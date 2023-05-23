@@ -1,6 +1,6 @@
-import heartCircle from '../../assets/imgs/svg-imgs/heart-circle.svg'
-import shoppingBag from '../../assets/imgs/svg-imgs/shopping-bag-circle.svg'
-
+import heartCircle from '../../../assets/imgs/svg-imgs/heart-circle.svg'
+import shoppingBag from '../../../assets/imgs/svg-imgs/shopping-bag-circle.svg'
+import '../../../style/css/card.css'
 
 interface CardProp{
     cardInfo:{
@@ -23,17 +23,19 @@ const Card = ({cardInfo, addFavorite,addToCart}:CardProp) => {
     return(
         <div className='card'>
             <div className='card-img'>
-                <img src={cardInfo.highResGallery[0]} alt="jewelry_img" />
-                    <div>
-                        <button onClick={addFavorite}><img src={heartCircle} alt="add-favorite" /></button>
-                        <button onClick={addToCart}><img src={shoppingBag} alt='add-to-cart'></img></button>
-                    </div>
+                {cardInfo.onSale ? 
+                <span className='on-sale'>On Sale</span>:null}
+                <img className = 'jewelry-img' src={cardInfo.lowResGallery[0]} alt="jewelry_img" />
+                <span className='btns'>
+                    <button onClick={addFavorite}><img src={heartCircle} alt="add-favorite" /></button>
+                    <button onClick={addToCart}><img src={shoppingBag} alt='add-to-cart'></img></button>
+                </span>
             </div>
             <p className='card-name'>
                 {cardInfo.name}
             </p>
                 {cardInfo.onSale ?  
-                    <p className='price'><s>${cardInfo.price}</s> ${cardInfo.price}</p> 
+                    <p className='price'><s>${cardInfo.price}</s> ${cardInfo.salePrice.toFixed(2)}</p> 
                     : 
                     <p className='price'>${cardInfo.price}</p>
                 }
