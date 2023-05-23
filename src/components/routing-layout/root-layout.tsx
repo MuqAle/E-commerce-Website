@@ -3,11 +3,14 @@ import heartOutline from '../../assets/imgs/svg-imgs/heart-outline.svg'
 import shoppingBag from '../../assets/imgs/svg-imgs/shopping-bag.svg'
 import search from '../../assets/imgs/svg-imgs/search.svg'
 import logo from '../../assets/imgs/svg-imgs/icons8-logo.svg'
+import arrow from '../../assets/imgs/svg-imgs/arrow.svg'
 import '../../style/css/root.css'
 
 const RootLayout = () => {
+
+
     return(
-        <div>
+        <div id="main-container">
             <header>
                 <nav>
                     <NavLink id="logo" to={"/"}>
@@ -22,8 +25,10 @@ const RootLayout = () => {
                         <NavLink to={"about"}>About Us</NavLink>
                     </div>
                     <div id="right-side-nav">
-                        <div id="search-bar">
-                            <img src={search} alt="" />
+                        <div className= 'search-bar'>
+                            <button>
+                                <img src={search} alt="search" />
+                            </button>
                             <input type="text"></input>
                         </div>
                         
@@ -44,11 +49,11 @@ const RootLayout = () => {
                     <label htmlFor="email-signup">SIGN UP FOR 10% OFF</label>
                     <div className="input-box">
                         <input id="email-signup" placeholder="Enter your email address"></input>
-                        <button type="submit"></button>
+                        <button type="submit"><img src={arrow} alt="arrow"/> </button>
                     </div>
                     <div>
                         <input type="checkbox" id='sign-up-checkbox'></input>
-                        <label htmlFor="sign-up-checkbox">By signing up you agree to our <a>Privacy and Policies</a></label>
+                        <label htmlFor="sign-up-checkbox">By signing up you agree to our <a>Privacy Policy</a></label>
                     </div>
                 </div>
                 <div id="info">
@@ -75,7 +80,7 @@ const RootLayout = () => {
                         <h3>More Info</h3>
                             <ul>
                                 <li><a>Terms and Conditions</a></li>
-                                <li><a>Privacy and Policies</a></li>
+                                <li><a>Privacy Policy</a></li>
                                 <li><a>Student Discount</a></li>
                                 <li><a>Refer a Friend</a></li>
                                 <li><a>Security</a></li>
