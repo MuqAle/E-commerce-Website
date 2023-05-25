@@ -31,14 +31,16 @@ const Card = ({cardInfo, addFavorite,addToCart}:CardProp) => {
                     <button onClick={addToCart}><img src={shoppingBag} alt='add-to-cart'></img></button>
                 </span>
             </div>
-            <p className='card-name'>
-                {cardInfo.name}
-            </p>
-                {cardInfo.onSale ?  
-                    <p className='price'><s>${cardInfo.price}</s> ${cardInfo.salePrice.toFixed(2)}</p> 
-                    : 
-                    <p className='price'>${cardInfo.price}</p>
-                }
+            <div className="label">
+                <p className='card-name'>
+                    {cardInfo.name}
+                </p>
+                    {cardInfo.onSale ?
+                        <p className='price sale-price'>${cardInfo.salePrice.toFixed(2)} <s sale-price>${cardInfo.price}</s> </p>
+                        :
+                        <p className='price '>${cardInfo.price}</p>
+                    }
+            </div>
         </div>
     )
 }
