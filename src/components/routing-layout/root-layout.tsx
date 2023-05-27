@@ -1,4 +1,5 @@
 import { Outlet, NavLink } from "react-router-dom";
+import { useState } from "react";
 import heartOutline from '../../assets/imgs/svg-imgs/heart-outline.svg'
 import shoppingBag from '../../assets/imgs/svg-imgs/shopping-bag.svg'
 import search from '../../assets/imgs/svg-imgs/search.svg'
@@ -17,19 +18,19 @@ const RootLayout = () => {
                             <img src={logo} alt="logo" />
                     </NavLink>
                     <div id="left-side-nav">
-                        <NavLink to={"shop-all"}>Shop All</NavLink>
-                        <NavLink to={"necklaces"}>Necklaces</NavLink>
-                        <NavLink to={"bracelets"}>Bracelets</NavLink>
-                        <NavLink to={"earrings"}>Earrings</NavLink>
-                        <NavLink to={"on-sale"}>On Sale</NavLink>
-                        <NavLink to={"about"}>About Us</NavLink>
+                        <NavLink className = 'header-link' to={"shop-all"}>Shop All</NavLink>
+                        <NavLink className = 'header-link' to={"necklaces"}>Necklaces</NavLink>
+                        <NavLink className = 'header-link' to={"bracelets"}>Bracelets</NavLink>
+                        <NavLink className = 'header-link' to={"earrings"}>Earrings</NavLink>
+                        <NavLink className = 'header-link' to={"on-sale"}>On Sale</NavLink>
+                        <NavLink className = 'header-link' to={"about"}>About Us</NavLink>
                     </div>
                     <div id="right-side-nav">
-                        <div className= 'search-bar'>
-                            <button>
+                        <div className= 'search-box'>
+                            <button className="btn-search">
                                 <img src={search} alt="search" />
                             </button>
-                            <input type="text"></input>
+                            <input className="input-search" type="text"></input>
                         </div>
                         
                         <NavLink id="whish-list" to={"wish-list"}>
