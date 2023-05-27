@@ -1,0 +1,162 @@
+@use 'card';
+
+
+*{
+    padding: 0;
+    margin: 0;
+    font-family: card.$font-stack;
+    box-sizing: border-box;
+}
+
+#main-container{
+    height:100dvh;
+    height: 100vh;
+    display: grid;
+    grid-template-rows: 100px 1fr 300px;
+}
+
+
+a{
+    text-decoration: none;
+    cursor: pointer;
+    color: black;
+}
+
+.header-link.active:after{
+    width: 100% !important; 
+}
+
+.header-link:after{
+    content: '';
+    display: block;
+    width: 0;
+    height: 1px;
+    background: card.$accent-color;
+    transition: width .3s;
+}
+
+.header-link:hover:after{
+    width: 100%;
+}
+
+button{
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+
+nav{
+    display: flex;
+    justify-content: space-between;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+#left-side-nav{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-grow: 1;
+}
+
+#right-side-nav{
+    display: flex;
+    align-items: center;
+
+    img{
+        height: 2.3rem;
+    }
+
+    .search-box{
+        height: 2.3rem;
+        position: relative;
+        display: flex;
+        align-items: center;
+        
+
+        .input-search{
+            height: 2rem;
+            outline: none;
+            border: none;
+            border-bottom: #000 1px solid;
+            font-size: 20px;
+            width: 0px;
+            font-weight: 200;
+            margin-left: auto;
+            transition: width .2s;
+        }
+
+        img{
+            height: 2.3rem;
+        }
+
+        &:hover .input-search{
+            width: 100%;
+        }
+
+
+        .input-search:focus{
+            width: 100%;
+        }
+    }
+
+    
+
+}
+
+
+footer{
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    width: 100%;
+    align-items: center;
+    background-color: rgb(183, 183, 183);
+
+    .discount{
+        width: 40%;
+
+        #email-signup{
+            
+            border: none;
+            outline: none;
+            width: inherit;
+            height: 30px;
+            background-color: transparent;
+        }
+        .input-box{
+            border-bottom: black 1px solid;
+            width: 80%;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            
+        }
+        button,img{
+            height: 30px;
+        }
+    }
+
+  
+
+    #info{
+        display: flex;
+        gap: 5rem;
+        h3{
+            border-bottom: 1px black solid ;
+            margin-bottom: 1rem;
+         }
+        li{
+            list-style: none;
+            margin-bottom: .5rem;
+            font-size: 15px;
+        }
+
+        .info-links{
+            width: 60%;
+        }
+    }
+}
+
+

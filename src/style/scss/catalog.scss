@@ -1,0 +1,38 @@
+@use 'card';
+
+
+h1{
+    font-family: card.$font-stack;
+    font-weight: 200;
+    font-size: 30pt;
+    text-align: center;
+    margin-bottom: 70px;
+    margin-top: 50px;
+    border-bottom: solid card.$accent-color 2px;
+}
+
+.product-link{
+    display: flex;
+    justify-content: center;
+    width: inherit;
+    height: auto;
+    margin-bottom: 40px;
+}
+
+
+.catalog{
+    width: 100%;
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: repeat(auto-fill,minmax(min(40%, 270px),1fr));
+    column-gap: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    justify-items: center;
+}
+
+.product-link:hover .btns{
+    display: flex;
+    justify-content: space-between;
+}
+
