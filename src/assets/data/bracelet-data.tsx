@@ -1,5 +1,4 @@
-import braceletImgs from "../../utils/import_imgs/import-bracelet-imgs";
-
+import braceletImgs from "../../utils/import-imgs/import-bracelet-imgs";
 
 
 const braceletData = [{

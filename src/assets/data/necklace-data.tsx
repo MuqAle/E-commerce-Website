@@ -1,4 +1,4 @@
-import necklaceImgs from "../../utils/import_imgs/import-necklace-imgs";
+import necklaceImgs from "../../utils/import-imgs/import-necklace-imgs";
 
 
 const necklaceData = [{

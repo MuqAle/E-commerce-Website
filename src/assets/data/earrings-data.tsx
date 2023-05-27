@@ -1,4 +1,4 @@
-import earringImgs from "../../utils/import_imgs/import-earrings-imgs";
+import earringImgs from "../../utils/import-imgs/import-earrings-imgs";
 
 const earringData = [{
     name:'Boho Earrings',
