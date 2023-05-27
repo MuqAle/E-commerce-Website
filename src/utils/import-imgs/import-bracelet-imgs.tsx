@@ -1,106 +1,57 @@
-import blackChakraHighImg2 from '../../assets/imgs/bracelets-imgs/high-res/black-chakra/7-chakra-bracelet-high.jpg'
-import blackChakraLowImg2 from '../../assets/imgs/bracelets-imgs/low-res/black-chakra/7-chakra-bracelet-low.jpg'
-import blackChakraHighImg1 from '../../assets/imgs/bracelets-imgs/high-res/black-chakra/chakra-bracelet-high.jpg'
-import blackChakraLowImg1 from '../../assets/imgs/bracelets-imgs/low-res/black-chakra/chakra-bracelet-low.jpg'
-import bohoBangleHighImg1 from '../../assets/imgs/bracelets-imgs/high-res/boho-bangle/bangle-bracelet-with-feathers-high.jpg'
-import bohoBangleLowImg1 from '../../assets/imgs/bracelets-imgs/low-res/boho-bangle/bangle-bracelet-with-feathers-low.jpg'
-import bohoBangleHighImg2 from '../../assets/imgs/bracelets-imgs/high-res/boho-bangle/boho-bangle-bracelet-high.jpg'
-import bohoBangleLowImg2 from '../../assets/imgs/bracelets-imgs/low-res/boho-bangle/boho-bangle-bracelet-low.jpg'
-import buddhaHighImg1 from '../../assets/imgs/bracelets-imgs/high-res/buddha/black-buddha-bracelet-high.jpg'
-import buddhaLowImg1 from '../../assets/imgs/bracelets-imgs/low-res/buddha/black-buddha-bracelet-low.jpg'
-import buddhaHighImg2 from '../../assets/imgs/bracelets-imgs/high-res/buddha/buddha-bracelet-for-men-high.jpg'
-import buddhaLowImg2 from '../../assets/imgs/bracelets-imgs/low-res/buddha/buddha-bracelet-for-men-low.jpg'
-import colorChakraHighImg2 from '../../assets/imgs/bracelets-imgs/high-res/color-chakra/chakra-bracelet-on-marble-high.jpg'
-import colorChakraLowImg2 from '../../assets/imgs/bracelets-imgs/low-res/color-chakra/chakra-bracelet-on-marble-low.jpg'
-import colorChakraHighImg1 from '../../assets/imgs/bracelets-imgs/high-res/color-chakra/chakra-bracelet-product-shot-high.jpg'
-import colorChakraLowImg1 from '../../assets/imgs/bracelets-imgs/low-res/color-chakra/chakra-bracelet-product-shot-low.jpg'
-import embroidHighImg1 from '../../assets/imgs/bracelets-imgs/high-res/embroidered/embroidered-bracelet-high.jpg'
-import embroidLowImg1 from '../../assets/imgs/bracelets-imgs/low-res/embroidered/embroidered-bracelet-low.jpg'
-import goldArrowHighImg1 from '../../assets/imgs/bracelets-imgs/high-res/gold-arrow/gold-arrow-bracelet-high.jpg'
-import goldArrowLowImg1 from '../../assets/imgs/bracelets-imgs/low-res/gold-arrow/gold-arrow-bracelet-low.jpg'
-import jewelsHighImg1 from '../../assets/imgs/bracelets-imgs/high-res/jewels/bangle-bracelet-with-jewels-high.jpg'
-import jewelsLowImg1 from '../../assets/imgs/bracelets-imgs/low-res/jewels/bangle-bracelet-with-jewels-low.jpg'
-import moonHighImg1 from '../../assets/imgs/bracelets-imgs/high-res/moon/moon-friendship-bracelet-high.jpg'
-import moonLowImg1 from '../../assets/imgs/bracelets-imgs/low-res/moon/moon-friendship-bracelet-low.jpg'
-import nauticalCharmHighImg1 from '../../assets/imgs/bracelets-imgs/high-res/nautical-charm/anchor-bracelet-gold-high.jpg'
-import nauticalCharmLowImg1 from '../../assets/imgs/bracelets-imgs/low-res/nautical-charm/anchor-bracelet-gold-low.jpg'
-import nauticalCharmHighImg2 from '../../assets/imgs/bracelets-imgs/high-res/nautical-charm/nautical-charm-bracelet-high.jpg'
-import nauticalCharmLowImg2 from '../../assets/imgs/bracelets-imgs/low-res/nautical-charm/nautical-charm-bracelet-low.jpg'
-import navyAnchorHighImg1 from '../../assets/imgs/bracelets-imgs/high-res/navy-anchor/anchor-bracelet-mens-high.jpg'
-import navyAnchorLowImg1 from '../../assets/imgs/bracelets-imgs/low-res/navy-anchor/anchor-bracelet-mens-low.jpg'
-import navyChakraHighImg2 from '../../assets/imgs/bracelets-imgs/high-res/navy-chakra/chakra-balancing-bracelet-high.jpg'
-import navyChakraLowImg2 from '../../assets/imgs/bracelets-imgs/low-res/navy-chakra/chakra-balancing-bracelet-low.jpg'
-import navyChakraHighImg1 from '../../assets/imgs/bracelets-imgs/high-res/navy-chakra/navy-blue-chakra-bracelet-high.jpg'
-import navyChakraLowImg1 from '../../assets/imgs/bracelets-imgs/low-res/navy-chakra/navy-blue-chakra-bracelet-low.jpg'
-import patternBangleHighImg1 from '../../assets/imgs/bracelets-imgs/high-res/patterned-bangle/patterned-bangle-high.jpg'
-import patternBangleLowImg1 from '../../assets/imgs/bracelets-imgs/low-res/patterned-bangle/patterned-bangle-low.jpg'
-import purpleChakraHighImg1 from '../../assets/imgs/bracelets-imgs/high-res/purple-chakra/chakra-bracelet-for-women-high.jpg'
-import purpleChakraLowImg1 from '../../assets/imgs/bracelets-imgs/low-res/purple-chakra/chakra-bracelet-for-women-low.jpg'
-import purpleChakraHighImg2 from '../../assets/imgs/bracelets-imgs/high-res/purple-chakra/purple-chakra-bracelet-high.jpg'
-import purpleChakraLowImg2 from '../../assets/imgs/bracelets-imgs/low-res/purple-chakra/purple-chakra-bracelet-low.jpg'
-import redAnchorHighImg1 from '../../assets/imgs/bracelets-imgs/high-res/red-anchor/womens-anchor-bracelet-high.jpg'
-import redAnchorLowImg1 from '../../assets/imgs/bracelets-imgs/low-res/red-anchor/womens-anchor-bracelet-low.jpg'
-import simpleGoldHighImg1 from '../../assets/imgs/bracelets-imgs/high-res/simple-gold/simple-gold-bracelet-high.jpg'
-import simpleGoldLowImg1 from '../../assets/imgs/bracelets-imgs/low-res/simple-gold/simple-gold-bracelet-low.jpg'
-import stackedArrowHighImg1 from '../../assets/imgs/bracelets-imgs/high-res/stacked-arrow/stacked-bracelets-high.jpg'
-import stackedArrowLowImg1 from '../../assets/imgs/bracelets-imgs/low-res/stacked-arrow/stacked-bracelets-low.jpg'
-import stackedTasselHighImg1 from '../../assets/imgs/bracelets-imgs/high-res/stacked-tassle/stacked-bracelets-set-high.jpg'
-import stackedTasselLowImg1 from '../../assets/imgs/bracelets-imgs/low-res/stacked-tassle/stacked-bracelets-set-low.jpg'
-import sunHighImg1 from '../../assets/imgs/bracelets-imgs/high-res/sun/sun-friendship-bracelet-high.jpg'
-import sunLowImg1 from '../../assets/imgs/bracelets-imgs/low-res/sun/sun-friendship-bracelet-low.jpg'
+
+import blackChakraImg2 from '../../assets/imgs/bracelets-imgs/black-chakra/7-chakra-bracelet-low.jpg'
+import blackChakraImg1 from '../../assets/imgs/bracelets-imgs/black-chakra/chakra-bracelet-low.jpg'
+import bohoBangleImg1 from '../../assets/imgs/bracelets-imgs/boho-bangle/bangle-bracelet-with-feathers-low.jpg'
+import bohoBangleImg2 from '../../assets/imgs/bracelets-imgs/boho-bangle/boho-bangle-bracelet-low.jpg'
+import buddhaImg1 from '../../assets/imgs/bracelets-imgs/buddha/black-buddha-bracelet-low.jpg'
+import buddhaImg2 from '../../assets/imgs/bracelets-imgs/buddha/buddha-bracelet-for-men-low.jpg'
+import colorChakraImg2 from '../../assets/imgs/bracelets-imgs/color-chakra/chakra-bracelet-on-marble-low.jpg'
+import colorChakraImg1 from '../../assets/imgs/bracelets-imgs/color-chakra/chakra-bracelet-product-shot-low.jpg'
+import embroidImg1 from '../../assets/imgs/bracelets-imgs/embroidered/embroidered-bracelet-low.jpg'
+import goldArrowImg1 from '../../assets/imgs/bracelets-imgs/gold-arrow/gold-arrow-bracelet-low.jpg'
+import jewelsImg1 from '../../assets/imgs/bracelets-imgs/jewels/bangle-bracelet-with-jewels-low.jpg'
+import moonImg1 from '../../assets/imgs/bracelets-imgs/moon/moon-friendship-bracelet-low.jpg'
+import nauticalCharmImg1 from '../../assets/imgs/bracelets-imgs/nautical-charm/anchor-bracelet-gold-low.jpg'
+import nauticalCharmImg2 from '../../assets/imgs/bracelets-imgs/nautical-charm/nautical-charm-bracelet-low.jpg'
+import navyAnchorImg1 from '../../assets/imgs/bracelets-imgs/navy-anchor/anchor-bracelet-mens-low.jpg'
+import navyChakraImg2 from '../../assets/imgs/bracelets-imgs/navy-chakra/chakra-balancing-bracelet-low.jpg'
+import navyChakraImg1 from '../../assets/imgs/bracelets-imgs/navy-chakra/navy-blue-chakra-bracelet-low.jpg'
+import patternBangleImg1 from '../../assets/imgs/bracelets-imgs/patterned-bangle/patterned-bangle-low.jpg'
+import purpleChakraImg1 from '../../assets/imgs/bracelets-imgs/purple-chakra/chakra-bracelet-for-women-low.jpg'
+import purpleChakraImg2 from '../../assets/imgs/bracelets-imgs/purple-chakra/purple-chakra-bracelet-low.jpg'
+import redAnchorImg1 from '../../assets/imgs/bracelets-imgs/red-anchor/womens-anchor-bracelet-low.jpg'
+import simpleGoldImg1 from '../../assets/imgs/bracelets-imgs/simple-gold/simple-gold-bracelet-low.jpg'
+import stackedArrowImg1 from '../../assets/imgs/bracelets-imgs/stacked-arrow/stacked-bracelets-low.jpg'
+import stackedTasselImg1 from '../../assets/imgs/bracelets-imgs/stacked-tassle/stacked-bracelets-set-low.jpg'
+import sunImg1 from '../../assets/imgs/bracelets-imgs/sun/sun-friendship-bracelet-low.jpg'
 
 
 
 const braceletImgs={
-    blackChakraHighImg1,
-    blackChakraHighImg2,
-    blackChakraLowImg1,
-    blackChakraLowImg2,
-    bohoBangleHighImg1,
-    bohoBangleHighImg2,
-    bohoBangleLowImg1,
-    bohoBangleLowImg2,
-    buddhaHighImg1,
-    buddhaHighImg2,
-    buddhaLowImg1,
-    buddhaLowImg2,
-    colorChakraHighImg1,
-    colorChakraHighImg2,
-    colorChakraLowImg1,
-    colorChakraLowImg2,
-    embroidHighImg1,
-    embroidLowImg1,
-    goldArrowHighImg1,
-    goldArrowLowImg1,
-    jewelsHighImg1,
-    jewelsLowImg1,
-    moonHighImg1,
-    moonLowImg1,
-    nauticalCharmHighImg1,
-    nauticalCharmHighImg2,
-    nauticalCharmLowImg1,
-    nauticalCharmLowImg2,
-    navyAnchorHighImg1,
-    navyAnchorLowImg1,
-    navyChakraHighImg1,
-    navyChakraHighImg2,
-    navyChakraLowImg1,
-    navyChakraLowImg2,
-    patternBangleHighImg1,
-    patternBangleLowImg1,
-    purpleChakraHighImg1,
-    purpleChakraHighImg2,
-    purpleChakraLowImg1,
-    purpleChakraLowImg2,
-    redAnchorHighImg1,
-    redAnchorLowImg1,
-    simpleGoldHighImg1,
-    simpleGoldLowImg1,
-    stackedArrowHighImg1,
-    stackedArrowLowImg1,
-    stackedTasselHighImg1,
-    stackedTasselLowImg1,
-    sunHighImg1,
-    sunLowImg1}
+    blackChakraImg1,
+    blackChakraImg2,
+    bohoBangleImg1,
+    bohoBangleImg2,
+    buddhaImg1,
+    buddhaImg2,
+    colorChakraImg1,
+    colorChakraImg2,
+    embroidImg1,
+    goldArrowImg1,
+    jewelsImg1,
+    moonImg1,
+    nauticalCharmImg1,
+    nauticalCharmImg2,
+    navyAnchorImg1,
+    navyChakraImg1,
+    navyChakraImg2,
+    patternBangleImg1,
+    purpleChakraImg1,
+    purpleChakraImg2,
+    redAnchorImg1,
+    simpleGoldImg1,
+    stackedArrowImg1,
+    stackedTasselImg1,
+    sunImg1}
 
 export default braceletImgs

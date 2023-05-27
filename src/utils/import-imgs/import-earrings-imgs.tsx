@@ -1,41 +1,24 @@
-import bohoHighImg from '../../assets/imgs/earrings-imgs/high-res/boho-earrings-high.jpg'
-import bohoLowImg from '../../assets/imgs/earrings-imgs/low-res/boho-earrings-low.jpg'
-import elephantHighImg from '../../assets/imgs/earrings-imgs/high-res/elephant-earrings-high.jpg'
-import elephantLowImg from '../../assets/imgs/earrings-imgs/low-res/elephant-earrings-low.jpg'
-import galaxyHighImg from '../../assets/imgs/earrings-imgs/high-res/galaxy-earrings-high.jpg'
-import galaxyLowImg from '../../assets/imgs/earrings-imgs/low-res/galaxy-earrings-low.jpg'
-import angelHighImg from '../../assets/imgs/earrings-imgs/high-res/guardian-angel-earrings-high.jpg'
-import angelLowImg from '../../assets/imgs/earrings-imgs/low-res/guardian-angel-earrings-low.jpg'
-import smallHoopsHighImg from '../../assets/imgs/earrings-imgs/high-res/jasmin-chew-UBeNYvk6ED0-high.jpg'
-import smallHoopsLowImg from '../../assets/imgs/earrings-imgs/low-res/jasmin-chew-UBeNYvk6ED0-low.jpg'
-import tearDropHighImg from '../../assets/imgs/earrings-imgs/high-res/julia-cheperis-GFI1sRmDaCs-high.jpg'
-import tearDropLowImg from '../../assets/imgs/earrings-imgs/low-res/julia-cheperis-GFI1sRmDaCs-low.jpg'
-import pearlHighImg from '../../assets/imgs/earrings-imgs/high-res/kateryna-hliznitsova-P6NiFTyI294-high.jpg'
-import pearlLowImg from '../../assets/imgs/earrings-imgs/low-res/kateryna-hliznitsova-P6NiFTyI294-low.jpg'
-import marbleStudHighImg from '../../assets/imgs/earrings-imgs/high-res/marble-stud-earrings-high.jpg'
-import marbleStudLowImg from '../../assets/imgs/earrings-imgs/low-res/marble-stud-earrings-low.jpg'
-import goldHighImg from '../../assets/imgs/earrings-imgs/high-res/sama-hosseini-6seIjO8gX2w-high.jpg'
-import goldLowImg from '../../assets/imgs/earrings-imgs/low-res/sama-hosseini-6seIjO8gX2w-low.jpg'
+
+import bohoImg from '../../assets/imgs/earrings-imgs/boho-earrings-low.jpg'
+import elephantImg from '../../assets/imgs/earrings-imgs/elephant-earrings-low.jpg'
+import galaxyImg from '../../assets/imgs/earrings-imgs/galaxy-earrings-low.jpg'
+import angelImg from '../../assets/imgs/earrings-imgs/guardian-angel-earrings-low.jpg'
+import smallHoopsImg from '../../assets/imgs/earrings-imgs/jasmin-chew-UBeNYvk6ED0-low.jpg'
+import tearDropImg from '../../assets/imgs/earrings-imgs/julia-cheperis-GFI1sRmDaCs-low.jpg'
+import pearlImg from '../../assets/imgs/earrings-imgs/kateryna-hliznitsova-P6NiFTyI294-low.jpg'
+import marbleStudImg from '../../assets/imgs/earrings-imgs/marble-stud-earrings-low.jpg'
+import goldImg from '../../assets/imgs/earrings-imgs/sama-hosseini-6seIjO8gX2w-low.jpg'
 
 const earringImgs = {
-    bohoHighImg,
-    bohoLowImg,
-    elephantHighImg,
-    elephantLowImg,
-    galaxyHighImg,
-    galaxyLowImg,
-    angelHighImg,
-    angelLowImg,
-    smallHoopsHighImg,
-    smallHoopsLowImg,
-    tearDropHighImg,
-    tearDropLowImg,
-    pearlHighImg,
-    pearlLowImg,
-    marbleStudHighImg,
-    marbleStudLowImg,
-    goldHighImg,
-    goldLowImg
+    bohoImg,
+    elephantImg,
+    galaxyImg,
+    angelImg,
+    smallHoopsImg,
+    tearDropImg,
+    pearlImg,
+    marbleStudImg,
+    goldImg
 }
 
 export default earringImgs

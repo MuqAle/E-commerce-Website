@@ -8,8 +8,7 @@ const earringData = [{
     onSale:false,
     salePrice:23,
     description:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-    highResGallery:[earringImgs.bohoHighImg],
-    lowResGallery:[earringImgs.bohoLowImg]
+    Gallery:[earringImgs.bohoImg]
 },
 {
     name:'Elephant Studs',
@@ -19,8 +18,7 @@ const earringData = [{
     onSale:true,
     salePrice:24 * .6,
     description:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-    highResGallery:[earringImgs.elephantHighImg],
-    lowResGallery:[earringImgs.elephantLowImg]
+    Gallery:[earringImgs.elephantImg]
 },
 {
     name:'Galaxy Earrings',
@@ -30,8 +28,7 @@ const earringData = [{
     onSale:true,
     salePrice:17 * .8,
     description:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-    highResGallery:[earringImgs.galaxyHighImg],
-    lowResGallery:[earringImgs.galaxyLowImg]
+    Gallery:[earringImgs.galaxyImg]
 },
 {
     name:'Angel Studs',
@@ -41,8 +38,7 @@ const earringData = [{
     onSale:false,
     salePrice:25,
     description:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-    highResGallery:[earringImgs.angelHighImg],
-    lowResGallery:[earringImgs.angelLowImg]
+    Gallery:[earringImgs.angelImg]
 },
 {
     name:'Gold Hoops',
@@ -52,8 +48,7 @@ const earringData = [{
     onSale:false,
     salePrice:31,
     description:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-    highResGallery:[earringImgs.smallHoopsHighImg],
-    lowResGallery:[earringImgs.smallHoopsLowImg]
+    Gallery:[earringImgs.smallHoopsImg]
 },
 {
     name:'Tear Drop Earrings',
@@ -63,8 +58,7 @@ const earringData = [{
     onSale:false,
     salePrice:28,
     description:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-    highResGallery:[earringImgs.tearDropHighImg],
-    lowResGallery:[earringImgs.tearDropLowImg]
+    Gallery:[earringImgs.tearDropImg]
 },
 {
     name:'Pearls Dangle Earrings',
@@ -74,8 +68,7 @@ const earringData = [{
     onSale:false,
     salePrice:33,
     description:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-    highResGallery:[earringImgs.pearlHighImg],
-    lowResGallery:[earringImgs.pearlLowImg]
+    Gallery:[earringImgs.pearlImg]
 },
 {
     name:'Marble Studs',
@@ -85,8 +78,7 @@ const earringData = [{
     onSale:false,
     salePrice:15,
     description:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-    highResGallery:[earringImgs.marbleStudHighImg],
-    lowResGallery:[earringImgs.marbleStudLowImg]
+    Gallery:[earringImgs.marbleStudImg]
 },
 {
     name:'Gold Beaded Drop Earrings',
@@ -96,8 +88,7 @@ const earringData = [{
     onSale:false,
     salePrice:28,
     description:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-    highResGallery:[earringImgs.goldHighImg],
-    lowResGallery:[earringImgs.goldLowImg]
+    Gallery:[earringImgs.goldImg]
 }]
 
 export default earringData

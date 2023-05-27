@@ -9,8 +9,7 @@ const braceletData = [{
     onSale: true,
     salePrice: (21.5 * .8),
     description:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-    highResGallery:[braceletImgs.blackChakraHighImg1,braceletImgs.blackChakraHighImg2],
-    lowResGallery:[braceletImgs.blackChakraLowImg1,braceletImgs.blackChakraLowImg2]
+    Gallery:[braceletImgs.blackChakraImg1,braceletImgs.blackChakraImg2]
 },
 {
     name:'Boho Bangle',
@@ -20,8 +19,7 @@ const braceletData = [{
     onSale: false,
     salePrice: 32.6,
     description:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-    highResGallery:[braceletImgs.bohoBangleHighImg1,braceletImgs.bohoBangleHighImg2],
-    lowResGallery:[braceletImgs.bohoBangleLowImg1,braceletImgs.bohoBangleLowImg2]
+    Gallery:[braceletImgs.bohoBangleImg1,braceletImgs.bohoBangleImg2]
 },
 {
     name:'Buddha Bracelet',
@@ -31,8 +29,7 @@ const braceletData = [{
     onSale: false,
     salePrice: 21.5,
     description:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-    highResGallery:[braceletImgs.buddhaHighImg1,braceletImgs.buddhaHighImg2],
-    lowResGallery:[braceletImgs.buddhaLowImg1,braceletImgs.buddhaLowImg2]
+    Gallery:[braceletImgs.buddhaImg1,braceletImgs.buddhaImg2]
 },
 {
     name:'Color Chakra Bead Bracelet',
@@ -42,8 +39,7 @@ const braceletData = [{
     onSale: true,
     salePrice: 21.5 * .8,
     description:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-    highResGallery:[braceletImgs.colorChakraHighImg1,braceletImgs.colorChakraHighImg2],
-    lowResGallery:[braceletImgs.colorChakraLowImg1,braceletImgs.colorChakraLowImg2]
+    Gallery:[braceletImgs.colorChakraImg1,braceletImgs.colorChakraImg2]
 },
 {
     name:'Embroidered Bangle',
@@ -53,8 +49,7 @@ const braceletData = [{
     onSale: false,
     salePrice: 23,
     description:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-    highResGallery:[braceletImgs.embroidHighImg1],
-    lowResGallery:[braceletImgs.embroidLowImg1]
+    Gallery:[braceletImgs.embroidImg1]
 },
 {
     name:'Gold Arrow Bangle',
@@ -64,8 +59,7 @@ const braceletData = [{
     onSale: false,
     salePrice: 27,
     description:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-    highResGallery:[braceletImgs.goldArrowHighImg1],
-    lowResGallery:[braceletImgs.goldArrowLowImg1]
+    Gallery:[braceletImgs.goldArrowImg1]
 },
 {
     name:'Jeweled Bangle',
@@ -75,8 +69,7 @@ const braceletData = [{
     onSale: false,
     salePrice: 41,
     description:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-    highResGallery:[braceletImgs.jewelsHighImg1],
-    lowResGallery:[braceletImgs.jewelsLowImg1]
+    Gallery:[braceletImgs.jewelsImg1]
 },
 {
     name:'Moon Friendship Bracelet',
@@ -86,8 +79,7 @@ const braceletData = [{
     onSale: true,
     salePrice: 28 * .7,
     description:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-    highResGallery:[braceletImgs.moonHighImg1],
-    lowResGallery:[braceletImgs.moonLowImg1]
+    Gallery:[braceletImgs.moonImg1]
 },
 {
     name:'Anchor Charm Bracelet',
@@ -97,8 +89,7 @@ const braceletData = [{
     onSale: false,
     salePrice: 27,
     description:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-    highResGallery:[braceletImgs.nauticalCharmHighImg1,braceletImgs.nauticalCharmHighImg2],
-    lowResGallery:[braceletImgs.nauticalCharmLowImg1,braceletImgs.nauticalCharmLowImg2]
+    Gallery:[braceletImgs.nauticalCharmImg1,braceletImgs.nauticalCharmImg2]
 },
 {
     name:'Navy Nautical Leather Bracelet',
@@ -108,8 +99,7 @@ const braceletData = [{
     onSale: false,
     salePrice: 15,
     description:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-    highResGallery:[braceletImgs.navyAnchorHighImg1],
-    lowResGallery:[braceletImgs.navyAnchorLowImg1]
+    Gallery:[braceletImgs.navyAnchorImg1]
 },
 {
     name:'Navy Chakra Bead Bracelet',
@@ -119,8 +109,7 @@ const braceletData = [{
     onSale: true,
     salePrice: 21.5 * .8,
     description:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-    highResGallery:[braceletImgs.navyChakraHighImg1,braceletImgs.navyChakraHighImg2],
-    lowResGallery:[braceletImgs.navyChakraLowImg1,braceletImgs.navyChakraLowImg2]
+    Gallery:[braceletImgs.navyChakraImg1,braceletImgs.navyChakraImg2]
 },
 {
     name:'Patterned Bangle',
@@ -130,8 +119,7 @@ const braceletData = [{
     onSale: false,
     salePrice: 23,
     description:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-    highResGallery:[braceletImgs.patternBangleHighImg1],
-    lowResGallery:[braceletImgs.patternBangleLowImg1]
+    Gallery:[braceletImgs.patternBangleImg1]
 },
 {
     name:'Purple Chakra Bead Bracelet',
@@ -141,8 +129,7 @@ const braceletData = [{
     onSale: true,
     salePrice: 21.5 * .8,
     description:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-    highResGallery:[braceletImgs.purpleChakraHighImg1,braceletImgs.purpleChakraHighImg2],
-    lowResGallery:[braceletImgs.purpleChakraLowImg1,braceletImgs.purpleChakraLowImg2]
+    Gallery:[braceletImgs.purpleChakraImg1,braceletImgs.purpleChakraImg2]
 },
 {
     name:'Red Nautical Leather Bracelet',
@@ -152,8 +139,7 @@ const braceletData = [{
     onSale: false,
     salePrice: 15,
     description:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-    highResGallery:[braceletImgs.redAnchorHighImg1],
-    lowResGallery:[braceletImgs.redAnchorLowImg1]
+    Gallery:[braceletImgs.redAnchorImg1]
 },
 {
     name:'Simple Gold Bangle',
@@ -163,8 +149,7 @@ const braceletData = [{
     onSale: false,
     salePrice: 31,
     description:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-    highResGallery:[braceletImgs.simpleGoldHighImg1],
-    lowResGallery:[braceletImgs.simpleGoldLowImg1]
+    Gallery:[braceletImgs.simpleGoldImg1]
 },
 {
     name:'Stacked Arrow Bangles',
@@ -174,8 +159,7 @@ const braceletData = [{
     onSale: false,
     salePrice: 37,
     description:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-    highResGallery:[braceletImgs.stackedArrowHighImg1],
-    lowResGallery:[braceletImgs.stackedArrowLowImg1]
+    Gallery:[braceletImgs.stackedArrowImg1]
 },
 {
     name:'Stacked Boho Bangle',
@@ -185,8 +169,7 @@ const braceletData = [{
     onSale: false,
     salePrice: 35,
     description:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-    highResGallery:[braceletImgs.stackedTasselHighImg1],
-    lowResGallery:[braceletImgs.stackedTasselLowImg1]
+    Gallery:[braceletImgs.stackedTasselImg1]
 },
 {
     name:'Sun Friendship Bracelet',
@@ -196,8 +179,7 @@ const braceletData = [{
     onSale: true,
     salePrice: 28.7,
     description:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-    highResGallery:[braceletImgs.sunHighImg1],
-    lowResGallery:[braceletImgs.sunLowImg1]
+    Gallery:[braceletImgs.sunImg1]
 }]
 
 export default braceletData
