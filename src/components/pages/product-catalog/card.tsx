@@ -11,8 +11,7 @@ interface CardProp{
         onSale:boolean,
         salePrice:number,
         description:string,
-        highResGallery:string[],
-        lowResGallery:string[]
+        Gallery:string[],
     },
     addFavorite: () => void
     addToCart: () => void
@@ -25,7 +24,7 @@ const Card = ({cardInfo, addFavorite,addToCart}:CardProp) => {
             <div className='card-img'>
                 {cardInfo.onSale ? 
                 <span className='on-sale'>On Sale</span>:null}
-                <img className = 'jewelry-img' src={cardInfo.lowResGallery[0]} alt="jewelry_img" />
+                <img className = 'jewelry-img' src={cardInfo.Gallery[0]} alt="jewelry_img" />
                 <span className='btns'>
                     <button onClick={addFavorite}><img src={heartCircle} alt="add-favorite" /></button>
                     <button onClick={addToCart}><img src={shoppingBag} alt='add-to-cart'></img></button>
@@ -36,7 +35,7 @@ const Card = ({cardInfo, addFavorite,addToCart}:CardProp) => {
                     {cardInfo.name}
                 </p>
                     {cardInfo.onSale ?
-                        <p className='price sale-price'>${cardInfo.salePrice.toFixed(2)} <s sale-price>${cardInfo.price}</s> </p>
+                        <p className='price sale-price'>${cardInfo.salePrice.toFixed(2)} <s>${cardInfo.price}</s> </p>
                         :
                         <p className='price '>${cardInfo.price}</p>
                     }
