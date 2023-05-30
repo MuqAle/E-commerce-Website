@@ -1,5 +1,4 @@
-import heartCircle from '../../../assets/imgs/svg-imgs/heart-circle.svg'
-import shoppingBag from '../../../assets/imgs/svg-imgs/shopping-bag-circle.svg'
+
 import '../../../style/css/card.css'
 
 interface CardProp{
@@ -13,22 +12,17 @@ interface CardProp{
         description:string,
         Gallery:string[],
     },
-    addFavorite: () => void
-    addToCart: () => void
+
         
 }
 
-const Card = ({cardInfo, addFavorite,addToCart}:CardProp) => {
+const Card = ({cardInfo}:CardProp) => {
     return(
         <div className='card'>
             <div className='card-img'>
                 {cardInfo.onSale ? 
                 <span className='on-sale'>On Sale</span>:null}
                 <img className = 'jewelry-img' src={cardInfo.Gallery[0]} alt="jewelry_img" />
-                <span className='btns'>
-                    <button onClick={addFavorite}><img src={heartCircle} alt="add-favorite" /></button>
-                    <button onClick={addToCart}><img src={shoppingBag} alt='add-to-cart'></img></button>
-                </span>
             </div>
             <div className="label">
                 <p className='card-name'>
