@@ -96,6 +96,26 @@ function App() {
     })
   } 
   
+  const increaseAmount = (id:string) => {
+    updateCart(bag => {
+      const product = bag.find(c => c.product.id === id)
+      if(product){
+        product.amount += 1
+      }
+    })
+  }
+
+  const decreaseAmount = (id:string) => {
+    updateCart(bag => {
+      const product = bag.find(c => c.product.id === id)
+      const index = bag.findIndex(c => c.product.id === id)
+      if(product && product.amount > 0){
+        product.amount -= 1
+      }else{
+        bag.splice(index,1)
+      }
+    })
+  }
 
 
 
@@ -107,8 +127,8 @@ function App() {
         <Route path='shop-all' element={<Catalog title='All Jewelry' data={allData} addFavorite={addProductFavorite} addToCart={addProductCart} favorited={favorited}/>}/>
         <Route path='necklaces' element={<Catalog title='Necklaces' data={necklaceData} addFavorite={addProductFavorite} addToCart={addProductCart} favorited={favorited}/>}/>
         <Route path='bracelets' element={<Catalog title='Bracelets' data={braceletData} addFavorite={addProductFavorite} addToCart={addProductCart} favorited={favorited}/>}/>
-        <Route path='earrings' element={<Catalog  title='Earrings' data={earringData} addFavorite={addProductCart} addToCart={addProductCart} favorited={favorited}/>}/>
-        <Route path='on-sale' element={<Catalog title='On Sale' data={allData.filter(data => data.onSale === true)} addFavorite={addProductCart} addToCart={addProductCart} favorited={favorited}/>}/>
+        <Route path='earrings' element={<Catalog  title='Earrings' data={earringData} addFavorite={addProductFavorite} addToCart={addProductCart} favorited={favorited}/>}/>
+        <Route path='on-sale' element={<Catalog title='On Sale' data={allData.filter(data => data.onSale === true)} addFavorite={addProductFavorite} addToCart={addProductCart} favorited={favorited}/>}/>
         {/* <Route path='about-us' element={<About/>}/> */}
         <Route path='shop-all/:id' element ={<ProductPage data={allData} addToCart={addProductCart} addToFavorite={addProductFavorite} favorited={favorited}/>}/>
         <Route path='necklaces/:id' element ={<ProductPage data={necklaceData} addToCart={addProductCart} addToFavorite={addProductFavorite} favorited={favorited}/>}/>
