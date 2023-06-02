@@ -1,5 +1,5 @@
 import { Outlet, NavLink } from "react-router-dom";
-import { useState } from "react";
+import ScrollToTop from "../../utils/scroll-to-top";
 import heartOutline from '../../assets/imgs/svg-imgs/heart-outline.svg'
 import shoppingBag from '../../assets/imgs/svg-imgs/shopping-bag.svg'
 import search from '../../assets/imgs/svg-imgs/search.svg'
@@ -7,11 +7,16 @@ import logo from '../../assets/imgs/svg-imgs/icons8-logo.svg'
 import arrow from '../../assets/imgs/svg-imgs/arrow.svg'
 import '../../style/css/root.css'
 
-const RootLayout = () => {
 
+interface Span{
+    shoppingCart:number,
+    favorites:number
+}
+const RootLayout = ({shoppingCart,favorites}:Span) => {
 
     return(
         <div id="main-container">
+            <ScrollToTop/>
             <header>
                 <nav>
                     <NavLink id="logo" to={"/"}>
@@ -33,10 +38,12 @@ const RootLayout = () => {
                             <input className="input-search" type="text"></input>
                         </div>
                         
-                        <NavLink id="whish-list" to={"wish-list"}>
+                        <NavLink id="wish-list" to={"wish-list"}>
+                            {favorites === 0? null:<span className="favorite-span">{favorites}</span>}
                             <img src={heartOutline} alt="favorite-item"/>
                         </NavLink>
                         <NavLink id="shopping-cart" to={"shopping-cart"}>
+                            {shoppingCart === 0?null:<span className="shopping-cart-span">{shoppingCart}</span>}
                             <img src={shoppingBag} alt="add-to-cart"/>
                         </NavLink>
                     </div>
