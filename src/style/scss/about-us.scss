@@ -1,0 +1,55 @@
+@use 'card';
+.about-us-main-container{
+    display: flex;
+    flex-direction: column;
+}
+.about-us-container{
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    padding: 40px;
+    gap: 30px;
+    .writing-container{
+        word-wrap: normal;
+         min-width: 400px;
+        max-width: 48%;
+        font-weight: 200;
+        
+
+        h2{
+            margin-bottom: 10px;
+            color: card.$accent-color;
+            font-size: 40px;
+            font-weight: 400;
+        }
+        p{
+            line-height: 200%;
+        }
+        
+    }
+    img{
+        min-width: 400px;
+        max-width: 48%;
+        object-fit: cover;
+        overflow: hidden;
+    }
+}
+
+@media (max-width:909px){
+    .about-us-container{
+        flex-direction: column;
+        justify-content:center;
+        .writing-container{
+            max-width: 100%;
+        }
+        img{
+           max-width: 100%;
+        }
+    }
+    .mission{
+        flex-direction: column-reverse;
+    }
+   
+
+}
