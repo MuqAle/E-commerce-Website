@@ -1,7 +1,39 @@
 @use 'card';
+@mixin card-btn($color:white, $size:2rem){
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $color;
+    border-radius: 50%;
+    position: absolute;
+    width: $size;
+    height: $size;
+    border-radius: 50%;
+    z-index: 2;
+    transition: visibility 0s, opacity 0.3s ease-in;
+    visibility: hidden;
+    opacity: 0;
+}
 
+@mixin visibility{
+    display: flex;
+    visibility: visible;
+    opacity: 100%;
+    justify-content: center;
+    align-items: center;
+}
 
-h1{
+@media screen and (max-width:1024px){
+    .card-container{
+        width: calc((100% - 8px)/2) !important;
+    }
+    // .right-btn, .left-btn{
+    //     top: 75% !important;
+    // }
+    
+}
+
+.title{
     font-family: card.$font-stack;
     font-weight: 200;
     font-size: 30pt;
@@ -11,28 +43,54 @@ h1{
     border-bottom: solid card.$accent-color 2px;
 }
 
-.product-link{
-    display: flex;
-    justify-content: center;
-    width: inherit;
-    height: auto;
+.card-container{
+    position: relative;
+    width: calc((100% - 24px)/4);
     margin-bottom: 40px;
+}
+
+.product-link{
+    width: 100%;
 }
 
 
 .catalog{
+    display: flex;
     width: 100%;
-    min-height: 100vh;
-    display: grid;
-    grid-template-columns: repeat(auto-fill,minmax(min(40%, 270px),1fr));
-    column-gap: 20px;
-    padding-left: 20px;
-    padding-right: 20px;
-    justify-items: center;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    padding: 0 20px;
+    gap: 8px;
 }
 
-.product-link:hover .btns{
-    display: flex;
-    justify-content: space-between;
+.card-container:hover .left-btn, .card-container:hover .right-btn{
+    @include visibility();
+    
+}
+
+
+
+.left-btn{
+    @include card-btn;
+    bottom: 85px;
+    left: 10px;
+    // margin-left: 1.5rem;
+    img{
+        width: 30px;
+        height: 23px;
+    }
+}
+
+.right-btn{
+    @include card-btn($color:black);
+    bottom: 85px;
+    right: 10px;
+    // margin-right: 1.5rem;
+    
+    img{
+        width: 30px;
+        height: 23px;
+        
+    }
 }
 
