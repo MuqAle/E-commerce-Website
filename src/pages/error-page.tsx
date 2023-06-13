@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom"
-import Breadcrumbs from "../components/breadcrumbs"
+
 
 const ErrorPage = () => {
 

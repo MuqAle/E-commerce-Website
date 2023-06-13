@@ -14,7 +14,7 @@ const backdrop = {
   exit:{opacity:0}
 }
 
-const Modal = ({closeModal,open}:Modal) => {
+const Modal = ({closeModal}:Modal) => {
 
   return (
         <motion.div 
