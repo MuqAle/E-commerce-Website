@@ -27,7 +27,8 @@ const Catalog = ({data,title,addToCart,addFavorite, favorited}:Data) => {
                     <Link className="product-link" to={d.id} >
                         <Card cardInfo={d}></Card>
                     </Link>
-                <button className="left-btn" onClick={()=> addFavorite(d.id)}><img src={favorited(d.id) ? heartFilled:heartOutline} alt="add-favorite" /></button>
+                <button style = {favorited(d.id) ? {visibility:"visible", opacity:'100%'} : {visibility:'hidden', opacity:'0'}} className="left-btn" onClick={()=> addFavorite(d.id)}><img src={favorited(d.id) ? heartFilled:heartOutline} alt="add-favorite" />
+                </button>
                 <button className="right-btn" onClick={() => addToCart(d.id)}><img src={shoppingBag} alt='add-to-cart'></img></button>
                 </div>
             ))}

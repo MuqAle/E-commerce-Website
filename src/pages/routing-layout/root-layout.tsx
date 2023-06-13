@@ -15,6 +15,10 @@ interface Span{
 const RootLayout = ({shoppingCart,favorites}:Span) => {
 
     const [showModal, setShowModal] = useState(false);
+    
+    const preventScroll = (event: TouchEvent) => {
+      event.preventDefault();
+    }; 
 
     useEffect(() => {
       const visitedBefore = sessionStorage.getItem('visitedBefore');
@@ -33,10 +37,9 @@ const RootLayout = ({shoppingCart,favorites}:Span) => {
 
     useEffect(() => {
       const body = document.querySelector("body")
-      const root = document.querySelector<HTMLElement>('#main-container');
-      if(body && root){
+      if(body){
           body.style.overflow = showModal ? 'hidden' : 'visible';
-          root.style.overflow = showModal ? 'hidden' : 'visible';
+          body.addEventListener("touchmove", preventScroll, { passive: false });
       }
     }, [showModal])
 

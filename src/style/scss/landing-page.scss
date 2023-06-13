@@ -7,40 +7,52 @@
     .landing-page-card .landing-page-right-btn{
         @include catalog.visibility;
     }
+     p.words:after{
+        visibility: hidden;
+    }
 }
 
 @media screen and (max-width:700px) and (min-width:500px) {
     p.words{
-        font-size:40px
+        font-size:40px;
     }
+    a.home-img,a.home-middle, div.carousel-root .slide img{
+        aspect-ratio: 2.7/1.5;
+    }
+    
 }
 
 @media screen and (max-width:550px){
     p.words{
         font-size:30px;
+        font-weight: 200;
+        ;
+    }
+    a.home-img,a.home-middle, div.carousel-root .slide img{
+        aspect-ratio: 2.7/1.5;
     }
     .header-display-container div.display-container-btns{
         display: none;
     }
     .carousel-root .slide p.fall{
-        margin-left: 10px;
+        padding: 0 10px;
         margin-top: 10px;
     }
     .carousel-root .slide p.summer{
-        margin-right: 5px;
-        margin-bottom: 5px;
+        padding: 0 10px;
+        margin-bottom: 10px;
     }
     .home-img.necklace p.words{
-        margin-right: 5px;
-        margin-bottom: 5px;
+        padding: 0 10px;
+        margin-bottom: 10px;
     }
     .home-middle p.words{
-        margin-top: 5px;
-        margin-right: 5px;
+        margin-top: 10px;
+        padding: 0 10px;
     }
     .home-img.about-us p.words{
-        margin-left: 5px;
-        margin-top: 5px
+        padding: 0 10px;
+        margin-top: 10px
     }
 }
 
@@ -61,13 +73,13 @@
             position: absolute;
         }
         .fall{
-            margin-left: 30px;
+            padding: 0 30px;
             margin-top: 30px;
         }
         .summer{
             bottom: 0;
             right: 0;
-            margin-right: 30px;
+            padding: 0 30px;
             margin-bottom: 30px;
         }
         img{
@@ -159,7 +171,7 @@
 }
 
 .words{
-        
+    background-color: rgb(0, 0, 0,.6);  
     color: white;
     font-size: 50px;
     font-weight: 200; 
@@ -182,13 +194,14 @@
     align-items: flex-end;
     justify-content: end;
     p{
-        margin-right: 30px;
+        padding: 0 30px;
         margin-bottom: 30px;
     }
 }
 .home-img.about-us{
+    align-items: baseline;
     p{
-        margin-left: 30px;
+        padding: 0 30px;
         margin-top: 30px;
     }
 }
@@ -210,8 +223,9 @@
     .words{
         position: absolute;
         right: 0;
+        padding: 0 30px;
         margin-top: 30px;
-        margin-right: 30px;
+       
     }
 }
 

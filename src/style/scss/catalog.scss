@@ -17,8 +17,8 @@
 
 @mixin visibility{
     display: flex;
-    visibility: visible;
-    opacity: 100%;
+    visibility: visible !important;
+    opacity: 100% !important;
     justify-content: center;
     align-items: center;
 }

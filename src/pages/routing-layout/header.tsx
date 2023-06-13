@@ -18,20 +18,29 @@ const Header = ({favorites, shoppingCart}:Header) => {
     const [openMenu,setOpenMenu] = useState(false)
     const [openSearch, setOpenSearch] = useState(false)
 
+    const preventScroll = (event: TouchEvent) => {
+        event.preventDefault();
+      };
+
     const toggleMenu = () => {
         setOpenMenu((menu) => !menu )
     }
 
     const toggleSearch = () => {
+        const search = document.querySelector<HTMLInputElement>('.input-search')
         setOpenSearch(search => !search)
+        if(openSearch){
+            search?.focus()
+        }
+        search?.blur()
     }
 
     useEffect(() => {
     const body = document.querySelector("body")
-      const root = document.querySelector<HTMLElement>('#main-container');
-      if(body && root){
+    
+      if(body ){
           body.style.overflow = openMenu ? 'hidden' : 'visible';
-          root.style.overflow = openMenu ? 'hidden' : 'visible';
+          body.addEventListener("touchmove", preventScroll, { passive: false });
       }
       }, [openMenu])
 
@@ -39,6 +48,7 @@ const Header = ({favorites, shoppingCart}:Header) => {
         const search = document.querySelector<HTMLInputElement>('.input-search')
         if(search){
             search.focus()
+           
         }
     },[openSearch])
       return(
@@ -81,9 +91,9 @@ const Header = ({favorites, shoppingCart}:Header) => {
                 <button className="menu" onClick={toggleMenu}><img src={menu} alt="open menu" /></button>
             </div>
         </nav>
-        <div className="input-container" style={openSearch ? {height:'80px'} : {height:'0px',padding:0}}>
+        <div className="input-container"  style={openSearch ? {height:'80px'} : {height:'0px',padding:0}}>
             <div className="search-container">
-                <input className="input-search" type="text"></input>
+                <input className="input-search" type="text" onBlur={() => setOpenSearch(false)}></input>
                 <button className="search-submit"><img src={arrow}/></button>
             </div>
         </div>

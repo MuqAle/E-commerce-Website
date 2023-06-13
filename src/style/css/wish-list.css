@@ -52,8 +52,8 @@
   .card-container .left-btn,
   .card-container .right-btn {
     display: flex;
-    visibility: visible;
-    opacity: 100%;
+    visibility: visible !important;
+    opacity: 100% !important;
     justify-content: center;
     align-items: center;
   }
@@ -99,8 +99,8 @@
 
 .card-container:hover .left-btn, .card-container:hover .right-btn {
   display: flex;
-  visibility: visible;
-  opacity: 100%;
+  visibility: visible !important;
+  opacity: 100% !important;
   justify-content: center;
   align-items: center;
 }
@@ -163,8 +163,8 @@
   .wish-list-product .wishlist-cart-btn,
   .wish-list-product .wishlist-close-btn {
     display: flex;
-    visibility: visible;
-    opacity: 100%;
+    visibility: visible !important;
+    opacity: 100% !important;
     justify-content: center;
     align-items: center;
   }
@@ -214,8 +214,8 @@
 
 .wish-list-product:hover .wishlist-cart-btn, .wish-list-product:hover .wishlist-close-btn {
   display: flex;
-  visibility: visible;
-  opacity: 100%;
+  visibility: visible !important;
+  opacity: 100% !important;
   justify-content: center;
   align-items: center;
 }

@@ -99,7 +99,7 @@ const ProductPage = ({data,addToCart,addToFavorite,favorited}:ProductProp) => {
                         <div className="first-container">
                             <h1 className="product-name">{product?.name}</h1>
                             <button className = 'add-product-favorites' onClick={() => {if(product?.id !== undefined){addToFavorite(product.id)}
-                            }}><img src={favorited(product?.id) ? filledheart : heartimg } alt="favorite-btn" /></button>
+                            }}><img src={favorited(product?.id) ? filledheart : heartimg}  alt="favorite-btn" /></button>
                         </div>
                         {product?.onSale ?
                         <p className='product-price product-sale-price'>${product?.salePrice.toFixed(2)} <s>${product?.price}</s> </p>

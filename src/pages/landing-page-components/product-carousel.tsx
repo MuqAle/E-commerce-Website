@@ -65,7 +65,9 @@ const ProductCarousel = ({array,addToCart,addFavorite,favorited,title}:ProductCa
                     <NavLink className="product-link" to={`${a.type}/${a.id}`} >
                       <Card cardInfo={a}></Card>
                     </NavLink>
-                    <button className="landing-page-left-btn" onClick={()=> addFavorite(a.id)} ><img src={favorited(a.id) ? heartFilled:heartOutline} alt="add-favorite" /></button>
+                    <button className="landing-page-left-btn" 
+                    style = {favorited(a.id) ? {visibility:"visible", opacity:'100%'} : {visibility:'hidden', opacity:'0'}}
+                    onClick={()=> addFavorite(a.id)} ><img src={favorited(a.id) ? heartFilled:heartOutline} alt="add-favorite" /></button>
                     <button className="landing-page-right-btn" onClick={() => addToCart(a.id)}><img src={shoppingBag} alt='add-to-cart'></img></button>
                   </div>
                 ))}
