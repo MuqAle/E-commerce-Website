@@ -41,6 +41,10 @@ const RootLayout = ({shoppingCart,favorites}:Span) => {
           body.style.overflow = showModal ? 'hidden' : 'visible';
           showModal ? body.addEventListener("touchmove", preventScroll, { passive: false }) : body.removeEventListener("touchmove", preventScroll)
       }
+
+      return () => {
+        document.body.removeEventListener("touchmove", preventScroll);
+      };
     }, [showModal])
 
     

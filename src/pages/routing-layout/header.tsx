@@ -40,8 +40,11 @@ const Header = ({favorites, shoppingCart}:Header) => {
     
       if(body ){
           body.style.overflow = openMenu ? 'hidden' : 'visible';
-          body.addEventListener("touchmove", preventScroll, { passive: false });
+          openMenu ? body.addEventListener("touchmove", preventScroll, { passive: false }) : body.removeEventListener("touchmove", preventScroll)
       }
+      return () => {
+        document.body.removeEventListener("touchmove", preventScroll);
+      };
       }, [openMenu])
 
     useEffect(() => {
