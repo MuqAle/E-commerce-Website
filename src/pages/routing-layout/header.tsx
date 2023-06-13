@@ -27,10 +27,12 @@ const Header = ({favorites, shoppingCart}:Header) => {
     }
 
     useEffect(() => {
-        const body = document.querySelector('body');
-        if(body){
-            body.style.overflow = openMenu ? 'hidden' : 'auto';
-        }
+    const body = document.querySelector("body")
+      const root = document.querySelector<HTMLElement>('#main-container');
+      if(body && root){
+          body.style.overflow = openMenu ? 'hidden' : 'visible';
+          root.style.overflow = openMenu ? 'hidden' : 'visible';
+      }
       }, [openMenu])
 
     useEffect(() => {

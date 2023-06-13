@@ -52,8 +52,17 @@
         img{
             object-fit: cover;
         }
+        div{
+            z-index: 3 !important;
+        }
     }
 
+}
+
+#react-image-magnify-portal-1841{
+    div{
+        z-index: 4 !important;
+    }
 }
 
 .image-button{

@@ -51,7 +51,7 @@ const ShoppingCart = ({array,increaseAmount,decreaseAmount,deleteProductCart}:Ca
                         <p className="total-price">${array.reduce((a,b) => a + (b.product.salePrice * b.amount),0).toFixed(2)}</p>
                     </div>
                     <p className="shipping">Shipping and taxes calculated at checkout</p>
-                    <button className="checkout-btn"><a target="_blank"  href="https://buy.stripe.com/test_5kA9DY3hB0xN9awaEE">Secure Checkout</a></button>
+                    <a target="_blank"  href="https://buy.stripe.com/test_5kA9DY3hB0xN9awaEE"><button className="checkout-btn">Secure Checkout</button></a>
                 </div>
             </div>
             }

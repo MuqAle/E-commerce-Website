@@ -71,6 +71,7 @@ const ProductPage = ({data,addToCart,addToFavorite,favorited}:ProductProp) => {
                     </div>
                     <div className="product-img-container">
                         <ReactImageMagnify className = 'product-img'
+                        
                         imageProps={{
                             src: product?.Gallery[image],
                         }}
@@ -87,6 +88,7 @@ const ProductPage = ({data,addToCart,addToFavorite,favorited}:ProductProp) => {
                         portalProps={{
                             horizontalOffset:10,
                             verticalOffset:10
+                            
                         }}
                         activationInteractionHint="hover"/>
                         {product && product.Gallery && product.Gallery.length > 1 ? <button className="left-count-btn" onClick={decrement}><img src={leftArrow} alt="" /></button> : null}

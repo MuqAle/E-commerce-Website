@@ -176,6 +176,7 @@ html {
     button{
         font-size: medium;
         text-decoration: underline;
+        color: black;
     }
 }
 
@@ -183,7 +184,7 @@ header{
     position: sticky;
     top: 0;
     background-color: white;
-    z-index: 3;
+    z-index: 5;
     border-bottom: 1px solid rgb(203, 202, 202);
     width: 100%;
 }
@@ -326,6 +327,7 @@ nav{
 }
 
 
+
 main{
     margin-bottom: 80px;
 }
@@ -381,7 +383,7 @@ button[type=submit]{
 
 .checkbox-container{
     display: flex;
-    align-items: center;
+    gap: 10px;
 }
 
 #sign-up-checkbox{
@@ -398,13 +400,14 @@ button[type=submit]{
     border: 1px black solid;
     height: 1.2rem;
     width: 1.2rem;
-    margin-right: 10px;
+
 }
 
 #sign-up-checkbox:checked:before{ 
     background: url('../../assets/imgs/svg-imgs/done_FILL0_wght200_GRAD0_opsz48.svg')no-repeat ;
     background-size: contain;
 }
+
 
 .sign-up-checkbox-label{
     font-size: 1.1rem;
@@ -507,4 +510,14 @@ li{
   .breadcrumbs .crumb:last-child:after {
     display: none;
   }
+
+  #info-mobile{
+    .info-links{
+        button{
+            color: black;
+        }
+    }
+    
+  }
+
 

@@ -23,7 +23,7 @@ const RootLayout = ({shoppingCart,favorites}:Span) => {
         const timer = setTimeout(() => {
           setShowModal(true);
           sessionStorage.setItem('visitedBefore', 'true');
-        }, 1000);
+        }, 1500);
   
         return () => {
           clearTimeout(timer);
@@ -32,9 +32,11 @@ const RootLayout = ({shoppingCart,favorites}:Span) => {
     }, []);
 
     useEffect(() => {
-      const body = document.querySelector('body');
-      if(body){
-          body.style.overflow = showModal ? 'hidden' : 'auto';
+      const body = document.querySelector("body")
+      const root = document.querySelector<HTMLElement>('#main-container');
+      if(body && root){
+          body.style.overflow = showModal ? 'hidden' : 'visible';
+          root.style.overflow = showModal ? 'hidden' : 'visible';
       }
     }, [showModal])
 

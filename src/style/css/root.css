@@ -200,13 +200,14 @@ html {
 .sign-up-header button {
   font-size: medium;
   text-decoration: underline;
+  color: black;
 }
 
 header {
   position: sticky;
   top: 0;
   background-color: white;
-  z-index: 3;
+  z-index: 5;
   border-bottom: 1px solid rgb(203, 202, 202);
   width: 100%;
 }
@@ -382,7 +383,7 @@ button[type=submit] img {
 
 .checkbox-container {
   display: flex;
-  align-items: center;
+  gap: 10px;
 }
 
 #sign-up-checkbox {
@@ -399,7 +400,6 @@ button[type=submit] img {
   border: 1px black solid;
   height: 1.2rem;
   width: 1.2rem;
-  margin-right: 10px;
 }
 
 #sign-up-checkbox:checked:before {
@@ -501,6 +501,10 @@ li {
 
 .breadcrumbs .crumb:last-child:after {
   display: none;
+}
+
+#info-mobile .info-links button {
+  color: black;
 }
 
 /*# sourceMappingURL=root.css.map */

@@ -94,6 +94,13 @@
 .product-images .product-img img {
   object-fit: cover;
 }
+.product-images .product-img div {
+  z-index: 3 !important;
+}
+
+#react-image-magnify-portal-1841 div {
+  z-index: 4 !important;
+}
 
 .image-button img {
   height: 110px;
