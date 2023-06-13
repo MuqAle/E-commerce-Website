@@ -1,18 +1,191 @@
 @use 'card';
 
+@media screen and (max-width:550px) {
+    nav{
+        justify-content: flex-start;
+        padding: 10px 5px;
+        #right-side-nav{
+            justify-content: flex-end;
+        }
+    }
+    
+}
+
+@media screen and (max-width:1300px) and (min-width:800px) {
+    .website-footer-container{
+        flex-direction: column;
+        gap: 100px;
+        .discount{
+            width: 100%;
+
+            
+            .input-box{
+                width: 100%;
+            }
+        }
+        #info{
+            width: 100%;
+            justify-content: space-between;
+        }
+    }
+}
+
+@media screen and (max-width:799px) {
+
+    footer{
+        gap: 100px;
+        padding: 80px 15px 20px !important;
+
+        .website-footer-container{
+            flex-direction: column;
+            gap: 100px;
+        }
+        .discount{
+            width: 100%;
+
+            .email-signup-label{
+                font-size: 25px;
+               
+            }
+
+            #email-signup{
+                font-size: 20px;
+            }
+
+            .input-box{
+                width: 100%;
+            }
+        }
+
+        #info-mobile{
+            display: flex;
+            width: 100%;
+            flex-direction: column;
+            border-bottom: 1px solid rgb(203, 202, 202);;
+            .info-links{
+                border-top: 1px solid rgb(203, 202, 202);
+            }
+
+            button{
+                width: 100%;
+                display: flex;
+                justify-content: baseline;
+                h3{
+                    margin: 25px 0;
+                }
+            }
+        }
+
+        #info{
+            display: none;
+            
+        }
+
+        .credit{
+            flex-direction: column-reverse;
+            gap: 30px;
+        }
+       
+    }
+
+        
+    .content-parent {
+        height: 0px;
+        overflow: hidden;
+        transition: height ease 0.9s;
+    }   
+    .breadcrumbs{
+        visibility: hidden;
+    }
+}
+
+
+@media screen and (max-width:1200px){
+    header #left-side-nav-mobile{
+        display: flex;
+        flex-direction: column;
+        align-items: baseline;
+        position: absolute;
+        justify-content: flex-start;
+        right: 0;
+        gap: 30px;
+        height: 100vh;
+        z-index: 100;
+        max-width: 470px;
+        background-color: white;
+        transition: width  ease-in-out 1s ;
+        overflow-x: hidden;
+    }
+    .nav-bar-container{
+        position: fixed;
+        top: 0;
+        left: 0;
+        width:100%;
+        height: 100%;
+        z-index: 5;
+        transition: all ease-in-out .7s .2s ;
+    }
+    header #left-side-nav{
+        display: none;
+    }
+    .header-link{
+        padding-left: 20%;
+        white-space: nowrap;
+        font-size: 25px;
+        font-weight: 200;
+    }
+
+    nav #logo{
+        padding-top: 10px;
+    }
+    header .menu{
+        align-items: center;
+        display: flex;
+        z-index: 4;
+    }
+    header .close-menu{
+        margin-left: auto;
+        display: flex;
+    }
+}
+
+html {
+    scroll-behavior: smooth;
+  }
 
 *{
     padding: 0;
     margin: 0;
     font-family: card.$font-stack;
     box-sizing: border-box;
+
 }
 
+
 #main-container{
-    height:100dvh;
-    height: 100vh;
     display: grid;
-    grid-template-rows: 100px 1fr 300px;
+    grid-template-rows: auto auto 1fr auto;
+    width: 100%;
+}
+
+.sign-up-header{
+    background-color: card.$accent-color ;
+    text-align: center;
+    padding: 3px 0px;
+    font-weight: 200;
+    button{
+        font-size: medium;
+        text-decoration: underline;
+    }
+}
+
+header{
+    position: sticky;
+    top: 0;
+    background-color: white;
+    z-index: 3;
+    border-bottom: 1px solid rgb(203, 202, 202);
+    width: 100%;
 }
 
 
@@ -46,11 +219,10 @@ button{
 }
 
 
-nav{
+nav{ 
+    padding:15px 20px;
     display: flex;
     justify-content: space-between;
-    padding-left: 1rem;
-    padding-right: 1rem;
 }
 
 #left-side-nav{
@@ -60,103 +232,279 @@ nav{
     flex-grow: 1;
 }
 
+#left-side-nav-mobile{
+    display: none;
+}
+
 #right-side-nav{
     display: flex;
     align-items: center;
+    gap: 2px;
 
     img{
-        height: 2.3rem;
+        height: 2.5rem;
     }
 
-    .search-box{
-        height: 2.3rem;
-        position: relative;
-        display: flex;
-        align-items: center;
-        
-
-        .input-search{
-            height: 2rem;
-            outline: none;
-            border: none;
-            border-bottom: #000 1px solid;
-            font-size: 20px;
-            width: 0px;
-            font-weight: 200;
-            margin-left: auto;
-            transition: width .2s;
-        }
-
-        img{
-            height: 2.3rem;
-        }
-
-        &:hover .input-search{
-            width: 100%;
-        }
-
-
-        .input-search:focus{
-            width: 100%;
-        }
+    .btn-search{
+        width: 2.5rem;
+        height: 2.5rem;
     }
 
     
 
 }
+.close-menu{
+    display: none;
+}
 
 
-footer{
+
+
+
+#wish-list,#shopping-cart{
+    position: relative;
+    width :2.5rem;
+    height: 2.5rem;
+}
+
+.favorite-span,.shopping-cart-span{
     display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    width: 100%;
-    align-items: center;
-    background-color: rgb(183, 183, 183);
+    justify-content: center;
+    align-content: center;
+    align-self: center;
+    background-color: card.$accent-color;
+    border-radius: 50%;
+    font-size: 85%;
+    width: 19px;
+    height: 19px;
+    color: white;
+    position: absolute;
+    top: 1;
+    right: 0;
+    bottom: 1;
+    left: 1;
+    z-index: 3;
+}
 
-    .discount{
-        width: 40%;
+.menu{
+    display: none;
+    width: 2.5rem;
+    height: 2.5rem;
+    
 
-        #email-signup{
-            
-            border: none;
-            outline: none;
-            width: inherit;
-            height: 30px;
-            background-color: transparent;
-        }
-        .input-box{
-            border-bottom: black 1px solid;
-            width: 80%;
-            display: flex;
-            align-items: flex-end;
-            justify-content: space-between;
-            
-        }
-        button,img{
-            height: 30px;
-        }
+    image{
+        width: 2.3rem;
     }
+}
 
-  
+.input-container{
+    
+    padding: 10px 40px;
+    transition: all ease-in-out .4s;
+    overflow-y: hidden;
 
-    #info{
+    .search-container{
         display: flex;
-        gap: 5rem;
-        h3{
-            border-bottom: 1px black solid ;
-            margin-bottom: 1rem;
-         }
-        li{
-            list-style: none;
-            margin-bottom: .5rem;
-            font-size: 15px;
-        }
-
-        .info-links{
-            width: 60%;
+        align-items: flex-end;
+        width: 100%;
+        border-bottom: 1px solid rgb(203, 202, 202);
+        
+    }
+    .input-search{
+        height: auto;
+        width: 100%;
+        border: none;
+        outline: none;
+        font-size: 20px;
+    }
+    .search-submit{
+        width: 2.5rem;
+        img{
+            width: 2.5rem;
         }
     }
 }
 
+
+main{
+    margin-bottom: 80px;
+}
+
+
+footer{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 80px 40px 20px;
+    border-top: 1px solid rgb(203, 202, 202) ;
+    gap: 100px;
+}
+
+.website-footer-container{
+    display: flex;
+    width: 100%;
+}
+
+.discount{
+    width: 50%;
+
+    .email-signup-label{
+        font-size: 30px;
+       
+    }
+}
+
+.input-box{
+    width: 70%;
+    display: flex;
+    align-items: end;
+    border-bottom: solid 1px  rgb(203, 202, 202);
+    margin: 25px 0 30px;
+
+    
+    #email-signup{
+        flex-grow: 1;
+        outline: none;
+        border: none;
+        font-size: 20px;
+        font-weight: 200;
+    }
+
+}
+
+button[type=submit]{
+    width: 32px;
+    img{
+        width: 32px;
+    }
+}
+
+.checkbox-container{
+    display: flex;
+    align-items: center;
+}
+
+#sign-up-checkbox{
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    appearance: none;
+}
+
+#sign-up-checkbox::before{
+    content:""; 
+    display:inline-block;
+    border: 1px black solid;
+    height: 1.2rem;
+    width: 1.2rem;
+    margin-right: 10px;
+}
+
+#sign-up-checkbox:checked:before{ 
+    background: url('../../assets/imgs/svg-imgs/done_FILL0_wght200_GRAD0_opsz48.svg')no-repeat ;
+    background-size: contain;
+}
+
+.sign-up-checkbox-label{
+    font-size: 1.1rem;
+    font-weight: 200;
+
+    a{
+        text-decoration: underline;
+    }
+}
+
+#info-mobile{
+    display: none;
+}
+
+#info{
+    display: flex;
+    justify-content: space-around;
+    width: 50%;
+}
+
+.info-links{
+
+    h3{
+        font-size: 1.5rem;
+        margin-bottom: 30px;
+        font-weight: 400;
+    }
+    ul{
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+
+        li{
+            font-size: 1rem;
+        }
+
+        li:hover{
+            text-decoration: underline;
+        }
+    }
+}
+
+li{
+    list-style: none;
+}
+
+.credit{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .github{
+        display: flex;
+        align-items: center;
+        gap: 1pt;
+
+        img{
+            height: 35px;
+        }
+    }
+    p{
+        font-size: 16px;
+        font-weight: 200;
+       
+    }
+}
+
+.socials{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    a{
+        display: flex;
+        align-items: center;
+    }
+    img{
+        width: 40px;
+    }
+}
+
+.breadcrumbs {
+    max-width: 1200px;
+    margin-left: 30px;
+    margin-top: 30px;
+    font-size: 14px;
+    font-weight: 200;
+  }
+  .breadcrumbs > *{
+    display: inline-block;
+    margin-right: 4px;
+  }
+  .breadcrumbs .crumb:after {
+    content: ' /';
+    margin-left: 4px;
+  }
+  .breadcrumbs .crumb:last-child{
+    font-weight: 400;
+  }
+  .breadcrumbs .crumb:last-child:after {
+    display: none;
+  }
 
