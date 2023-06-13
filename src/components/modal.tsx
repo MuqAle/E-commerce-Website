@@ -1,18 +1,29 @@
+import { motion } from "framer-motion"
 import img from '../assets/imgs/front-page-imgs/nati-melnychuk-Ki7TPcA9204-unsplash.jpg'
 import arrow from '../assets/imgs/svg-imgs/arrow.svg'
 import '../style/css/modal.css'
 
 interface Modal{
     closeModal:() => void
+    open:boolean
 }
 
+const backdrop = {
+  visible:{opacity:1},
+  hidden:{opacity:0},
+  exit:{opacity:0}
+}
 
-const Modal = ({closeModal}:Modal) => {
-
+const Modal = ({closeModal,open}:Modal) => {
 
   return (
-        <div className="modal">
-          <div className="modal-content">
+        <motion.div 
+        variants={backdrop}
+        initial="hidden"
+        animate="visible"
+        exit="exit"
+        className="modal" onClick={closeModal}>
+          <div className={'modal-content'} onClick={e => e.stopPropagation()}>
           <button className="close-modal" onClick={closeModal}>&times;</button>
             <div className="modal-img"><img src={img} alt="2 gold earrings"/></div>
             <div className='modal-form'>
@@ -32,7 +43,7 @@ const Modal = ({closeModal}:Modal) => {
                 </div>
             </div>
           </div>
-        </div>
+        </motion.div>
   );
 };
 
