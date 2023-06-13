@@ -2,11 +2,54 @@
 @use 'catalog';
 
 
+@media (hover: none){
+    .landing-page-card .landing-page-left-btn, 
+    .landing-page-card .landing-page-right-btn{
+        @include catalog.visibility;
+    }
+}
+
+@media screen and (max-width:700px) and (min-width:500px) {
+    p.words{
+        font-size:40px
+    }
+}
+
+@media screen and (max-width:550px){
+    p.words{
+        font-size:30px;
+    }
+    .header-display-container div.display-container-btns{
+        display: none;
+    }
+    .carousel-root .slide p.fall{
+        margin-left: 10px;
+        margin-top: 10px;
+    }
+    .carousel-root .slide p.summer{
+        margin-right: 5px;
+        margin-bottom: 5px;
+    }
+    .home-img.necklace p.words{
+        margin-right: 5px;
+        margin-bottom: 5px;
+    }
+    .home-middle p.words{
+        margin-top: 5px;
+        margin-right: 5px;
+    }
+    .home-img.about-us p.words{
+        margin-left: 5px;
+        margin-top: 5px
+    }
+}
+
+
 .landing-page-container{
     display: flex;
     flex-direction: column;
     align-items: center;
-
+    width: 100%;
 }
 
 
@@ -14,6 +57,19 @@
     overflow: hidden;
     width: 100%;
     .slide{
+        p{
+            position: absolute;
+        }
+        .fall{
+            margin-left: 30px;
+            margin-top: 30px;
+        }
+        .summer{
+            bottom: 0;
+            right: 0;
+            margin-right: 30px;
+            margin-bottom: 30px;
+        }
         img{
             aspect-ratio: 2.5/1;
             width: 100%;
@@ -25,29 +81,32 @@
 }
 
 .display-container{
-     margin: 30px;
+     padding: 30px 20px;
+     width: 100vw;
+     display: flex;
+     flex-direction: column;
 }
 
 
 .header-display-container{
     display: flex;
+    align-items: center;
     justify-content: space-between;
     margin-bottom: 30px;
 
     .container-heading{
-        padding-left: 30px;
         padding-right: 30px;
         font-weight: 200;
     }
 
     .display-container-btns{
         display: flex;
+        
         height: 30px;
         gap: 40px;
         button{
             width: 25px;
-           
-        }
+        }}
         img{
             width: inherit;
         }
@@ -56,57 +115,26 @@
         }
     }
 
-}
+
 
 .landing-page-card-container{
     display: flex;
     width: 100%;
     flex-wrap: nowrap;
     scroll-behavior: smooth;
+    justify-content: space-between;
     scroll-snap-type: x mandatory;
     overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    -ms-overflow-style: none;
-    scrollbar-width: none; 
     scroll-snap-align: center;
-    gap: 30px;
-   
-
+    gap:24px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
     .landing-page-card{
-        min-width: min(40%, 350px);
+        min-width: min(85%, 400px);
         position: relative;
-
-        .left-btn{
-            @include catalog.card-btn;
-            top: 70%;
-            right: 1;
-            bottom: 0;
-            left: 0;
-            margin-left: 1.5rem;
-            img{
-                width: 2rem;
-                height: 23px;
-            }
-        }
-
-        .right-btn{
-            @include catalog.card-btn($color:black);
-            top: 70%;
-            right: 0;
-            bottom: 0;
-            left: 1;
-            margin-right: 1.5rem;
-            
-            img{
-                width: 2rem;
-                height: 23px;
-                
-            }
-        }
     }
 
     .card{
-        
         height: 100%;
         width: 100%;
     }
@@ -116,7 +144,7 @@
     display: none;
 }
 
-.landing-page-card:hover .left-btn, .landing-page-card:hover .right-btn{
+.landing-page-card:hover .landing-page-left-btn, .landing-page-card:hover .landing-page-right-btn{
     @include catalog.visibility
 }
 
@@ -137,7 +165,7 @@
     font-weight: 200; 
 }
 
-.home-img:hover .words:after, .home-middle:hover .words:after{
+.home-img:hover .words:after, .home-middle:hover .words:after, .slide:hover .words:after{
     width: 100%;
 }
 
@@ -184,5 +212,27 @@
         right: 0;
         margin-top: 30px;
         margin-right: 30px;
+    }
+}
+
+.landing-page-left-btn{
+    @include catalog.card-btn;
+    bottom: 82px;
+    left: 8px;
+    img{
+        width: 2rem;
+        height: 23px;
+    }
+}
+
+.landing-page-right-btn{
+    @include catalog.card-btn($color:black);
+    bottom: 82px;
+    right: 8px;
+    
+    img{
+        width: 2rem;
+        height: 23px;
+        
     }
 }

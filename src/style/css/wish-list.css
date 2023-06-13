@@ -149,4 +149,119 @@
   height: 23px;
 }
 
-/*# sourceMappingURL=catalog.css.map */
+@media screen and (min-width: 500px) and (max-width: 1024px) {
+  .wish-list-product {
+    width: calc((100% - 8px) / 2) !important;
+  }
+}
+@media screen and (max-width: 500px) {
+  .wish-list-product {
+    width: 100% !important;
+  }
+}
+@media (hover: none) {
+  .wish-list-product .wishlist-cart-btn,
+  .wish-list-product .wishlist-close-btn {
+    display: flex;
+    visibility: visible;
+    opacity: 100%;
+    justify-content: center;
+    align-items: center;
+  }
+}
+.empty {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 200px;
+  margin-bottom: 200px;
+}
+.empty p {
+  font-size: 40px;
+  text-align: center;
+}
+.empty button {
+  margin-top: 50px;
+  width: 230px;
+  height: 60px;
+  background-color: rgb(231, 185, 192);
+}
+.empty button a {
+  color: white;
+  font-size: 22px;
+}
+
+.wish-list-full {
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  padding: 0 20px;
+  gap: 8px;
+}
+.wish-list-full .wish-list-product {
+  position: relative;
+  width: calc((100% - 24px) / 4);
+  margin-bottom: 40px;
+}
+.wish-list-full .wish-list-product button {
+  position: absolute;
+}
+.wish-list-full .wish-list-link .card {
+  width: inherit;
+}
+
+.wish-list-product:hover .wishlist-cart-btn, .wish-list-product:hover .wishlist-close-btn {
+  display: flex;
+  visibility: visible;
+  opacity: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.wishlist-close-btn {
+  top: 8px;
+  right: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(222, 220, 220);
+  border-radius: 50%;
+  position: absolute;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  z-index: 2;
+  transition: visibility 0s, opacity 0.3s ease-in;
+  visibility: hidden;
+  opacity: 0;
+}
+.wishlist-close-btn img {
+  width: 30px;
+  height: 23px;
+}
+
+.wishlist-cart-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: black;
+  border-radius: 50%;
+  position: absolute;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  z-index: 2;
+  transition: visibility 0s, opacity 0.3s ease-in;
+  visibility: hidden;
+  opacity: 0;
+  bottom: 82px;
+  left: 8px;
+}
+.wishlist-cart-btn img {
+  width: 30px;
+  height: 23px;
+}
+
+/*# sourceMappingURL=wish-list.css.map */

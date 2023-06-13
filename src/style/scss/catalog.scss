@@ -23,14 +23,24 @@
     align-items: center;
 }
 
-@media screen and (max-width:1024px){
+@media (hover: none){
+    .card-container .left-btn, 
+    .card-container .right-btn{
+        @include visibility;
+    }
+}
+
+@media screen and (min-width:500px) and (max-width:1024px){
     .card-container{
         width: calc((100% - 8px)/2) !important;
     }
-    // .right-btn, .left-btn{
-    //     top: 75% !important;
-    // }
     
+}
+
+@media screen and (max-width:500px) {
+    .card-container{
+        width: 100% !important;
+    }
 }
 
 .title{
@@ -39,7 +49,7 @@
     font-size: 30pt;
     text-align: center;
     margin-bottom: 70px;
-    margin-top: 50px;
+    margin-top: 20px;
     border-bottom: solid card.$accent-color 2px;
 }
 

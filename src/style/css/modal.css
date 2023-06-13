@@ -1,0 +1,133 @@
+@media screen and (max-width: 640px) {
+  .modal {
+    align-items: end !important;
+  }
+  .modal .modal-content {
+    width: 100%;
+    aspect-ratio: 1.3/1;
+  }
+  .modal .modal-content div.modal-img {
+    display: none;
+  }
+}
+.modal {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  height: 100vh;
+  height: 100dvh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.modal-content {
+  background-color: white;
+  position: relative;
+  display: flex;
+  min-width: 300px;
+  aspect-ratio: 1.3/0.8;
+  max-width: 40rem;
+}
+.modal-content .modal-img {
+  width: 60%;
+}
+.modal-content img {
+  object-position: 100% 0;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.close-modal {
+  position: absolute;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  font-size: 26px;
+  font-weight: 200;
+  margin-top: 5px;
+  margin-right: 5px;
+}
+
+.modal-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  margin-top: -10px;
+}
+.modal-form h2 {
+  font-size: 36px;
+}
+.modal-form p {
+  font-size: 16px;
+}
+
+.modal-input-box {
+  width: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: end;
+  border-bottom: 1px solid rgb(203, 202, 202);
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+.modal-input-box .modal-signup {
+  flex-grow: 1;
+  outline: none;
+  border: none;
+  font-size: 16px;
+}
+.modal-input-box button[type=submit] {
+  width: 26px;
+  height: 26px;
+}
+.modal-input-box button[type=submit] img {
+  width: 26px;
+}
+
+.modal-checkbox-container {
+  display: flex;
+}
+
+#modal-sign-up-checkbox {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  appearance: none;
+}
+
+#modal-sign-up-checkbox::before {
+  content: "";
+  display: inline-block;
+  border: 1px black solid;
+  height: 12px;
+  width: 12px;
+  margin-right: 5px;
+}
+
+#modal-sign-up-checkbox:checked:before {
+  background: url("../../assets/imgs/svg-imgs/done_FILL0_wght200_GRAD0_opsz48.svg") no-repeat;
+  background-size: contain;
+}
+
+.modal-sign-up-checkbox-label {
+  font-size: 12px;
+  font-weight: 200;
+}
+.modal-sign-up-checkbox-label a {
+  text-decoration: underline;
+}
+
+/*# sourceMappingURL=modal.css.map */
