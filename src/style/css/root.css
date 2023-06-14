@@ -332,6 +332,7 @@ nav {
   border: none;
   outline: none;
   font-size: 20px;
+  font-weight: 200;
 }
 .input-container .search-submit {
   width: 2.5rem;
