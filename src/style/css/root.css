@@ -56,6 +56,12 @@
   nav #right-side-nav {
     justify-content: flex-end;
   }
+  header #left-side-nav-mobile {
+    transition: width ease-in-out 0.7s !important;
+  }
+  .nav-bar-container {
+    transition: all ease-in-out 0.6s 0.2s !important;
+  }
 }
 @media screen and (max-width: 1300px) and (min-width: 800px) {
   .website-footer-container {

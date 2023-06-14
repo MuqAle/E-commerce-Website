@@ -8,6 +8,12 @@
             justify-content: flex-end;
         }
     }
+    header #left-side-nav-mobile{
+        transition: width  ease-in-out .7s !important ;
+    }
+    .nav-bar-container{
+        transition: all ease-in-out .6s .2s !important;
+    }
     
 }
 
@@ -523,3 +529,4 @@ li{
   }
 
 
+ 

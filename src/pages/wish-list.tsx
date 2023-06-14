@@ -21,7 +21,7 @@ const Wishlist = ({array,addToCart,deleteFavorite}:WishlistProp) => {
            {array.length === 0 ?
                 <div className="empty">
                     <p>Your Wishlist Is Empty</p>
-                    <button><Link to={'/shop-all'}>Shop All Jewelry</Link></button>
+                    <Link to={'/shop-all'}><button>Shop All Jewelry</button></Link>
                 </div>
                     :
                 <div className="wish-list-full">

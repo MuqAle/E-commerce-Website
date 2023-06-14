@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom'
-import { useState,useEffect} from "react";
+import { useState,useEffect,useRef} from "react";
 import heartOutline from '../../assets/imgs/svg-imgs/heart-outline.svg'
 import shoppingBag from '../../assets/imgs/svg-imgs/shopping-bag.svg'
 import search from '../../assets/imgs/svg-imgs/search.svg'
@@ -17,6 +17,7 @@ const Header = ({favorites, shoppingCart}:Header) => {
 
     const [openMenu,setOpenMenu] = useState(false)
     const [openSearch, setOpenSearch] = useState(false)
+    const searchRef = useRef<HTMLInputElement>(null)
 
     const preventScroll = (event: TouchEvent) => {
         event.preventDefault();
@@ -24,16 +25,14 @@ const Header = ({favorites, shoppingCart}:Header) => {
 
     const toggleMenu = () => {
         setOpenMenu((menu) => !menu )
+        
     }
 
     const toggleSearch = () => {
-        const search = document.querySelector<HTMLInputElement>('.input-search')
-        setOpenSearch(search => !search)
-        if(openSearch){
-            search?.focus()
-        }
-        search?.blur()
+        setOpenSearch(isOpen => !isOpen)
+        !openSearch ?  searchRef.current?.focus() : searchRef.current?.blur()
     }
+
 
     useEffect(() => {
     const body = document.querySelector("body")
@@ -45,15 +44,10 @@ const Header = ({favorites, shoppingCart}:Header) => {
       return () => {
         document.body.removeEventListener("touchmove", preventScroll);
       };
-      }, [openMenu])
+      }, [])
 
-    useEffect(() => {
-        const search = document.querySelector<HTMLInputElement>('.input-search')
-        if(search){
-            search.focus()
-           
-        }
-    },[openSearch])
+
+
       return(
         <header>
         <nav>
@@ -96,7 +90,7 @@ const Header = ({favorites, shoppingCart}:Header) => {
         </nav>
         <div className="input-container"  style={openSearch ? {height:'80px'} : {height:'0px',padding:0}}>
             <div className="search-container">
-                <input className="input-search" type="text" onBlur={() => setOpenSearch(false)}></input>
+                <input className="input-search" ref={searchRef} type="text" ></input>
                 <button className="search-submit"><img src={arrow}/></button>
             </div>
         </div>

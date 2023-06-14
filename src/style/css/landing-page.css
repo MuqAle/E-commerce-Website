@@ -167,16 +167,15 @@
     font-size: 40px;
   }
   a.home-img, a.home-middle, div.carousel-root .slide img {
-    aspect-ratio: 2.7/1.5;
+    aspect-ratio: 2.5/1.5;
   }
 }
 @media screen and (max-width: 550px) {
   p.words {
     font-size: 30px;
-    font-weight: 200;
   }
   a.home-img, a.home-middle, div.carousel-root .slide img {
-    aspect-ratio: 2.7/1.5;
+    aspect-ratio: 2.5/1.5;
   }
   .header-display-container div.display-container-btns {
     display: none;
@@ -187,19 +186,19 @@
   }
   .carousel-root .slide p.summer {
     padding: 0 10px;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
   }
   .home-img.necklace p.words {
     padding: 0 10px;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
   }
   .home-middle p.words {
-    margin-top: 10px;
     padding: 0 10px;
+    margin-right: 5px;
   }
   .home-img.about-us p.words {
     padding: 0 10px;
-    margin-top: 10px;
+    margin-top: 5px;
   }
 }
 .landing-page-container {
@@ -350,7 +349,7 @@
   display: flex;
   width: 100%;
   height: 100%;
-  aspect-ratio: 2.5/1;
+  aspect-ratio: 2.7/1;
   position: relative;
   justify-content: space-evenly;
 }

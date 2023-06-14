@@ -6,7 +6,7 @@ const ErrorPage = () => {
     return(
     <div className="empty">
         <p>Uh Oh! Could Not Find Page</p>
-        <button style={{width:'270px'}}><Link to={'/'}>Back To Home Page</Link></button>
+        <Link to={'/'}><button style={{width:'270px'}}>Back To Home Page</button></Link>
     </div>
     )
     

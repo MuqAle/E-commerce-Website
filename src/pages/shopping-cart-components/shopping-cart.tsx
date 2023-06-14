@@ -29,7 +29,7 @@ const ShoppingCart = ({array,increaseAmount,decreaseAmount,deleteProductCart}:Ca
            {array.length === 0 ?
                 <div className="empty">
                     <p>Your Cart Is Empty</p>
-                    <button><Link to={'/shop-all'}>Shop All Jewelry</Link></button>
+                    <Link to={'/shop-all'}><button>Shop All Jewelry</button></Link>
                 </div>
                     :
             <div className="shopping-cart-full">
