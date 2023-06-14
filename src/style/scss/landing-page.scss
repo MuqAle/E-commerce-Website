@@ -10,6 +10,9 @@
      p.words:after{
         visibility: hidden;
     }
+    .display-container{
+        width: 100vw !important;
+    }
 }
 
 @media screen and (max-width:700px) and (min-width:500px) {
@@ -91,7 +94,7 @@
 
 .display-container{
      padding: 30px 20px;
-     width: 100vw;
+     width: calc(100vw - 15px);
      display: flex;
      flex-direction: column;
 }
