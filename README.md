@@ -1,7 +1,7 @@
 # E-commerce Jewelry Website
 
 ## Live Link
-https://e-commerce-website-muqale.vercel.app/
+https://e-commerce-website-1mzt.vercel.app/
 
 ## Technologies
 html, css, sass, typescript, react, react-router, framer motion
