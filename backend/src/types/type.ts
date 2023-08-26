@@ -1,3 +1,5 @@
+import { Request } from "express"
+import { Types } from "mongoose"
 
 interface Product{
     name:string,
@@ -10,18 +12,44 @@ interface Product{
     Gallery:string[],
 }
 
-interface Inventory{
+interface ProductDb {
     name:string,
-    id:string,
     type:string,
     price:number,
     onSale:boolean,
-    salePrice:number,
+    salePercentage?:number,
     description:string,
-    Gallery:string[],
-}[]
+    stock:number,
+    sold:number,
+    metal: 'gold' | 'silver' | 'brass',
+    colors:string[],
+    overallRating:number,
+    reviews?:{
+        postedBy:Types.ObjectId
+        review:string,
+        rating:number
+    }[]
+    images:string[]
+}
+
+interface UserTypes{
+    name:string,
+    emailAddress:string,
+    password:string,
+    wishList?:Types.ObjectId[],
+    shoppingCart?:{
+        product:Types.ObjectId,
+        quantity:number}[],
+    reviews?:Types.ObjectId[],
+    orders?:Types.ObjectId[]
+}
+
+
+interface ProductRequest extends Request,ProductDb{} 
 
 export {
     Product,
-    Inventory
+    ProductDb,
+    ProductRequest,
+    UserTypes
 }
