@@ -1,6 +1,7 @@
 import mongoose, { Schema,Types } from "mongoose";
 import uniqueValidator from 'mongoose-unique-validator'
-
+import isEmail from 'validator/lib/isEmail'
+import { UserTypes } from "../types/type";
 
 
 const userSchema = new mongoose.Schema({
@@ -8,7 +9,8 @@ const userSchema = new mongoose.Schema({
     emailAddress:{
         type:String,
         required:true,
-        unique:true
+        unique:true,
+        validate:[ isEmail, 'invalid email' ]
     },
     passwordHash:{
         type:String,
@@ -16,24 +18,27 @@ const userSchema = new mongoose.Schema({
     },
     wishList:[{
         type:Schema.Types.ObjectId,
-        ref:'Product'
+        ref:'Product',
+
     }],
     shoppingCart:[{
+        product:{
+        type:Schema.Types.ObjectId,
+        ref:'Product'},
+        quantity:Number
+    }],
+    reviews:[{
         type:Schema.Types.ObjectId,
         ref:'Product'
     }],
     orders:[{
         type:Schema.Types.ObjectId,
         ref:'Order'
-    }],
-    reviews:[{
-        type:Schema.Types.ObjectId,
-        ref:'Product'
-
     }]
 })
 
 userSchema.plugin(uniqueValidator)
+const User = mongoose.model<UserTypes>('User', userSchema)
 
 userSchema.set('toJSON', {
     transform: (_document, returnedObject) => {
@@ -44,4 +49,6 @@ userSchema.set('toJSON', {
     }
 })
 
-export default userSchema
+
+
+export default User
