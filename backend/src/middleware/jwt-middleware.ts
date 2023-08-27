@@ -3,11 +3,8 @@ import { Secret, verify} from 'jsonwebtoken'
 import User from "../models/user-model";
 import SECRET from "../config/token-config";
 
-interface CustomRequest extends Request{
-    token: string | null 
-    user?: Record<string,unknown> | null | undefined
-}
-const tokenExtractor =  (req:CustomRequest,_res:Response, next:NextFunction) => {
+
+const tokenExtractor =  (req:Request,_res:Response, next:NextFunction) => {
     const authorization = req.get('authorization')
     if(authorization && authorization.startsWith('Bearer')){
         req.token = authorization.replace('Bearer ','')
@@ -17,7 +14,7 @@ const tokenExtractor =  (req:CustomRequest,_res:Response, next:NextFunction) => 
     return next()
 }
 
-const userExtractor = async (req:CustomRequest,res:Response,next:NextFunction) =>{
+const userExtractor = async (req:Request,res:Response,next:NextFunction) =>{
     try{
         if(req.token){
             const decodedToken = verify(req.token, SECRET as Secret) 
