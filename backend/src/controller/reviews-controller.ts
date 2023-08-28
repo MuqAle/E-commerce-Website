@@ -3,42 +3,54 @@ import Product from "../models/product-model";
 import { ParamsDictionary } from "express-serve-static-core"
 import { ReviewTypes } from "../types/type";
 import mongoose from "mongoose";
+import User from "../models/user-model";
 
 
 
 const postReview = async (req:Request<ParamsDictionary, unknown, ReviewTypes>,res:Response) => {
     try{
-        const {_id} = req.user
         const {user} = req
         const {rating,reviewDesc} = req.body 
 
-        const product = await Product.findById(req.params._id)
+        const product = await Product.findById(req.params.id)
 
         const alreadyRated = product?.reviews?.find(
-            userId => userId.postedBy.toString() === _id.toString()
+            userId => userId.postedBy.toString() === user.id.toString()
         )
-
         if(alreadyRated){
-            const updateRating = await Product.updateOne(
+           await Product.updateOne(
                 {
                 reviews:{
                     $elemMatch:alreadyRated
                 },
                 },{
                 $set:{
-                    "reviews.rating":rating,
-                    "reviews.reviewDesc":reviewDesc}
+                    "reviews.$.rating":rating,
+                    "reviews.$.reviewDesc":reviewDesc}
                 },{
                     new:true,
                     context:"query"
                 }
             )
-            res.json(updateRating)
+            await User.updateOne(
+                {
+                    reviews:{
+                        $elemMatch:{
+                            product:req.params.id
+                        }
+                    }
+                },{
+                    $set:{
+                        "reviews.$.rating":rating,
+                        "reviews.$.reviewDesc":reviewDesc
+                    }
+                }
+            )
         }else{
-            const rateProduct = await Product.findByIdAndUpdate(req.params._id,{
+           await Product.findByIdAndUpdate(req.params.id,{
                 $push: {
                     reviews:{
-                        postedBy:_id,
+                        postedBy:user.id,
                         rating:rating,
                         reviewDesc:reviewDesc
                     }
@@ -47,13 +59,28 @@ const postReview = async (req:Request<ParamsDictionary, unknown, ReviewTypes>,re
                 context:'query'
             })
             user.reviews = user.reviews?.concat({
-                product:new mongoose.Types.ObjectId(req.params._id),
+                product:new mongoose.Types.ObjectId(req.params.id),
                 reviewDesc:reviewDesc,
                 rating:rating})
             await user.save()
-            res.json(rateProduct)
         }
+        const getAllReviews = await Product.findById(req.params.id)
+        const totalReviews = getAllReviews?.reviews?.length
+        let actualRating
+        const reviewSum = getAllReviews?.reviews?.map((product) => product.rating)
+        .reduce((prev,curr) => prev + curr, 0)
+        if(reviewSum && totalReviews){
+             actualRating = Math.round(reviewSum/totalReviews)
+        }
+        const finalProduct = await Product.findByIdAndUpdate(req.params.id,{
+            overallRating:actualRating
+        },{
+            new:true
+        })
+
+        res.json(finalProduct)
     }catch(error){
+        console.log(error)
         res.status(400).send(error)
     }
 }
