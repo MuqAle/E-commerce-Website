@@ -1,7 +1,8 @@
 import { NextFunction, Request, Response } from "express";
-import { Secret, verify} from 'jsonwebtoken'
+import { JwtPayload, Secret, verify} from 'jsonwebtoken'
 import User from "../models/user-model";
 import SECRET from "../config/token-config";
+import { UserTypes } from "../types/type";
 
 
 const tokenExtractor =  (req:Request,_res:Response, next:NextFunction) => {
@@ -17,8 +18,8 @@ const tokenExtractor =  (req:Request,_res:Response, next:NextFunction) => {
 const userExtractor = async (req:Request,res:Response,next:NextFunction) =>{
     try{
         if(req.token){
-            const decodedToken = verify(req.token, SECRET as Secret) 
-            req.user = await User.findById(decodedToken)
+            const decodedToken = verify(req.token, SECRET as Secret) as JwtPayload
+            req.user = await User.findById(decodedToken.id) as UserTypes
         }
         return next()
     }catch(error){
