@@ -1,5 +1,5 @@
-import { Request } from "express"
-import { Types } from "mongoose"
+
+import { Document, Types } from "mongoose"
 
 interface Product{
     name:string,
@@ -26,30 +26,72 @@ interface ProductDb {
     overallRating:number,
     reviews?:{
         postedBy:Types.ObjectId
-        review:string,
-        rating:number
+        reviewDesc:string,
+        rating:number,
+        datePosted:Date
     }[]
     images:string[]
 }
 
-interface UserTypes{
+interface UserTypes extends Document{
+    id:Types.ObjectId
     name:string,
-    emailAddress:string,
-    password:string,
+    email:string,
+    passwordHash:string
     wishList?:Types.ObjectId[],
     shoppingCart?:{
         product:Types.ObjectId,
         quantity:number}[],
-    reviews?:Types.ObjectId[],
-    orders?:Types.ObjectId[]
+    reviews?:{
+        product:Types.ObjectId,
+        reviewDesc:string,
+        rating:number}[],
+    orders?:Types.ObjectId[],
+    isAdmin:boolean
+}
+
+interface UserRequest{
+    name:string,
+    email:string,
+    password:string
+}
+
+interface ReviewTypes{
+    reviewDesc:string,
+    rating:number
+}
+
+interface WishListTypes{
+    prodId:string
+}
+
+interface OrderType{
+    products:{
+        product:Types.ObjectId,
+        quantity:number
+    }[],
+    firstName:string,
+    lastName:string,
+    address:{
+        street:string,
+        city:string,
+        state:string,
+        zipcode:string
+    },
+    payment:object,
+    userId:string | Types.ObjectId,
+    orderStatus:string
 }
 
 
-interface ProductRequest extends Request,ProductDb{} 
+
 
 export {
     Product,
     ProductDb,
-    ProductRequest,
-    UserTypes
+    UserRequest,
+    UserTypes,
+    ReviewTypes,
+    WishListTypes,
+    OrderType
 }
