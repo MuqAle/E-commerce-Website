@@ -1,5 +1,5 @@
 import mongoose, {Schema,Types} from "mongoose";
-import { CartTypes } from "../types/type";
+import { CartUserType} from "../types/type";
 
 
 const cartSchema = new mongoose.Schema({
@@ -12,29 +12,25 @@ const cartSchema = new mongoose.Schema({
             type:Number,
             required:true
         },
-        price:{
-            type:Number,
-            required:true
-        }
     }],
     cartTotal:Number,
+    cartPrice:Number,
     user:{
         type:Schema.Types.ObjectId,
         ref:'User'
-    },
-    
+    }
 },
 {
     timestamps:true
 })
 
-const Cart = mongoose.model<CartTypes>('Cart', cartSchema)
+const Cart = mongoose.model<CartUserType>('Cart', cartSchema)
 
 cartSchema.set('toJSON', {
     transform: (_document, returnedObject) => {
         returnedObject.id = (returnedObject._id as Types.ObjectId).toString()
         delete returnedObject._id
-        delete returnedObject._v
+        delete returnedObject.__v
     }
 })
 
