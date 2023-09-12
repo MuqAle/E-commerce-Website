@@ -66,12 +66,12 @@ const loginUser =  async(req:Request<ParamsDictionary, unknown, UserRequest>,res
             await cart.save()
             
         }
-       
-        req.session.guestCart = {
-            products:[] as unknown as CartTypes["products"] ,
-            cartPrice:0,
-            cartTotal:0
-        } 
+
+        req.session.destroy(err => {
+            if(err){
+                res.send(err)
+            }
+        })
     }
 
     
