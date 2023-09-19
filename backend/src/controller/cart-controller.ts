@@ -49,7 +49,7 @@ const addToCart = async (req:Request,res:Response,next:NextFunction) => {
                 res.status(200).json(newGuestCart)
             }
         }else{
-            res.status(400).json({error:'This item does not exist'})
+            res.status(404).json({Error:'Item Not Found'})
         }
 
     }catch(error){
@@ -101,7 +101,7 @@ const reductionCart = async (req:Request,res:Response,next:NextFunction) => {
                     res.status(400).json({Error:'No Items In Cart'})
                 }else{
                    const updatedGuestCart =  await reduceFromCartGuest(guestCart,productId)
-                   res.status(200).json(updatedGuestCart)
+                   res.status(updatedGuestCart.status).json(updatedGuestCart.response)
                 }
             }
         }
