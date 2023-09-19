@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { JwtPayload, Secret, verify} from 'jsonwebtoken'
 import User from "../models/user-model";
-import SECRET from "../config/token-config";
+import {SECRET} from "../config/config";
 import { UserTypes } from "../types/type";
 
 
@@ -15,7 +15,7 @@ const tokenExtractor =  (req:Request,_res:Response, next:NextFunction) => {
     return next()
 }
 
-const userExtractor = async (req:Request,res:Response,next:NextFunction) =>{
+const userExtractor = async (req:Request,res:Response,next:NextFunction) => {
     try{
         if(req.token){
             const decodedToken = verify(req.token, SECRET as Secret) as JwtPayload
@@ -27,4 +27,15 @@ const userExtractor = async (req:Request,res:Response,next:NextFunction) =>{
     }
 }
 
-export {tokenExtractor,userExtractor}
+const isAdmin = (req:Request,res:Response) => {
+    if(req.user && req.user.isAdmin === false){
+        res.status(400).send('Access Denied: Not Admin')
+    }else{
+
+        res.status(400).send('Access Denied: You Must Login')
+        
+    }
+    
+}
+
+export {tokenExtractor,userExtractor,isAdmin}
