@@ -96,7 +96,7 @@ const deleteFromCartUser = async (user:UserTypes,productId:string,) => {
     if(!foundObject){
        return ({
         status:404,
-        response:{Error: 'Product Not Found'}
+        response:{Error: 'Item Not Found'}
        })
     }
     if(cart && cart?.products.length < 1){
@@ -153,7 +153,7 @@ const deleteFromCartGuest = async(guestCart:CartTypes,productId:string) => {
             }else{
                 return ({
                     status:400,
-                    response:{Error: 'Product Not Found'}
+                    response:{Error: 'Item Not Found'}
                    })
             }
             
@@ -165,6 +165,12 @@ const reduceFromCartUser = async (user:UserTypes,productId:string) => {
     const cart = await Cart.findById(user.shoppingCart).populate('products.product',{price:1,name:1,onSale:1,salePercentage:1,salePrice:1}) 
     const foundObject = cart?.products.find(product => productId === product.product.id.toString()) as CartType | undefined
     let response 
+    if(!foundObject){
+        response = ({
+            status:404,
+            response:{Error:'Item Not Found'}
+        })
+    }
     if(foundObject && cart){
         if(cart.products.length < 1){
         response =  ({
@@ -198,18 +204,29 @@ const reduceFromCartGuest = async (guestCart:CartTypes,productId:string) => {
             const foundProduct = guestCart.products.find(product => productId === product.product.toString())
             const product = await Product.findById(foundProduct?.product) as ProductDb
             const foundIndex = guestCart.products.findIndex(product => productId === product.product.toString())
-            if(foundProduct && foundProduct.quantity > 1){
-                foundProduct.quantity -= 1
+            if(!foundProduct){
+                return ({
+                    status:404,
+                    response:{Error:'Item Not Found'}
+                })
             }else{
-                guestCart.products.splice(foundIndex,1)
+                if(foundProduct.quantity > 1){
+                    foundProduct.quantity -= 1
+                }else{
+                    guestCart.products.splice(foundIndex,1)
+                }
+                guestCart.cartPrice -= product.onSale ? 
+                product.salePrice as number
+                :
+                product.price
+                guestCart.cartTotal -= 1
+                guestCart.cartPrice = evenRound(guestCart.cartPrice,2)
+                return ({
+                    status:200,
+                    response:guestCart
+                })
             }
-            guestCart.cartPrice -= product.onSale ? 
-            product.salePrice as number
-            :
-            product.price
-            guestCart.cartTotal -= 1
-            guestCart.cartPrice = evenRound(guestCart.cartPrice,2)
-            return guestCart
+            
 }
 
 
