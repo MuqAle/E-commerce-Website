@@ -5,7 +5,7 @@ import { addToCartGuest,
     deleteFromCartGuest,
     deleteFromCartUser,
     reduceFromCartGuest,
-    reduceFromCartUser} from "../services/cart-services"
+    reduceFromCartUser} from "../services/cart-service"
 import Cart from "../models/shopping-cart-model"
 import { NextFunction, Request, Response } from "express"
 import {  CartTypes, ProductDb} from "../types/type"

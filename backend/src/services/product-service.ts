@@ -51,7 +51,8 @@ const deleteProductSession = async (product:ProductDb,id:string) => {
             sessionCart.cartPrice -= totalPrice
             sessionCart.cartPrice = evenRound(sessionCart.cartPrice,2)
 
-            sessionCart.products = sessionCart.products.filter(product => product.product.toString() !== id)
+            const index = sessionCart.products.findIndex(product => product.product.toString() === id)
+            sessionCart.products.splice(index,1)
 
             await session.save()
         }
@@ -76,7 +77,8 @@ const deleteProductUser = async (product:ProductDb,id:string) => {
                 cart.cartPrice -= totalPrice
                 cart.cartPrice = evenRound(cart.cartPrice,2)
 
-                cart.products = cart.products.filter(product => product.product.toString() !== id)
+                const index = cart.products.findIndex(product => product.product.toString() === id)
+                cart.products.splice(index,1)
 
                 await cart.save()
             }
@@ -87,7 +89,10 @@ const deleteProductReviews = async (id:string) => {
 
     const users = await User.find({'reviews.product':id})
     for(const user of users){
-        user.reviews = user.reviews?.filter(review => review.product.toString() !== id)
+        if(user.reviews){
+        const index = user.reviews.findIndex(review => review.product.toString() === id)
+        user.reviews.splice(index,1)
+        }
     }
 }
 

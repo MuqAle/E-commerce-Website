@@ -3,7 +3,7 @@ import { compare } from "bcrypt";
 import { Request, Response, response } from 'express'
 import User from "../models/user-model";
 import { ParamsDictionary } from "express-serve-static-core"
-import { UserRequest,CartTypes} from "../types/type";
+import { UserRequest} from "../types/type";
 import {SECRET} from "../config/config";
 import { Types } from "mongoose";
 import Cart from "../models/shopping-cart-model";
@@ -23,7 +23,7 @@ const loginUser =  async(req:Request<ParamsDictionary, unknown, UserRequest>,res
 
     if(!(user && passwordCorrect)){
         return response.status(401).json({
-            error:'invalid email or password'
+            error:'Invalid Email Or Password'
         })
     }
 
@@ -41,11 +41,11 @@ const loginUser =  async(req:Request<ParamsDictionary, unknown, UserRequest>,res
     if( session && cart){
 
 
-        if(cart.products.length as number === 0){
+        if(cart.products.length === 0){
             
             await Cart.findByIdAndUpdate(
                 user.shoppingCart,{
-                    products:[...(cart.products as CartTypes['products']),...(session.products as CartTypes['products']) ],
+                    products:[...(cart.products),...(session.products) ],
                     cartTotal:cart.cartTotal + session.cartTotal,
                     cartPrice:evenRound(cart.cartPrice + session.cartPrice,2)
                 }

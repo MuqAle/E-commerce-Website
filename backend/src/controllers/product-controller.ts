@@ -2,7 +2,7 @@ import Product from "../models/product-model"
 import {ProductDb} from "../types/type"
 import { Request,Response,NextFunction } from "express"
 import {deleteImage} from "../utils/cloudinary"
-import { addProductDB, deleteProductReviews, deleteProductSession, deleteProductUser, updateProductDB } from "../services/product-services"
+import { addProductDB, deleteProductReviews, deleteProductSession, deleteProductUser, updateProductDB } from "../services/product-service"
 
 
 

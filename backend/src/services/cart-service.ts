@@ -140,7 +140,7 @@ const deleteFromCartGuest = async(guestCart:CartTypes,productId:string) => {
                 })
             }
             if(foundProduct && product){
-                const index = guestCart.products.findIndex(product => product.product.toString() !== productId)
+                const index = guestCart.products.findIndex(product => product.product.toString() === productId)
                 guestCart.products.splice(index,1)
                 guestCart.cartPrice -= product?.onSale ? 
                 evenRound((product.salePrice as number) * foundProduct.quantity,2) :
@@ -181,7 +181,7 @@ const reduceFromCartUser = async (user:UserTypes,productId:string) => {
         if(foundObject.quantity > 1){
             foundObject.quantity -= 1
         }else{
-            const index = cart.products.findIndex(product => product.product.toString() !== productId)
+            const index = cart.products.findIndex(product => product.product.toString() === productId)
             cart.products.splice(index,1)
         }
         cart.cartTotal -= 1
