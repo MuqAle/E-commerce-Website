@@ -1,26 +1,57 @@
-import Product from "../models/inventory";
+import Product from "../models/product-model";
 import allData from "../assets/data/all-products";
-import {readFileSync} from 'fs'
+import {v4 as uuidv4} from 'uuid'
+import {v2 as cloudinary } from 'cloudinary';
+import { CLOUDINARY_KEY,CLOUDINARY_NAME,CLOUDINARY_SECRET } from './../config/config';
 
 
-const importData = async () => {
+cloudinary.config({ 
+  cloud_name: CLOUDINARY_NAME, 
+  api_key: CLOUDINARY_KEY, 
+  api_secret: CLOUDINARY_SECRET 
+});
+
+
+
+const importData = async() => {
     for (const entry of allData){
-        const {name,type,idProduct,price,onSale,salePercentage,description,Gallery} = entry
+        const {name,type,price,onSale,salePercentage,description,stock,metal,colors,images} = entry
+        const uuid = uuidv4()
 
         const path = __dirname.replace('/utils','')
 
-        const imageBuffers = Gallery.map((imgUrl) => readFileSync(path + '/assets/imgs/' + imgUrl))
+        // const imageBuffers: Buffer[] = images.map((imgUrl:string) => readFileSync(path + '/assets/imgs/' + imgUrl))
         
-        const product = new Product({
+        const imagePath = await Promise.all(
+            images.map(async file => {
+                try{
+                    const image = await cloudinary.uploader.upload(path + '/assets/imgs/' + file,
+                        {
+                            folder:`online-store/${uuid}`,
+                            width:880,
+                            height:1050, 
+                            crop: "fill"
+                        })
+                    return image.secure_url
+                    
+                }catch(error){
+                    return error
+                }
+            }))
+
+        
+       const product = new Product({
             name,
-            idProduct,
             type,
             price,
             onSale,
             salePercentage,
+            stock,
+            metal,
+            colors,
             description,
-            images:imageBuffers
-
+            images:imagePath,
+            imageFolder: uuid
         })
         try{
             await product.save()
