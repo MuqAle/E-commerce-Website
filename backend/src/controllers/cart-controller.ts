@@ -16,7 +16,6 @@ import Session from "../models/session-model"
 
 
 
-
 const getAllCart = async(_req:Request,res:Response) => {
     const cart:CartTypes[] = await Cart.find({}).populate('products.product', {name:1,price:1})
 
@@ -75,9 +74,14 @@ const addToCart = async (req:Request,res:Response,next:NextFunction) => {
                     
                     const newGuestCart = addToCartGuest(guestCart,guestItems,productId,product)
         
-                    req.session.guestCart = newGuestCart
-           
-                    res.status(200).json(newGuestCart)
+                    const sessionCart = await Session.findByIdAndUpdate(req.session.id,{
+                        'session.guestCart':newGuestCart
+                    },{ new:true,
+                        runValidators:true,
+                        context:'query'})
+                        .populate('session.guestCart.products.product',{stock:0,sold:0,reviews:0,imageFolder:0},)
+
+                    res.status(200).json(sessionCart?.session.guestCart)
                 }
             }
         }else{
@@ -94,7 +98,6 @@ const deleteFromCart = async (req:Request,res:Response,next:NextFunction) => {
 
     const productId = req.params.id
     const user = req.user
-
     try{
         if(user){
             const updatedCart = await deleteFromCartUser(user,productId)
@@ -103,8 +106,11 @@ const deleteFromCart = async (req:Request,res:Response,next:NextFunction) => {
             }
         }else{
             const guestCart =  req.session.guestCart as CartTypes
-            const updatedCart = await deleteFromCartGuest(guestCart,productId)
-  
+            if(guestCart.products.length <= 0){
+                res.status(400).json({Error: 'No Items In Cart'})
+            }
+            const updatedCart = await deleteFromCartGuest(guestCart,productId,req.session.id)
+
             res.status(updatedCart.status).json(updatedCart.response)
         }
 
@@ -132,7 +138,7 @@ const reductionCart = async (req:Request,res:Response,next:NextFunction) => {
                 if(guestCart.products.length < 1){
                     res.status(400).json({Error:'No Items In Cart'})
                 }else{
-                   const updatedGuestCart =  await reduceFromCartGuest(guestCart,productId)
+                   const updatedGuestCart =  await reduceFromCartGuest(guestCart,productId,req.session.id)
                    res.status(updatedGuestCart.status).json(updatedGuestCart.response)
                 }
             }

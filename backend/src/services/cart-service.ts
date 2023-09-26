@@ -3,6 +3,7 @@ import Cart from "../models/shopping-cart-model"
 import { CartTypes, ProductDb, UserTypes } from "../types/type"
 import evenRound from "../utils/rounding"
 import Product from "../models/product-model"
+import Session from "../models/session-model"
 
 interface CartType {
     product:{
@@ -35,7 +36,7 @@ const addToCartUser = async (user:UserTypes,productId:string,cartItems:CartTypes
                  },
                  { 
                  new:true
-                 }).populate('products.product',{price:1,name:1,onSale:1,salePercentage:1,salePrice:1})
+                 }).populate('products.product',{price:1,name:1,onSale:1,salePercentage:1,salePrice:1,images:1})
          }else{
              foundObject.quantity += 1
             if(cart && foundObject){
@@ -89,7 +90,7 @@ const addToCartGuest = (guestCart:CartTypes,cartItems:CartTypes['products'][0],p
 const deleteFromCartUser = async (user:UserTypes,productId:string,) => {
     const userShopping = user.shoppingCart
     const cart = await Cart.findById(userShopping).populate('products.product',
-        {price:1,name:1,onSale:1,salePercentage:1,salePrice:1}) 
+        {price:1,name:1,onSale:1,salePercentage:1,salePrice:1,images:1}) 
     const foundObject = cart?.products.
         find(product => productId === product.product.id.toString()) as CartType | undefined
     
@@ -129,7 +130,7 @@ const deleteFromCartUser = async (user:UserTypes,productId:string,) => {
     }
 }
 
-const deleteFromCartGuest = async(guestCart:CartTypes,productId:string) => {
+const deleteFromCartGuest = async(guestCart:CartTypes,productId:string,sessionId:string) => {
     
             const foundProduct = guestCart.products.find(product => productId === product.product.toString())
             const product = await Product.findById(foundProduct?.product)
@@ -147,9 +148,14 @@ const deleteFromCartGuest = async(guestCart:CartTypes,productId:string) => {
                 evenRound(product.price * foundProduct.quantity,2)
                 guestCart.cartPrice = evenRound(guestCart.cartPrice,2)
                 guestCart.cartTotal -= foundProduct.quantity
+                const newSessionCart = await Session.findByIdAndUpdate(sessionId,
+                    {'session.guestCart':guestCart},
+                    { new:true,
+                    runValidators:true,
+                    context:'query'}).populate('session.guestCart.products.product',{stock:0,sold:0,reviews:0,imageFolder:0})
                 return ({
                     status:200,
-                    response:guestCart})
+                    response:newSessionCart?.session.guestCart})
             }else{
                 return ({
                     status:400,
@@ -162,7 +168,7 @@ const deleteFromCartGuest = async(guestCart:CartTypes,productId:string) => {
 
 const reduceFromCartUser = async (user:UserTypes,productId:string) => {
 
-    const cart = await Cart.findById(user.shoppingCart).populate('products.product',{price:1,name:1,onSale:1,salePercentage:1,salePrice:1}) 
+    const cart = await Cart.findById(user.shoppingCart).populate('products.product',{price:1,name:1,onSale:1,salePercentage:1,salePrice:1,images:1}) 
     const foundObject = cart?.products.find(product => productId === product.product.id.toString()) as CartType | undefined
     let response 
     if(!foundObject){
@@ -199,7 +205,7 @@ const reduceFromCartUser = async (user:UserTypes,productId:string) => {
     return (response)
 }
 
-const reduceFromCartGuest = async (guestCart:CartTypes,productId:string) => {
+const reduceFromCartGuest = async (guestCart:CartTypes,productId:string,sessionId:string) => {
 
             const foundProduct = guestCart.products.find(product => productId === product.product.toString())
             const product = await Product.findById(foundProduct?.product) as ProductDb
@@ -221,9 +227,14 @@ const reduceFromCartGuest = async (guestCart:CartTypes,productId:string) => {
                 product.price
                 guestCart.cartTotal -= 1
                 guestCart.cartPrice = evenRound(guestCart.cartPrice,2)
+                const newSessionCart = await Session.findByIdAndUpdate(sessionId,
+                    {'session.guestCart':guestCart},
+                    { new:true,
+                    runValidators:true,
+                    context:'query'}).populate('session.guestCart.products.product',{stock:0,sold:0,reviews:0,imageFolder:0})
                 return ({
                     status:200,
-                    response:guestCart
+                    response:newSessionCart?.session.guestCart
                 })
             }
             
