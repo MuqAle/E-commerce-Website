@@ -8,8 +8,9 @@ import { addToCartGuest,
     reduceFromCartUser} from "../services/cart-service"
 import Cart from "../models/shopping-cart-model"
 import { NextFunction, Request, Response } from "express"
-import {  CartTypes, GuestCartTypes, ProductDb} from "../types/type"
+import {  CartTypes, ProductDb} from "../types/type"
 import Product from "../models/product-model"
+import Session from "../models/session-model"
 
 
 
@@ -24,14 +25,15 @@ const getAllCart = async(_req:Request,res:Response) => {
 
 const getUserCart = async(req:Request,res:Response) => {
     try{if(req.user){
-        const cart = await Cart.findById(req.user.shoppingCart).populate('products.product', {})
+        const cart = await Cart.findById(req.user.shoppingCart).populate('products.product', {stock:0,sold:0,reviews:0,imageFolder:0})
         return res.json(cart)
     }if(req.session.guestCart){
-        const session = req.session.guestCart 
-        return res.json(session)
+        const session = req.session.id
+        const sessionCart = await Session.findById(session).populate('session.guestCart.products.product',{stock:0,sold:0,reviews:0,imageFolder:0})
+        return res.json(sessionCart?.session.guestCart)
     }if(!req.session.guestCart){
         const session = {
-            products:[] as unknown as GuestCartTypes['products'],
+            products:[] as unknown as CartTypes['products'],
             cartPrice:0,
             cartTotal:0
         } 
@@ -66,10 +68,10 @@ const addToCart = async (req:Request,res:Response,next:NextFunction) => {
                 }
                 else{
                     const guestItems = {
-                        product:product,
+                        product:new Types.ObjectId(productId),
                         quantity:1
                     }
-                    const guestCart = req.session.guestCart as GuestCartTypes
+                    const guestCart = req.session.guestCart as CartTypes
                     
                     const newGuestCart = addToCartGuest(guestCart,guestItems,productId,product)
         
@@ -100,7 +102,7 @@ const deleteFromCart = async (req:Request,res:Response,next:NextFunction) => {
                 res.status(updatedCart.status).json(updatedCart.response)
             }
         }else{
-            const guestCart =  req.session.guestCart as GuestCartTypes
+            const guestCart =  req.session.guestCart as CartTypes
             const updatedCart = await deleteFromCartGuest(guestCart,productId)
   
             res.status(updatedCart.status).json(updatedCart.response)
