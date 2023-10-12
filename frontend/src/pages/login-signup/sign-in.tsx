@@ -3,61 +3,79 @@ import { LoginTypes} from "../../utils/types"
 import { useImmer } from "use-immer"
 import login from "../../services/login"
 
+interface LoginForm {
+    emailError:string,
+    passwordError:string,
+    serverError:string
+}
+
 const SignInForm = ({user}:{user:LoginTypes | null}) => {
     const [email,setEmail] = useImmer('')
     const [password,setPassword] = useImmer('')
-    const [error,setError] = useImmer('')
-    const [emailError,setEmailError] = useImmer('')
+    const [rememberMe,setRememberMe] = useImmer(false)
+    const [errors,setError] = useImmer<Partial<LoginForm>>({})
 
     const signInFunction = async (e:React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
-        setError('')
-        setEmailError('')
+        setError({})
         const credentials = {
             email,
             password
         }
+        const newErrors: Partial<LoginForm> = {}
         const validRegex = new RegExp(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)
         try{
-            if(email === '' && password === '' ){
-                setEmailError('Please enter a valid email')
-                setError('Please enter a password')
+            if(email === '' && password === '' || (!validRegex.test(email) && password === '')){
+                newErrors.emailError = 'Please enter a valid email'
+                newErrors.passwordError = 'Please enter a password'
+                setError(newErrors)
                 return
             }
             if(email === '' || !validRegex.test(email)){
-                return setEmailError('Please enter a valid email')
+                newErrors.emailError = 'Please enter a valid email'
+                setError(newErrors)
+                return
             }
             if(password === ''){
-                return setError('Please enter a password')
+                newErrors.passwordError = 'Please enter a password'
+                setError(newErrors)
+                return
             }else{
                 user = await login(credentials)
-                window.localStorage.setItem('loggedUser',JSON.stringify(user))
-                setEmail('')
-                setPassword('')
+                if(rememberMe){
+                    window.localStorage.setItem('loggedUser',JSON.stringify(user))
+                }else{
+                    window.sessionStorage.setItem('loggedUser',JSON.stringify(user))
+                }
+                newErrors.serverError = 'You are now logged in. You will be redirected shortly'
+                setError(newErrors)
+                location.reload()
         }
             }catch(error){
-                if(error instanceof Error){
-                    setError('Wrong email or password')
-                }
-                
+                newErrors.passwordError = 'Wrong email or password, please try again'
+                setError(newErrors)
             }
-          
+            
     }
-
     return (
-        <form>
-        <div className="input-container">
+        <form className="sign-in-form">
+        <div className={`form-input-container ${errors.emailError ? 'error' : ''}` }>
             <label htmlFor="sign-in-email">
                 Email<span>*</span>
             </label>
             <input id="sign-in-email" type='email' value={email} onChange={(e) => setEmail(e.target.value)}/>
-            <p>{emailError}</p>
+            {errors.emailError && <p className="error">{errors.emailError}</p>}
         </div>
-        <PasswordInput id = 'sign-in-password' value= {password} name="Password" setPassword={
+        <div className="password-input-container">
+        <PasswordInput id = 'sign-in-password' value= {password} errors={errors.passwordError} className={`form-input-container ${errors.passwordError ? 'error' : ''}`}  inputName="Password" name="password" setPassword={
             (e) =>  setPassword(e.target.value) } />
-        <p>{error}</p>
-        <button type="submit" onClick={signInFunction}>Submit</button>
-        
+        <div className= 'remember-me-container'>
+        <input type="checkbox" checked ={rememberMe} onChange = {() => setRememberMe(!rememberMe)} id="remember-me-checkbox"/>
+        <label htmlFor="remember-me-checkbox">Remember me</label>
+        </div>
+        </div>
+        <button type="submit" className="sign-in-submit" onClick={signInFunction}>Submit</button>
+        {errors.serverError && <p className="error">{errors.serverError}</p>}
     </form> 
     )
 }

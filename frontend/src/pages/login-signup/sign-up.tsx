@@ -1,26 +1,131 @@
+import { useImmer } from "use-immer"
+import { createAccount } from "../../services/users"
+import { LoginTypes } from "../../utils/types"
+import login from "../../services/login"
+import PasswordInput from "./password"
 
 
-const accountSignUp = () => {
+interface FormData {
+    firstName: string
+    lastName: string
+    email: string
+    password: string
+    confirmPassword: string
+  }
+
+const SignUpForm = ({user}:{user:LoginTypes | null}) => {
+
+    const [formData, setFormData] = useImmer({
+        firstName: '',
+        lastName: '',
+        email: '',
+        password: '',
+        confirmPassword: '',
+      });
+    
+      const [errors, setErrors] = useImmer<Partial<FormData>>({});
+      const [serverResponse,setServerResponse] = useImmer('')
+    
+      const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setFormData({
+          ...formData,
+          [name]: value,
+        });
+      };
+    
+      const validateForm = () => {
+        const newErrors: Partial<FormData> = {};
+    
+        if (!formData.firstName) {
+          newErrors.firstName = 'First name is required'
+        }
+    
+        if (!formData.lastName) {
+          newErrors.lastName = 'Last name is required'
+        }
+    
+        if (!formData.email) {
+          newErrors.email = 'Email is required';
+        } else if (!/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}$/.test(formData.email)) {
+          newErrors.email = 'Invalid email format'
+        }
+    
+        if (!formData.password) {
+          newErrors.password = 'Password is required';
+        } else if (!/^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+])[A-Za-z0-9!@#$%^&*()_+]{8,}$/.test(formData.password)) {
+          newErrors.password = 'Password must contain 8 characters, 1 digit, 1 capital letter, and 1 special character '
+        }
+    
+        if (formData.password !== formData.confirmPassword) {
+          newErrors.confirmPassword = 'Passwords do not match'
+        }
+    
+        setErrors(newErrors);
+
+        return Object.keys(newErrors).length === 0
+      }
+
+
+    const handleSubmit = async(e: React.FormEvent) => {
+        e.preventDefault()
+        setErrors({})
+        if (validateForm()) {
+            try{
+                await createAccount(formData)
+                setServerResponse('Account created you will be redirected shortly')
+                user = await login({
+                    email:formData.email,
+                    password:formData.password
+                })
+                window.localStorage.setItem('loggedUser',JSON.stringify(user))
+            }catch(error){
+                setServerResponse('This email is already in use')
+            }
+    }
+  }
     return(
-           <form> 
-              <label>
-                  First Name
-                  <input id="sign-up-first-name"/>
-              </label>
-              <label>
-                  Last Name
-                  <input id="sign-up-last-name"/>
-              </label>
-              <label>
-                  Email
-                  <input className="sign-up-email"/>
-              </label>
-              <label>
-                  Password
-                  <input className="sign-up-password"/>
-              </label>
+           <form className="sign-up-form"> 
+              <div className={`input-container ${errors.firstName ? 'error' : ''}`}>
+                  <label htmlFor="sign-up-first-name">
+                      First Name<span>*</span>
+                  </label>
+                  <input id="sign-up-first-name" name="firstName" value={formData.firstName} onChange = {handleChange}/>
+                  {errors.firstName && <p className="error">{errors.firstName}</p>}
+              </div>
+              <div className={`input-container ${errors.lastName ? 'error' : ''}`}>
+                  <label htmlFor="sign-up-last-name">
+                      Last Name<span>*</span>
+                  </label>
+                  <input id="sign-up-last-name" name="lastName" value={formData.lastName} onChange={handleChange}/>
+                  {errors.lastName && <p className="error">{errors.lastName}</p>}
+              </div>
+              <div className={`input-container ${errors.email ? 'error' : ''}`}>
+                  <label htmlFor="sign-up-email">
+                      Email<span>*</span>
+                  </label>
+                  <input type="email" id="sign-up-email" name="email" value={formData.email} onChange={handleChange} autoComplete="off"/>
+                  {errors.email && <p className="error">{errors.email}</p>}
+              </div>
+            <PasswordInput 
+            id='sign-up-password' 
+            inputName='Password' 
+            name="password" 
+            errors={errors.password} 
+            className={`input-container ${errors.password ? 'error' : ''}`} 
+            value={formData.password} 
+            setPassword={handleChange}/>
+            <PasswordInput 
+            id='sign-up-second-password' 
+            inputName="Confirm Password" 
+            name="confirmPassword" 
+            errors={errors.confirmPassword} 
+            className={`input-container ${errors.confirmPassword ? 'error' : ''}`} 
+            value={formData.confirmPassword} setPassword={handleChange}/>
+              <button onClick={handleSubmit}>Submit</button>
+              <p className="error">{serverResponse}</p>
           </form>
     )
 }
 
-export default accountSignUp
+export default SignUpForm
