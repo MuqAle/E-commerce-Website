@@ -1,6 +1,6 @@
 import { Secret, sign } from "jsonwebtoken";
 import { compare } from "bcrypt";
-import { Request, Response, response } from 'express'
+import { Request, Response} from 'express'
 import User from "../models/user-model";
 import { ParamsDictionary } from "express-serve-static-core"
 import { UserRequest} from "../types/type";
@@ -21,8 +21,9 @@ const loginUser =  async(req:Request<ParamsDictionary, unknown, UserRequest>,res
     ? false
     : await compare(password, user.passwordHash)
 
+
     if(!(user && passwordCorrect)){
-        return response.status(401).json({
+        return res.status(401).json({
             error:'Invalid Email Or Password'
         })
     }
@@ -38,9 +39,7 @@ const loginUser =  async(req:Request<ParamsDictionary, unknown, UserRequest>,res
 
     const session = req.session.guestCart
 
-    if( session && cart){
-
-
+    if(session && cart){
         if(cart.products.length === 0){
             
             await Cart.findByIdAndUpdate(
@@ -51,22 +50,24 @@ const loginUser =  async(req:Request<ParamsDictionary, unknown, UserRequest>,res
                 }
             )
         }else{
-            const indexedArray1 = new Map(cart.products.map((item) => [item.product.toString(), item]));
+            const indexedArray1 = new Map(cart.products.map((item) => [item.product.toString(), item]))
             for (const item2 of session.products) {
                 const productIdStr = item2.product.toString();
                 if (indexedArray1.has(productIdStr)) {
                     const item1 = indexedArray1.get(productIdStr);
                     item1 && (item1.quantity += item2.quantity);
-                } 
+                }else{
+                    cart.products.push(item2)
+                }
                 }
             cart.cartTotal += session.cartTotal
             cart.cartPrice += session.cartPrice
-            evenRound(cart.cartPrice, 2)
+            cart.cartPrice = evenRound(cart.cartPrice, 2)
 
             await cart.save()
             
         }
-
+        res.clearCookie('connect.sid', { path: '/' })
         req.session.destroy(err => {
             if(err){
                 res.send(err)
@@ -74,9 +75,7 @@ const loginUser =  async(req:Request<ParamsDictionary, unknown, UserRequest>,res
         })
     }
 
-    
-
-    return res.status(200).send({token,email:user.email, name:user.name})
+    return res.status(200).send({token,email:user.email, name:`${user.firstName} ${user.lastName}`})
 }
 
 export default loginUser

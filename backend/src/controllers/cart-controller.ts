@@ -24,13 +24,22 @@ const getAllCart = async(_req:Request,res:Response) => {
 
 const getUserCart = async(req:Request,res:Response) => {
     try{if(req.user){
-        const cart = await Cart.findById(req.user.shoppingCart).populate('products.product', {stock:0,sold:0,reviews:0,imageFolder:0})
+        const cart = await Cart.findById(req.user.shoppingCart).populate('products.product', {
+            stock:0
+            ,sold:0,
+            reviews:0,
+            imageFolder:0})
         return res.json(cart)
-    }if(req.session.guestCart){
+    }if(req.session && req.session.guestCart){
         const session = req.session.id
-        const sessionCart = await Session.findById(session).populate('session.guestCart.products.product',{stock:0,sold:0,reviews:0,imageFolder:0})
+        const sessionCart = await Session.findById(session).populate('session.guestCart.products.product',{
+            stock:0,
+            sold:0,
+            reviews:0,
+            imageFolder:0})
         return res.json(sessionCart?.session.guestCart)
-    }if(!req.session.guestCart){
+    }
+    if(!req.session.guestCart){
         const session = {
             products:[] as unknown as CartTypes['products'],
             cartPrice:0,
