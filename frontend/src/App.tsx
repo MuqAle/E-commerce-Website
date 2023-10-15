@@ -10,130 +10,114 @@ import Home from './pages/landing-page-components/landing-page'
 import Catalog from './pages/product-catalog/catalog'
 import ProductPage from './pages/product-page'
 import AboutUs from './pages/about-us'
-import allData from './assets/data/all-products'
-import necklaceData from './assets/data/necklace-data'
-import braceletData from './assets/data/bracelet-data'
-import earringData from './assets/data/earrings-data'
-import {containsCartObject,containsFavoriteObject} from './utils/find-match'
 import Wishlist from './pages/wish-list'
 import ShoppingCart from './pages/shopping-cart-components/shopping-cart'
 import ErrorPage from './pages/error-page'
-
-interface WebsiteProp {
-  cart:{product:{name:string,
-    id:string,
-    type:string,
-    price:number,
-    onSale:boolean,
-    salePrice:number,
-    description:string,
-    Gallery:string[]}
-    amount:number
-  },
-  favorite:{
-    name:string,
-    id:string,
-    type:string,
-    price:number,
-    onSale:boolean,
-    salePrice:number,
-    description:string,
-    Gallery:string[],
-  }
-}
+import { CartTypes, LoginTypes, ProductDb, UserTypes } from './utils/types'
+import { useEffect } from 'react'
+import { getAllProducts } from './services/products'
+import { addToCart, deleteOneCart,deleteAllProduct, getCart } from './services/cart'
+import { retrieveProfile } from './services/user-req'
 
 
 
 function App() {
-  const [cart, updateCart] = useImmer<WebsiteProp["cart"][]>([])
-  const [favorite, updateFavorite] = useImmer<WebsiteProp['favorite'][]>([])
+  const [cart, setCart] = useImmer<CartTypes>(Object)
+  const [favorite, setFavorite] = useImmer<UserTypes['wishList'][]>([])
+  const [allData,setData] = useImmer<ProductDb[]>([])
+  const [user,setUser] = useImmer<LoginTypes | null>(null)
+  const [loginModal,setLoginModal] = useImmer(false)
+  const [error,setError] = useImmer('')
 
-  const addProductCart = (id:string) => {
-    const foundProduct =  allData.find(d => d.id === id)
-    const index = cart.findIndex(c => c.product.id === id)
-    if(foundProduct && containsCartObject(cart,foundProduct)){
-      updateCart(c => {c[index].amount += 1 })
-    }else 
-    if(foundProduct){
-      updateCart(c => {c.push({
-        product:foundProduct,
-        amount:1
-      })
-    })
+  const token = user?.token ? `Bearer ${user?.token}` : null
+
+  useEffect(() => {
+    getAllProducts().then(products => setData(products))
+  },[setData])
+
+  useEffect(() => {
+    const controller = new AbortController()
+    const loggedUserJSON = window.localStorage.getItem('loggedUser')
+    const loggedUserSessionJSON = window.sessionStorage.getItem('loggedUser')
+
+    if(loggedUserJSON){
+      const user:LoginTypes = JSON.parse(loggedUserJSON)
+      setUser(user)
+      getCart(`Bearer ${user.token}`).then(
+        userCart => setCart(userCart)
+      ).catch(err => setError('Something went wrong'))
+    }if(loggedUserSessionJSON){
+      const user:LoginTypes = JSON.parse(loggedUserSessionJSON)
+      getCart(`Bearer ${user.token}`).then(
+        userCart => setCart(userCart)
+      ).catch(err => setError('Something went wrong'))
+      setUser(user)
+    }else{
+      getCart(null).then(
+        userCart => setCart(userCart)
+      ).catch(err => setError('Something went wrong'))
     }
-  }
+    return () => {
+      controller.abort()
+    }
+  },[setCart, setError, setUser, token])
+
+  useEffect(() => {
+    if(user){
+      retrieveProfile(token).then(
+        (user) => setFavorite(user.wishList)
+      )
+    }
+  })
+
 
   const addProductFavorite = (id:string) => {
-    const foundProduct =  allData.find(d => d.id === id)
-    const favoriteProduct = favorite.find(d => d.id === id)
-    const index = favorite.findIndex(f => f.id === id)
-     if(foundProduct && !containsFavoriteObject(favorite,foundProduct)){
-      updateFavorite(f => {
-        f.push(foundProduct)
-      })
-    }if(favoriteProduct && containsFavoriteObject(favorite,favoriteProduct)){
-      updateFavorite(f => {
-        f.splice(index,1)})
-    }
-  }
-
-  const favorited = (id:string|undefined) => {
-    const product = favorite.find(f => f.id === id)
-    if(product && containsFavoriteObject(favorite,product)){
+    if(!user){
+      setLoginModal(true)
       return true
     }else{
-      return false
+      return true
     }
   }
 
-  const deleteProductCart = (id:string) => {
-    const index = cart.findIndex(c => c.product.id === id)
-    updateCart(c => {
-       c.splice(index,1)
-    })
+  const favorited = (id:string) => {
+    return true
   }
 
-  const increaseAmount = (id:string) => {
-    updateCart(bag => {
-      const product = bag.find(c => c.product.id === id)
-      if(product){
-        product.amount += 1
-      }
-    })
+  const deleteProductCart = async(id:string) => {
+   const cart = await deleteAllProduct(id,token)
+   
+   setCart(cart)
   }
 
-  const decreaseAmount = (id:string) => {
-    updateCart(bag => {
-      const product = bag.find(c => c.product.id === id)
-      const index = bag.findIndex(c => c.product.id === id)
-      if(product && product.amount > 1){
-        product.amount -= 1
-      }else{
-        bag.splice(index,1)
-      }
-    })
+  const decreaseAmount = async(id:string) => {
+    const cart = await deleteOneCart(id,token)
+    setCart(cart)
   }
 
-
+  const addProductCart = async(id:string,) => {
+    const cart = await addToCart(id,token)
+    setCart(cart)
+  }
 
   const router= createBrowserRouter(
   
     createRoutesFromElements(
-      <Route path='/' element={<RootLayout shoppingCart={cart.reduce((a,b) => a + b.amount, 0)} favorites = {favorite.length}/>}>
-        <Route index element={<Home addFavorite={addProductFavorite} addToCart={addProductCart} favorited={favorited}/>}/>
+      <Route path='/' element={<RootLayout closeModal={() => setLoginModal(false)} user={user} shoppingCart={cart.cartTotal} favorites={favorite.length} showLoginModal={loginModal} setLoginModal={setLoginModal}/>}>
+        <Route index element={<Home data={allData} addFavorite={addProductFavorite} addToCart={addProductCart} favorited={favorited}/>}/>
         <Route path='shop-all' element={<Catalog title='All Jewelry' data={allData} addFavorite={addProductFavorite} addToCart={addProductCart} favorited={favorited}/>}/>
-        <Route path='necklace' element={<Catalog title='Necklaces' data={necklaceData} addFavorite={addProductFavorite} addToCart={addProductCart} favorited={favorited}/>}/>
-        <Route path='bracelet' element={<Catalog title='Bracelets' data={braceletData} addFavorite={addProductFavorite} addToCart={addProductCart} favorited={favorited}/>}/>
-        <Route path='earrings' element={<Catalog  title='Earrings' data={earringData} addFavorite={addProductFavorite} addToCart={addProductCart} favorited={favorited}/>}/>
+        <Route path='necklace' element={<Catalog title='Necklaces' data={allData} addFavorite={addProductFavorite} addToCart={addProductCart} favorited={favorited}/>}/>
+        <Route path='bracelet' element={<Catalog title='Bracelets' data={allData} addFavorite={addProductFavorite} addToCart={addProductCart} favorited={favorited}/>}/>
+        <Route path='earrings' element={<Catalog  title='Earrings' data={allData} addFavorite={addProductFavorite} addToCart={addProductCart} favorited={favorited}/>}/>
         <Route path='on-sale' element={<Catalog title='On Sale' data={allData.filter(data => data.onSale === true)} addFavorite={addProductFavorite} addToCart={addProductCart} favorited={favorited}/>}/>
         <Route path='about-us' element={<AboutUs/>}/>
         <Route path='wish-list' element={<Wishlist array={favorite} addToCart={addProductCart} deleteFavorite={addProductFavorite}/>}/>
-        <Route path='shopping-cart' element={<ShoppingCart array={cart} decreaseAmount={decreaseAmount} increaseAmount={increaseAmount} deleteProductCart={deleteProductCart}></ShoppingCart>}/>
-        <Route path='shop-all/:id' element ={<ProductPage data={allData} addToCart={addProductCart} addToFavorite={addProductFavorite} favorited={favorited}/>}/>
-        <Route path='necklace/:id' element ={<ProductPage data={necklaceData} addToCart={addProductCart} addToFavorite={addProductFavorite} favorited={favorited}/>}/>
-        <Route path='bracelet/:id' element ={<ProductPage data={braceletData} addToCart={addProductCart } addToFavorite={addProductFavorite} favorited={favorited}/>}/>
-        <Route path='earrings/:id' element ={<ProductPage data={earringData} addToCart={addProductCart} addToFavorite={addProductFavorite} favorited={favorited}/>}/>
-        <Route path='on-sale/:id' element ={<ProductPage data={allData.filter(data => data.onSale === true)} addToCart={addProductCart} addToFavorite={addProductFavorite} favorited={favorited}/>}/>
+        <Route path='shopping-cart' element={<ShoppingCart cart={cart} decreaseAmount={decreaseAmount} increaseAmount={addProductCart} deleteProductCart={deleteProductCart}></ShoppingCart>}/>
+        <Route path='shop-all/:id' element ={<ProductPage addToCart={addProductCart} addFavorite={addProductFavorite} favorited={favorited}/>}/>
+        <Route path='necklace/:id' element ={<ProductPage addToCart={addProductCart} addFavorite={addProductFavorite} favorited={favorited}/>}/>
+        <Route path='bracelet/:id' element ={<ProductPage addToCart={addProductCart } addFavorite={addProductFavorite} favorited={favorited}/>}/>
+        <Route path='earrings/:id' element ={<ProductPage addToCart={addProductCart} addFavorite={addProductFavorite} favorited={favorited}/>}/>
+        <Route path='on-sale/:id' element ={<ProductPage  addToCart={addProductCart} addFavorite={addProductFavorite} favorited={favorited}/>}/>
         <Route path='*' element ={<ErrorPage/>}/>
       </Route>
     )
