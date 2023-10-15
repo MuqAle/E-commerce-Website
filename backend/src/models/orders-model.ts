@@ -1,11 +1,11 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 import { Types } from "mongoose";
 import { OrderType } from "../types/type";
 
 const orderSchema = new mongoose.Schema({
     products:[{
         product:{
-            type:Types.ObjectId,
+            type:Schema.Types.ObjectId,
             ref:'Product'
         },
         quantity:{
@@ -13,35 +13,28 @@ const orderSchema = new mongoose.Schema({
             required:true
         }
     }],
-    firstName:{
+    name:{
         type:String,
         required:true
     },
-    lastName:{
+    email:{
         type:String,
         required:true
     },
-    address:{
-        street:{
-            type:String,
-            required:true},
-        city:{
-            type:String,
-            required:true},
-        sate:{
-            type:String,
-            required:true
-        },
-        zipcode:{
-            type:String,
-            required:true}, 
+    shippingAddress:{
+        line1:String,
+        line2:String,
+        postal_code:String,
+        city:String,
+        sate:String,
+        
     },
-    payment:{},
-
     userId:{
-        type:String || Types.ObjectId,
-        default:'No Account'
+        type:String || Schema.Types.ObjectId,
+        default:'Guest User',
+        ref:'User'
     },
+    paymentIntentId:String,
     orderStatus:{
         type:String,
         default:"Not Processed",
@@ -50,19 +43,26 @@ const orderSchema = new mongoose.Schema({
             'Processing',
             'Label Created',
             'Shipped',
-            'Delivered'
+            'Delivered',
+            'Canceled'
         ]
-    }
+    },
+    shippingCost:Number,
+    tax:Number,
+    subtotal:Number,
+    total:Number,
     
+},{
+    timestamps:true
 })
 
-const Order = mongoose.model<OrderType>('User', orderSchema)
+const Order = mongoose.model<OrderType>('Order', orderSchema)
 
 orderSchema.set('toJSON', {
     transform: (_document, returnedObject) => {
         returnedObject.id = (returnedObject._id as Types.ObjectId).toString()
         delete returnedObject._id
-        delete returnedObject._v
+        delete returnedObject.__v
     }
 })
 

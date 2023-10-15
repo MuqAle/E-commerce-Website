@@ -5,7 +5,6 @@ import session from "express-session";
 
 const sessionStore = MongoStore.create({
     mongoUrl:MONGODB_URI,
-    dbName:'guestUsers',
     stringify:false,
     ttl: 14 * 24 * 60 * 60
 })

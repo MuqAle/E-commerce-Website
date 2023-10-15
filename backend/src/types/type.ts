@@ -1,59 +1,54 @@
 
 import { Document, Types } from "mongoose"
+import Stripe from "stripe"
 
-interface Product{
-    name:string,
-    idProduct:string,
-    type:string,
-    price:number,
-    onSale:boolean,
-    salePercentage?:number,
-    description:string,
-    Gallery:string[],
-}
 
-interface ProductDb {
+interface ProductDb extends Document {
     name:string,
     type:string,
     price:number,
     onSale:boolean,
     salePercentage?:number,
+    salePrice?:number,
     description:string,
     stock:number,
     sold:number,
     metal: 'gold' | 'silver' | 'brass',
     colors:string[],
     overallRating:number,
-    reviews?:{
+    reviews:{
         postedBy:Types.ObjectId
         reviewDesc:string,
         rating:number,
         datePosted:Date
     }[]
     images:string[]
+    imageFolder:string
 }
 
 interface UserTypes extends Document{
     id:Types.ObjectId
-    name:string,
+    firstName:string,
+    lastName:string,
     email:string,
     passwordHash:string
     wishList?:Types.ObjectId[],
-    shoppingCart?:{
-        product:Types.ObjectId,
-        quantity:number}[],
+    shoppingCart:Types.ObjectId,
     reviews?:{
         product:Types.ObjectId,
         reviewDesc:string,
         rating:number}[],
     orders?:Types.ObjectId[],
-    isAdmin:boolean
+    isAdmin:boolean,
+    stripeId?:string
 }
 
 interface UserRequest{
-    name:string,
+    firstName:string,
+    lastName:string,
     email:string,
-    password:string
+    password:string,
+    isAdmin:boolean
 }
 
 interface ReviewTypes{
@@ -70,28 +65,101 @@ interface OrderType{
         product:Types.ObjectId,
         quantity:number
     }[],
-    firstName:string,
-    lastName:string,
-    address:{
-        street:string,
+    name:string,
+    email:string,
+    shippingAddress:{
+        line1:string,
+        line2:string,
+        postal_code:string,
         city:string,
-        state:string,
-        zipcode:string
+        sate:string,
     },
-    payment:object,
     userId:string | Types.ObjectId,
-    orderStatus:string
+    paymentIntentId:string,
+    orderStatus:string,
+    shippingCost:number,
+    tax:number,
+    subtotal:number,
+    total:number
 }
+
+interface CartTypes{
+    products:{
+        product:Types.ObjectId,
+        quantity:number
+    }[],
+    user?:Types.ObjectId,
+    cartTotal:number,
+    cartPrice:number,
+}
+
+interface GuestCartTypes{
+    products:{
+        product:ProductDb,
+        quantity:number
+    }[],
+    cartTotal:number,
+    cartPrice:number,
+}
+
+
+interface SessionTypes extends Document {
+  _id: string;
+  expires: Date;
+  session: {
+    cookie: {
+      originalMaxAge: number;
+      expires: Date | null;
+      secure: boolean | null;
+      httpOnly: boolean;
+      domain: string | null;
+      path: string;
+      sameSite: string | null;
+    };
+    guestCart: CartTypes;
+  };
+}
+
+interface LineItem extends Stripe.Checkout.SessionCreateParams.LineItem {
+    price_data: {
+      currency: string,
+      product_data: {
+        name: string,
+        images: string[],
+        metadata: {
+            item: string ,
+        };
+      };
+      unit_amount: number,
+    },
+    quantity: number,
+  }
+
+interface StripeCart {
+    
+        product:string,
+        quantity:number
+
+}
+
+
+  
+
 
 
 
 
 export {
-    Product,
     ProductDb,
     UserRequest,
     UserTypes,
     ReviewTypes,
     WishListTypes,
-    OrderType
+    OrderType,
+    CartTypes,
+    SessionTypes,
+    LineItem,
+    StripeCart,
+    GuestCartTypes
+  
 }

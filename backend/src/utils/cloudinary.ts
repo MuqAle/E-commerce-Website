@@ -16,38 +16,50 @@ const uploadImage = async (files:Express.Multer.File[],uuid:string) => {
                 const image = await cloudinary.uploader.upload(file.path,
                     {
                         folder:`online-store/${uuid}`,
-                        width:925,
-                        height:725, 
+                        width:880,
+                        height:1050, 
                         crop: "fill"
                     })
                 return image.secure_url
+                
             }catch(error){
-                return console.log(error)
+                return error
             }
         })
-    )
+    ) as string[]
 
     return imagePath
 }
 
 const deleteImage = async(filePath:string) => {
-    await cloudinary.api.delete_resources_by_prefix(filePath,{
-        type:'upload'
-    })
-    await cloudinary.api.delete_folder(filePath)
+    try{
+        await cloudinary.api.delete_resources_by_prefix(filePath,{
+            type:'upload'
+        })
+        await cloudinary.api.delete_folder(filePath)
+        return
+    }catch(error){
+        return error
+    }
+    
 }
 
 
 
-const updateImages = async(filePath:string,uuid:string,files:Express.Multer.File[]) => {
+const updateImages = async(filePath:string,fullFilePath:string,files:Express.Multer.File[]) => {
 
-    await cloudinary.api.delete_resources_by_prefix(filePath,{
-        type:'upload'
-    })
-
-    const newImages = await uploadImage(files,uuid)
-
-    return newImages
+    try{
+        await cloudinary.api.delete_resources_by_prefix(fullFilePath,{
+            type:'upload'
+        })
+    
+        const newImages = await uploadImage(files,filePath) 
+    
+        return newImages
+    }catch(error){
+        return error
+    }
+    
 }
 
 export {uploadImage,deleteImage,updateImages}

@@ -1,6 +1,6 @@
 import { Types } from "mongoose"
 import Product from "../models/product-model"
-import { CartTypes, UserTypes } from "../types/type"
+import { CartTypes,StripeCart,UserTypes } from "../types/type"
 import Stripe from "stripe"
 import { STRIPE_KEY } from "../config/config"
 import Order from "../models/orders-model"
@@ -47,7 +47,7 @@ const createLineItems = async(array:CartTypes['products']) => {
 
 const createCustomer =(user:UserTypes) => {
     return ({
-        name:user.name,
+        name:`${user.firstName} ${user.lastName}`,
         email:user.email,
         metadata: {
           userId: user.id.toString(),
@@ -117,6 +117,16 @@ const checkoutSessionConfig = (user:UserTypes,sessionID:string,customer:string |
   }) as Stripe.Checkout.SessionCreateParams
 }
 
+const updateProductInventory = async(products:StripeCart[]) => {
+  for(const product of products){
+      const foundProduct = await Product.findById(product.product) 
+      if(foundProduct){
+        foundProduct.stock -= product.quantity
+        foundProduct.sold += product.quantity
+        await foundProduct.save()
+      }
+  }
+}
 
 const createOrder = async (data:Stripe.Checkout.Session,customer:Stripe.Customer | undefined) => {
 
@@ -135,8 +145,8 @@ const createOrder = async (data:Stripe.Checkout.Session,customer:Stripe.Customer
         metadata = product.metadata.item;
       }
       return {
-        product:metadata,
-        quantity: item.quantity,
+        product:metadata as string,
+        quantity: item.quantity as number,
         price:item.price?.unit_amount as number / 100
       }
     })
@@ -156,6 +166,7 @@ const createOrder = async (data:Stripe.Checkout.Session,customer:Stripe.Customer
   
     try{
        await newOrder.save()
+       await updateProductInventory(products)
     }catch(error){
         console.log(error)
     }
@@ -165,5 +176,6 @@ export {
     createLineItems,
     createCustomer,
     checkoutSessionConfig,
-    createOrder
+    createOrder,
+    updateProductInventory
 }

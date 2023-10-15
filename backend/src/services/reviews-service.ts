@@ -12,8 +12,13 @@ const updatedRating = async (id:string) => {
         const reviewSum = getAllReviews?.reviews?.map((product) => product.rating)
         .reduce((prev,curr) => prev + curr, 0)
         if(reviewSum && totalReviews){
-             actualRating = evenRound((reviewSum/totalReviews),3)
-             getAllReviews.overallRating = actualRating
+            if(totalReviews === 0){
+                actualRating = 0
+            }else{
+                actualRating = evenRound((reviewSum/totalReviews),2)
+                getAllReviews.overallRating = actualRating
+            }
+             
         }
         const product = await getAllReviews?.save()
 

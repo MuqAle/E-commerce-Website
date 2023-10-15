@@ -1,22 +1,36 @@
 import mongoose from "mongoose";
-import { Types } from "mongoose";
 import { ProductDb } from "../types/type";
 
 const inventorySchema = new mongoose.Schema({
     name:{
         type:String,
-        required:[true,'Name is required']
+        required:true
     },
     type:String,
     price:{
         type:Number,
-        required:[true,'Price is required']
+        required:true
     },
     onSale:{
         type:Boolean,
-        required:[true,'Item should be specified if on sale']
+        default:false
     },
-    salePercentage:Number,
+    salePercentage:{
+        type:Number,
+        validate: {
+            validator: function (this: ProductDb, value: string) {
+                if (this.onSale === true) {
+                    return typeof value === 'number';
+                }
+                return true;
+            },
+
+            message: 'Sale percentage is required when the product is on sale.',
+          },
+    },
+    salePrice:{
+        type:Number,
+    },
     description:String,
     stock:{
         type:Number,
@@ -49,7 +63,10 @@ const inventorySchema = new mongoose.Schema({
     images:[{
         type:String,
         required:[true,'an image must be uploaded']
-    }]
+    }],
+    imageFolder:String
+},{
+    timestamps:true
 })
 
 const Product = mongoose.model<ProductDb>('Product', inventorySchema)
@@ -57,9 +74,7 @@ const Product = mongoose.model<ProductDb>('Product', inventorySchema)
 
 inventorySchema.set('toJSON',{
     transform:(_document, returnObject) => {
-        returnObject.id = (returnObject._id as Types.ObjectId).toString()
-        delete returnObject._id
-        delete returnObject._v
+        delete returnObject.__v
     }
 })
 

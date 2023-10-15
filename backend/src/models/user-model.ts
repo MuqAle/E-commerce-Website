@@ -4,13 +4,21 @@ import isEmail from 'validator/lib/isEmail'
 import { UserTypes } from "../types/type";
 
 
+
 const userSchema = new mongoose.Schema({
-    name:String,
-    emailAddress:{
+    firstName:{
+        type:String,
+        required:true},
+    lastName:{
+        type:String,
+        required:true},
+    email:{
         type:String,
         required:true,
         unique:true,
-        validate:[ isEmail, 'invalid email' ]
+        validate:[ isEmail, 'invalid email' ],
+        trim:true,
+        lowercase:true
     },
     passwordHash:{
         type:String,
@@ -21,20 +29,32 @@ const userSchema = new mongoose.Schema({
         ref:'Product',
 
     }],
-    shoppingCart:[{
-        product:{
+    shoppingCart:{
         type:Schema.Types.ObjectId,
-        ref:'Product'},
-        quantity:Number
-    }],
+        ref:'Cart'
+    },
     reviews:[{
-        type:Schema.Types.ObjectId,
-        ref:'Product'
+        product:{
+            type:Schema.Types.ObjectId,
+            ref:'Product'
+        },
+        reviewDesc:String,
+        rating:Number,
     }],
     orders:[{
         type:Schema.Types.ObjectId,
         ref:'Order'
-    }]
+    }],
+    stripeId:{
+        type:String,
+    },
+    isAdmin:{
+        type:Boolean,
+        default:false
+    },
+    
+},{
+    timestamps:true
 })
 
 userSchema.plugin(uniqueValidator)
@@ -44,7 +64,7 @@ userSchema.set('toJSON', {
     transform: (_document, returnedObject) => {
         returnedObject.id = (returnedObject._id as Types.ObjectId).toString()
         delete returnedObject._id
-        delete returnedObject._v
+        delete returnedObject.__v
         delete returnedObject.passwordHash
     }
 })

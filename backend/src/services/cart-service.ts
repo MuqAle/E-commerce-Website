@@ -20,8 +20,8 @@ interface CartType {
 
 
 const addToCartUser = async (user:UserTypes,productId:string,cartItems:CartTypes['products'][0],product:ProductDb) => {
-        const cart = await Cart.findById(user.shoppingCart).
-            populate('products.product',{price:1,name:1,onSale:1,salePercentage:1,salePrice:1}) 
+        const cart = await Cart.findById(user.shoppingCart).populate('products.product',
+        {price:1,name:1,onSale:1,salePercentage:1,salePrice:1,images:1}) 
         const foundObject = cart?.products.
             find(product => productId === product.product.id.toString()) as CartType | undefined
         let updatedCart
@@ -37,6 +37,11 @@ const addToCartUser = async (user:UserTypes,productId:string,cartItems:CartTypes
                  { 
                  new:true
                  }).populate('products.product',{price:1,name:1,onSale:1,salePercentage:1,salePrice:1,images:1})
+                 if(updatedCart){
+                    updatedCart.cartPrice = evenRound(updatedCart.cartPrice,2)
+                    updatedCart = await updatedCart.save()
+                 }
+                 
          }else{
              foundObject.quantity += 1
             if(cart && foundObject){
@@ -114,17 +119,21 @@ const deleteFromCartUser = async (user:UserTypes,productId:string,) => {
                     foundObject.product.onSale ?
                      evenRound(-(foundObject.product.salePrice * foundObject.quantity),2)
                     :
-                    evenRound(-(foundObject.product.price * foundObject.quantity),2),2
-                ) 
-                     }
+                    evenRound(-(foundObject.product.price * foundObject.quantity),2),2) 
+                     },
                 },
                 { 
                 new:true
-                })
-                return ({
-                    status:200,
-                    response:updatedCart
-                   })
+                }).populate('products.product',
+                {price:1,name:1,onSale:1,salePercentage:1,salePrice:1,images:1})
+                if(updatedCart){
+                    updatedCart.cartPrice = evenRound(updatedCart.cartPrice,2)
+                    const savedCart = await updatedCart.save()
+                    return ({
+                        status:200,
+                        response:savedCart
+                       })
+                }
         }
         return
     }
@@ -187,8 +196,9 @@ const reduceFromCartUser = async (user:UserTypes,productId:string) => {
         if(foundObject.quantity > 1){
             foundObject.quantity -= 1
         }else{
-            const index = cart.products.findIndex(product => product.product.toString() === productId)
+            const index = cart.products.findIndex(product =>  productId === product.product.id.toString())
             cart.products.splice(index,1)
+            
         }
         cart.cartTotal -= 1
         cart.cartPrice -= foundObject.product.onSale ? 

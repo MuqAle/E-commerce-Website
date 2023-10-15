@@ -111,6 +111,7 @@ const updateProductDB = async(body:ProductDb,id:string,files:Express.Multer.File
 
         const product = {
             name:body.name,
+            type:body.type,
             price:body.price,
             onSale:body.onSale,
             salePercentage:body.salePercentage,

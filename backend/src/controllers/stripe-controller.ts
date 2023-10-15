@@ -59,8 +59,6 @@ const checkoutSession =  async (req:Request, res:Response) => {
 
 
 
-
-
 const stripeWebhook = async (req:Request,res:Response,_next:NextFunction) => {
 
   const webhookSecret = STRIPE_WEBHOOK
@@ -101,8 +99,6 @@ const stripeWebhook = async (req:Request,res:Response,_next:NextFunction) => {
       if(data.customer){
         customer = await stripe.customers.retrieve(data.customer as string) as Stripe.Customer
       }
-      
-
       try{
         await createOrder(data,customer)
       }catch(error){

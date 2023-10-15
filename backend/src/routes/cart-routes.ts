@@ -1,12 +1,13 @@
 import express from 'express'
-import { addToCart,deleteFromCart,getAllCart,reductionCart } from '../controller/cart-controller'
+import { addToCart,deleteFromCart,getAllCart,getUserCart,reductionCart } from '../controllers/cart-controller'
 
 const cartRouter = express.Router()
 
 
-cartRouter.put('/cart-add/:id',addToCart )
-cartRouter.put('/cart-delete/:id',deleteFromCart)
-cartRouter.put('/cart-decrease/:id', reductionCart)
-cartRouter.get('/cart',getAllCart)
+cartRouter.put('/add/:id',addToCart )
+cartRouter.put('/delete/:id',deleteFromCart)
+cartRouter.put('/decrease/:id', reductionCart)
+cartRouter.get('/',getAllCart),
+cartRouter.get('/user-cart',getUserCart)
 
 export default cartRouter

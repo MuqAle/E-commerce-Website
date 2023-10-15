@@ -1,14 +1,14 @@
 import { Request } from "express";
 import multer, { FileFilterCallback } from "multer";
+import {v4 as uuidv4} from 'uuid'
 
 // const path =  __dirname.replace('/config','')
 
+const uuid = uuidv4()
+
 const storage = multer.diskStorage({
-    destination: (_req,_file,cb) => {
-        cb(null, 'public/uploads/')
-    },
-    filename: (_req,file,cb) => {
-        cb(null,new Date().toISOString() + file.originalname)
+    filename: (_req,_file,cb) => {
+        cb(null,new Date().toISOString() + uuid)
     }
 })
 

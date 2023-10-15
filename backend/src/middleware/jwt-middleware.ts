@@ -19,21 +19,28 @@ const userExtractor = async (req:Request,res:Response,next:NextFunction) => {
     try{
         if(req.token){
             const decodedToken = verify(req.token, SECRET as Secret) as JwtPayload
-            req.user = await User.findById(decodedToken.id) as UserTypes
+            req.user = await User.findById(decodedToken.id)
+            .populate('wishList') 
+            .populate({
+              path: 'reviews.product', 
+              model: 'Product', 
+            })
+            .populate('orders')as UserTypes
         }
         return next()
     }catch(error){
-        return res.status(401).json({error:'token invalid'})
+        return res.status(401).json({Error:'Token Invalid'})
     }
 }
 
-const isAdmin = (req:Request,res:Response) => {
-    if(req.user && req.user.isAdmin === false){
-        res.status(400).send('Access Denied: Not Admin')
+const isAdmin = (req:Request,res:Response,next:NextFunction) => {
+    if(req.user){
+        if(req.user.isAdmin === false){
+            res.status(403).json({Error:'Access Denied: Not Admin'})
+        }
+        return next()
     }else{
-
-        res.status(400).send('Access Denied: You Must Login')
-        
+        res.status(401).json({Error:'Access Denied: You Must Login'}) 
     }
     
 }

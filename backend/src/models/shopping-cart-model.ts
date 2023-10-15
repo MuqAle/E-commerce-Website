@@ -1,5 +1,5 @@
 import mongoose, {Schema,Types} from "mongoose";
-import { CartUserType} from "../types/type";
+import {CartTypes} from "../types/type";
 
 
 const cartSchema = new mongoose.Schema({
@@ -24,7 +24,7 @@ const cartSchema = new mongoose.Schema({
     timestamps:true
 })
 
-const Cart = mongoose.model<CartUserType>('Cart', cartSchema)
+const Cart = mongoose.model<CartTypes>('Cart', cartSchema)
 
 cartSchema.set('toJSON', {
     transform: (_document, returnedObject) => {

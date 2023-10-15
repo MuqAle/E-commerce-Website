@@ -3,6 +3,7 @@ import allData from "../assets/data/all-products";
 import {v4 as uuidv4} from 'uuid'
 import {v2 as cloudinary } from 'cloudinary';
 import { CLOUDINARY_KEY,CLOUDINARY_NAME,CLOUDINARY_SECRET } from './../config/config';
+import evenRound from "./rounding";
 
 
 cloudinary.config({ 
@@ -20,7 +21,6 @@ const importData = async() => {
 
         const path = __dirname.replace('/utils','')
 
-        // const imageBuffers: Buffer[] = images.map((imgUrl:string) => readFileSync(path + '/assets/imgs/' + imgUrl))
         
         const imagePath = await Promise.all(
             images.map(async file => {
@@ -46,6 +46,7 @@ const importData = async() => {
             price,
             onSale,
             salePercentage,
+            salePrice: onSale ? evenRound(price * (salePercentage as number),2) : undefined,
             stock,
             metal,
             colors,

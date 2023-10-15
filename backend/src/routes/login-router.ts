@@ -1,4 +1,4 @@
-import loginUser from "../controller/login-controller";
+import loginUser from "../controllers/login-controller";
 import express from 'express'
 
 const loginRouter = express.Router()

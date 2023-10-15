@@ -23,7 +23,7 @@ const getProduct = async(req:Request,res:Response,next:NextFunction) => {
             res.status(404).end()
         }
     }catch(error){
-        next()
+        next(error)
     }
 }
 
@@ -38,12 +38,12 @@ const addProduct = async (req:Request,res:Response,next:NextFunction) => {
 
         res.status(201).json(saveProduct)
     }catch(error){
-        next()
+        next(error)
     }
 }
 
 
-const deleteProduct = async(req:Request,res:Response) => {
+const deleteProduct = async(req:Request,res:Response,next:NextFunction) => {
     try{
         const {id} = req.params
         const product = await Product.findById(id)
@@ -51,18 +51,19 @@ const deleteProduct = async(req:Request,res:Response) => {
 
         if(product){
             await deleteProductSession(product,id)
-            await deleteProductUser(product,id)
             await deleteProductReviews(id)
-
+            await deleteProductUser(product,id)
             await deleteImage(fullFolderPath)
 
             await Product.findByIdAndRemove(req.params.id)
 
             res.status(204).end()
+        }else{
+            res.status(404).json({Error:'Item Not Found'})
         }
 
     }catch(error){
-        res.status(404).json({Error:'Item Not Found'})
+        next(error)
     }
 }
 
@@ -74,9 +75,14 @@ const updatedProducts = async (req:Request,res:Response,next:NextFunction) => {
 
         const changeProduct = await updateProductDB(body,id,files)
 
-        res.json(changeProduct)
+        if(!changeProduct){
+            res.status(404).json({Error:'Item Not Found'})
+        }else{
+            res.json(changeProduct)
+        }
+        
     }catch(error){
-        next()
+        next(error)
     }
    
 

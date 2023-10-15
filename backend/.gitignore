@@ -1,2 +1,5 @@
 node_modules
 .env
+src/assets/imgs
+src/assets/data
+src/assets/utils

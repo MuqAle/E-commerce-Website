@@ -1,9 +1,9 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 import { SessionTypes } from "../types/type";
 
 
-const sessionSchema = new mongoose.Schema({
-    _id: String, // The session ID as a string
+const sessionSchema = new Schema({
+    _id: String, 
     expires: Date,
     session: {
       cookie: {
@@ -18,7 +18,10 @@ const sessionSchema = new mongoose.Schema({
       guestCart: {
         products: [
           {
-            product: mongoose.Schema.Types.ObjectId, // Assuming product is referenced by ObjectId
+            product:{
+              type:Schema.Types.ObjectId,
+              ref:'Product'
+            }, 
             quantity: Number,
           },
         ],

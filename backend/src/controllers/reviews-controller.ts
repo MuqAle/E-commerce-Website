@@ -30,7 +30,7 @@ const postReview = async (req:Request,res:Response,next:NextFunction) => {
             res.status(404).json({Error:'Item Not Found'})
         }
     }catch(error){
-        next()
+        next(error)
     }
 }
 
@@ -57,7 +57,7 @@ const deleteReview = async (req:Request,res:Response,next:NextFunction) => {
             res.status(404).json({Error:'No Review Or Product Found'})
         }
     }catch(error){
-        next()
+        next(error)
     }
 }
 

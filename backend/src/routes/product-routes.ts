@@ -1,17 +1,20 @@
 import express from 'express'
-import { deleteProduct, getAllProducts,getProduct, addProduct } from '../controller/inventory-controller'
-import upload from '../config/multer-config'
+import { deleteProduct, getAllProducts,getProduct, addProduct, updatedProducts } from '../controllers/product-controller'
+import upload from '../middleware/multer-middleware'
+import { isAdmin, userExtractor } from '../middleware/jwt-middleware'
 
 
 
 const productRouter = express.Router()
 
-productRouter.get('/', getAllProducts)
+productRouter.get('/',getAllProducts)
 
 productRouter.get('/:id',getProduct)
 
-productRouter.delete('/:id',deleteProduct)
+productRouter.delete('/:id',userExtractor,isAdmin,deleteProduct)
 
-productRouter.post('/', upload.array('images', 3),addProduct)
+productRouter.post('/',userExtractor, isAdmin,upload.array('images', 3),addProduct)
+
+productRouter.put('/:id',userExtractor,isAdmin,upload.array('images', 3),updatedProducts)
 
 export default productRouter
