@@ -20,10 +20,15 @@ const userExtractor = async (req:Request,res:Response,next:NextFunction) => {
         if(req.token){
             const decodedToken = verify(req.token, SECRET as Secret) as JwtPayload
             req.user = await User.findById(decodedToken.id)
-            .populate('wishList') 
+            .populate({
+                path: 'wishList',
+                model: 'Product', 
+                select: 'name price images onSale salePercentage salePrice type' 
+              }) 
             .populate({
               path: 'reviews.product', 
               model: 'Product', 
+              select: 'name price images onSale salePercentage salePrice type' 
             })
             .populate('orders')as UserTypes
         }

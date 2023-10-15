@@ -6,7 +6,7 @@ import { getUserProfile } from '../controllers/user-controller'
 const userReqRouter = express.Router()
 
 userReqRouter.put('/add-reviews/:id', postReview )
-userReqRouter.put('/wishlist', addWishList)
+userReqRouter.put('/wishlist/:id', addWishList)
 userReqRouter.put('/delete-reviews/:id', deleteReview )
 userReqRouter.get('/profile', getUserProfile)
 
