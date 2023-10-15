@@ -39,7 +39,11 @@ const userSchema = new mongoose.Schema({
             ref:'Product'
         },
         reviewDesc:String,
-        rating:Number,
+        rating:{
+            type:Number,
+            min:1,
+            max:5
+        }
     }],
     orders:[{
         type:Schema.Types.ObjectId,

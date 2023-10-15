@@ -52,6 +52,10 @@ const updateProductRating = async (alreadyRated:ProductDb['reviews'][0],rating:n
                 "reviews.$.rating":rating,
                 "reviews.$.reviewDesc":reviewDesc
             }
+        },{
+            new:true,
+            runValidators:true,
+            context:"query"
         }
     )
 }
@@ -66,6 +70,7 @@ const addNewRating = async (id:string,user:UserTypes,rating:number,reviewDesc:st
             }
         },
         new:true,
+        runValidators:true,
         context:'query'
     })
     if(user.reviews){
