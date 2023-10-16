@@ -56,7 +56,6 @@
 .card-container{
     position: relative;
     width: calc((100% - 24px)/4);
-    margin-bottom: 40px;
 }
 
 .product-link{
@@ -82,9 +81,10 @@
 
 .left-btn{
     @include card-btn;
-    bottom: 85px;
+    bottom: 125px;
     left: 10px;
     img{
+        margin-top: 2.7px;
         width: 30px;
         height: 23px;
     }
@@ -92,7 +92,7 @@
 
 .right-btn{
     @include card-btn($color:black);
-    bottom: 85px;
+    bottom: 125px;
     right: 10px;
     // margin-right: 1.5rem;
     

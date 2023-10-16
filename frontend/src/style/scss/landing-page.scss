@@ -149,6 +149,8 @@
     .card{
         height: 100%;
         width: 100%;
+
+        
     }
 }
 
@@ -230,8 +232,8 @@
 
 .landing-page-left-btn{
     @include catalog.card-btn;
-    bottom: 82px;
-    left: 8px;
+    bottom: 125px;
+    left: 10px;
     img{
         width: 2rem;
         height: 23px;
@@ -240,8 +242,8 @@
 
 .landing-page-right-btn{
     @include catalog.card-btn($color:black);
-    bottom: 82px;
-    right: 8px;
+    bottom: 125px;
+    right: 10px;
     
     img{
         width: 2rem;
