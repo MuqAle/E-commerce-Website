@@ -55,6 +55,7 @@ const inventorySchema = new mongoose.Schema({
         },
         reviewDesc: String,
         rating: Number,
+        reviewTitle:String,
         datePosted:{
             type:Date,
             default:Date.now()

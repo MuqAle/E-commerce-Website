@@ -19,9 +19,9 @@ const postReview = async (req:Request,res:Response,next:NextFunction) => {
                 userId => userId.postedBy.toString() === user.id.toString()
             )
             if(alreadyRated){
-                await updateProductRating(alreadyRated,body.rating,body.reviewDesc,id)
+                await updateProductRating(alreadyRated,body.rating,body.reviewTitle,body.reviewDesc,id)
             }else{
-                await addNewRating(id,user,body.rating,body.reviewDesc)
+                await addNewRating(id,user,body.rating,body.reviewTitle,body.reviewDesc)
             }
             const finalProduct = await updatedRating(id)
     

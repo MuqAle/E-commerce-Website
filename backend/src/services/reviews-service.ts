@@ -6,7 +6,7 @@ import { Types } from "mongoose";
 
 
 const updatedRating = async (id:string) => {
-    const getAllReviews = await Product.findById(id)
+    const getAllReviews = await Product.findById(id).populate('reviews.postedBy',{firstName:1})
         const totalReviews = getAllReviews?.reviews?.length
         let actualRating
         const reviewSum = getAllReviews?.reviews?.map((product) => product.rating)
@@ -25,7 +25,7 @@ const updatedRating = async (id:string) => {
         return product
 }
 
-const updateProductRating = async (alreadyRated:ProductDb['reviews'][0],rating:number,reviewDesc:string,id:string) => {
+const updateProductRating = async (alreadyRated:ProductDb['reviews'][0],rating:number,reviewTitle:string,reviewDesc:string,id:string) => {
     await Product.updateOne(
         {
         reviews:{
@@ -34,7 +34,8 @@ const updateProductRating = async (alreadyRated:ProductDb['reviews'][0],rating:n
         },{
         $set:{
             "reviews.$.rating":rating,
-            "reviews.$.reviewDesc":reviewDesc}
+            "reviews.$.reviewDesc":reviewDesc,
+            "reviews.$.reviewTitle":reviewTitle}
         },{
             new:true,
             context:"query"
@@ -50,7 +51,8 @@ const updateProductRating = async (alreadyRated:ProductDb['reviews'][0],rating:n
         },{
             $set:{
                 "reviews.$.rating":rating,
-                "reviews.$.reviewDesc":reviewDesc
+                "reviews.$.reviewDesc":reviewDesc,
+                "reviews.$.reviewTitle":reviewTitle
             }
         },{
             new:true,
@@ -60,13 +62,14 @@ const updateProductRating = async (alreadyRated:ProductDb['reviews'][0],rating:n
     )
 }
 
-const addNewRating = async (id:string,user:UserTypes,rating:number,reviewDesc:string) => {
+const addNewRating = async (id:string,user:UserTypes,rating:number,reviewTitle:string,reviewDesc:string) => {
     await Product.findByIdAndUpdate(id,{
         $push: {
             reviews:{
                 postedBy:user.id,
                 rating:rating,
                 reviewDesc:reviewDesc, 
+                reviewTitle:reviewTitle,
             }
         },
         new:true,
@@ -77,6 +80,7 @@ const addNewRating = async (id:string,user:UserTypes,rating:number,reviewDesc:st
         user.reviews.push({
             product:new Types.ObjectId(id),
             reviewDesc:reviewDesc,
+            reviewTitle:reviewTitle,
             rating:rating,})
         await user.save()
     }
@@ -84,10 +88,10 @@ const addNewRating = async (id:string,user:UserTypes,rating:number,reviewDesc:st
 
 const deleteProductReview = async (product:ProductDb,reviewPosted:ProductDb['reviews'][0],user:UserTypes,id:string) => {
     const productIndex = product.reviews.findIndex(review => review.postedBy === reviewPosted.postedBy)
-    product.reviews = product.reviews.splice(productIndex,1)
+    product.reviews.splice(productIndex,1)
     if(user.reviews){
         const userIndex = user.reviews.findIndex(review => review.product.toString() === id)
-        user.reviews = user.reviews.splice(userIndex,1) 
+        user.reviews.splice(userIndex,1) 
     }
     await user.save()
     await product.save()

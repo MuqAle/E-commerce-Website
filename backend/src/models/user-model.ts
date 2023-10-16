@@ -38,7 +38,12 @@ const userSchema = new mongoose.Schema({
             type:Schema.Types.ObjectId,
             ref:'Product'
         },
+        reviewTitle:String,
         reviewDesc:String,
+        datePosted:{
+            type:Date,
+            default:Date.now()
+        },
         rating:{
             type:Number,
             min:1,

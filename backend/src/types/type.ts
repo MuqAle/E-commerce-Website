@@ -19,6 +19,7 @@ interface ProductDb extends Document {
     reviews:{
         postedBy:Types.ObjectId
         reviewDesc:string,
+        reviewTitle:string
         rating:number,
         datePosted:Date
     }[]
@@ -37,6 +38,7 @@ interface UserTypes extends Document{
     reviews?:{
         product:Types.ObjectId,
         reviewDesc:string,
+        reviewTitle:string,
         rating:number}[],
     orders?:Types.ObjectId[],
     isAdmin:boolean,
@@ -53,6 +55,8 @@ interface UserRequest{
 
 interface ReviewTypes{
     reviewDesc:string,
+    reviewTitle:string,
+    datePosted:Date
     rating:number
 }
 
