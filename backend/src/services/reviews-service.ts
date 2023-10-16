@@ -6,20 +6,20 @@ import { Types } from "mongoose";
 
 
 const updatedRating = async (id:string) => {
-    const getAllReviews = await Product.findById(id).populate('reviews.postedBy',{firstName:1})
-        const totalReviews = getAllReviews?.reviews?.length
-        let actualRating
-        const reviewSum = getAllReviews?.reviews?.map((product) => product.rating)
-        .reduce((prev,curr) => prev + curr, 0)
-        if(reviewSum && totalReviews){
-            if(totalReviews === 0){
-                actualRating = 0
-            }else{
-                actualRating = evenRound((reviewSum/totalReviews),2)
-                getAllReviews.overallRating = actualRating
-            }
-             
+    const getAllReviews = await Product.findById(id).populate('reviews.postedBy',{firstName:1,lastName:1})
+        const totalReviews = getAllReviews?.reviews.length
+        let actualRating = 0
+        if(totalReviews && totalReviews > 0){
+            const reviewSum = getAllReviews?.reviews.map((product) => product.rating)
+            .reduce((prev,curr) => prev + curr, 0)
+            if(reviewSum && totalReviews){
+            actualRating = evenRound((reviewSum/totalReviews),2) 
         }
+        }
+        if(getAllReviews && getAllReviews.overallRating){
+            getAllReviews.overallRating = actualRating
+        }
+        
         const product = await getAllReviews?.save()
 
         return product
