@@ -44,6 +44,7 @@ $accent-color: rgb(231, 185, 192);
 .label{
     margin-top: 20px;
     height: 90px;
+    overflow: hidden;
 
     .card-name{
         margin-bottom: 5px;
@@ -60,7 +61,7 @@ $accent-color: rgb(231, 185, 192);
     }
 }
 
-.star-rating-container-card{
+.star-rating-container.card{
     display: flex;
     margin-top: 5px;
 }

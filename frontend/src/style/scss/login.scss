@@ -11,8 +11,8 @@
 
 @mixin password-show-btn {
     position: absolute; 
-    right: 70px;
-    margin-top: 15px;
+    right: 10px;
+    margin-top: 16px;
     background: none;
     border: 0; 
     cursor: pointer;
@@ -58,14 +58,20 @@
     top: 0;
 }
 
-.sign-in-form{
+.sign-in-form ,.sign-up-form-scroll{
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
     height: 70%;
     width: 90%;
-    .form-input-container.error{
+
+    .sign-up-form{
+        height: 100%;
+        width: 100%;
+        padding-top: 30px;
+    }
+    .input-container.error{
         input{
             border: rgb(188, 11, 11) solid 1px;
         }
@@ -76,7 +82,7 @@
         flex-direction: column;
         width: 100%;
     }
-    .form-input-container{
+    .input-container{
         display: flex;
         flex-direction: column;
         padding: 10px 30px;
@@ -101,6 +107,7 @@
         
         .password-container{
             display: flex;
+            position: relative;
             input{
                 flex-grow: 1;
             }
@@ -110,7 +117,7 @@
         }
     }
 
-    .sign-in-submit{
+    .sign-in-submit,.sign-up-submit{
         background-color: card.$accent-color;
          display: inline-block;
         width: 86%;
@@ -150,5 +157,17 @@
         font-weight: 200;
     }
     
+}
+
+.sign-up-form-scroll{
+overflow-y: scroll;
+overflow-x: hidden;
+    .server-error{
+        color:rgb(188, 11, 11) ;
+        padding-left: 30px;
+    }
+}
+.sign-up-submit{
+    margin: 30px;
 }
 

@@ -36,6 +36,7 @@
     flex-direction: column-reverse;
     overflow: hidden;
     width: 70%;
+    
 
     .product-img-container{
         width: 100%;
@@ -149,5 +150,12 @@
 }
 
     
+.empty-page{
+    height: 100vh;
+}
 
-
+.star-rating-container{
+    display: flex;
+    margin-top: -25px;
+    margin-bottom: 20;
+}
