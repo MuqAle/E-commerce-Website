@@ -1,4 +1,5 @@
 import {FaStar} from 'react-icons/fa'
+import { v4 as uuidv4 } from 'uuid'
 
 const StarRating = ({rating,size,type}:{rating:number,size:string,type:string}) => {
 
@@ -28,9 +29,10 @@ const StarRating = ({rating,size,type}:{rating:number,size:string,type:string}) 
     }
 
     return(
-        <div className={`star-rating-container-${type}`}>
+        <div className={`star-rating-container ${type}`}>
             {starArray.map((star,i) => {
-                const uniqueGradientId = `star-rating-gradient-${i}`
+                const randomNumber = uuidv4()
+                const uniqueGradientId = `star-rating-gradient-${randomNumber}`
                 const firstOffSet = `${(star === 0 ? star - 1 : star) * 100}%`
                 const secondOffSet = `${(star === 0 ? star : 1-star) * 100}%`
                 return(
