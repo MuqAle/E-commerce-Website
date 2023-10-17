@@ -16,7 +16,7 @@ const updatedRating = async (id:string) => {
             actualRating = evenRound((reviewSum/totalReviews),2) 
         }
         }
-        if(getAllReviews && getAllReviews.overallRating){
+        if(getAllReviews){
             getAllReviews.overallRating = actualRating
         }
         
