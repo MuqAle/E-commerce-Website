@@ -7,16 +7,18 @@ import { addProductDB, deleteProductReviews, deleteProductSession, deleteProduct
 
 
 
-const getAllProducts = async (_req:Request,res:Response)=> {
-    const product:ProductDb[] = await Product.find({}).populate('reviews.postedBy',
-    {name:1})
-
-     res.json(product)
+const getAllProducts = async (_req:Request,res:Response,next:NextFunction)=> {
+    try{
+        const product:ProductDb[] = await Product.find({})
+          res.status(200).json(product)
+    }catch(error){
+        next(error)
+    } 
 }
 
 const getProduct = async(req:Request,res:Response,next:NextFunction) => {
     try{
-        const product = await Product.findById(req.params.id)
+        const product = await Product.findById(req.params.id).populate('reviews.postedBy',{firstName:1,lastName:1})
         if(product){
             res.status(200).json(product)
         }else{
