@@ -1,14 +1,19 @@
-import usePagination from "../hooks/pagnation";
+import usePagination from "../hooks/pagination";
+
+interface PaginationTypes {
+  onPageChange:(num : number) => void,
+  totalCount:number,
+  currentPage:number,
+  pageSize:number,
+}
 
 
 const Pagination = (
-        onPageChange:(num : number|string) => void,
-        totalCount:number,
-        siblingCount = 1,
-        currentPage:number,
-        pageSize:number,
+{  onPageChange,
+  totalCount,
+  currentPage,
+  pageSize,}:PaginationTypes,siblingCount = 1
 ) => {
-
 
     const paginationRange = usePagination(
         currentPage,
@@ -33,14 +38,12 @@ const Pagination = (
     
       const lastPage = paginationRange[paginationRange.length - 1]
 
+     
       return (
-        <ul
-          className={'pagination-container'}
-        >
+        <ul className={'pagination-container'}>
           <li
             className={currentPage === 1 ? 'pagination-item disabled':'pagination-item'}
-            onClick={onPrevious}
-          >
+            onClick={onPrevious}>
             <div className="arrow left" />
           </li>
           {paginationRange.map(pageNumber => {
@@ -49,17 +52,15 @@ const Pagination = (
               return <li className="pagination-item dots">&#8230;</li>;
             }
             
-            // Render our Page Pills
             return (
               <li
                 className={pageNumber === currentPage ? 'pagination-item-selected' : 'pagination-item'}
-                onClick={() => onPageChange(pageNumber)}
+                // onClick={() => onPageChange(pageNumber)}
               >
                 {pageNumber}
               </li>
-            );
+            )
           })}
-          {/*  Right Navigation arrow */}
           <li
             className={currentPage === lastPage ? 'pagination-item disabled':'pagination-item' }
             onClick={onNext}
@@ -67,7 +68,7 @@ const Pagination = (
             <div className="arrow right" />
           </li>
         </ul>
-      );
+      )
 }
 
 export default Pagination
