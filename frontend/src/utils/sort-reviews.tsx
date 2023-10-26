@@ -1,8 +1,11 @@
-import { ProductDb } from "./types";
+import {  ReviewType } from "./types";
+import formatDistanceToNowStrict from 'date-fns/formatDistanceToNowStrict'
 
 
 
-const sortReviewsInDiffArray = (arr:ProductDb['reviews']) => {
+
+
+const sortReviewsInDiffArray = (arr:ReviewType[] | undefined) => {
     const oneStar = []
     const twoStar = []
     const threeStar = []
@@ -38,26 +41,66 @@ const sortReviewsInDiffArray = (arr:ProductDb['reviews']) => {
     }
 }
 
-const sortLowestRating  = (arr:ProductDb['reviews']) => {
+const sortLowestRating  = (arr:ReviewType[] | undefined):ReviewType[] | undefined => {
     if(arr){
-        if(arr.length < 1){
+        if(arr.length <= 1){
             return arr
         }
         const pivot = arr[0]
         const leftArray = []
         const rightArray = []
-        for(let i = 0 ; i < arr.length; i+=1){
-            if(arr[i] < pivot){
+        for(let i = 1 ; i < arr.length; i+=1){
+            if(arr[i].rating < pivot.rating){
                 leftArray.push(arr[i])
             }else{
                 rightArray.push(arr[i])
             }
         }
-        return [...leftArray,pivot,...rightArray]
+        
+        return [...sortLowestRating(leftArray) as ReviewType[],pivot,...sortLowestRating(rightArray) as ReviewType[]] 
     }  
 }
 
-const sortHighestRating = (arr:ProductDb['reviews']) => {
+const sortHighestRating = (arr:ReviewType[] | undefined):ReviewType[] | undefined => {
+    if(arr){
+        if(arr.length <= 1){
+            return arr
+        }
+        const pivot = arr[0]
+        const leftArray = []
+        const rightArray = []
+        for(let i = 1 ; i < arr.length; i+=1){
+            if(arr[i].rating > pivot.rating){
+                leftArray.push(arr[i])
+            }else{
+                rightArray.push(arr[i])
+            }
+        }
+        return [...sortHighestRating(leftArray) as ReviewType[],pivot,...sortHighestRating(rightArray) as ReviewType[]] 
+    } 
+}
+
+const sortRecentDate = (arr:ReviewType[] | undefined):ReviewType[] | undefined  => {
+    if(arr){
+        if(arr.length <= 1){
+            return arr
+        }
+        const pivot = arr[0]
+        const leftArray = []
+        const rightArray = []
+        for(let i = 1 ; i < arr.length; i+=1){
+            if(new Date(arr[i].datePosted).getTime() > new Date(pivot.datePosted).getTime()){
+                leftArray.push(arr[i])
+            }else{
+                rightArray.push(arr[i])
+            }
+        }
+        
+        return [...sortRecentDate(leftArray) as ReviewType[],pivot,...sortRecentDate(rightArray) as ReviewType[]] 
+    } 
+}
+
+const sortOldestDate = (arr:ReviewType[] | undefined):ReviewType[] | undefined  => {
     if(arr){
         if(arr.length < 1){
             return arr
@@ -65,83 +108,27 @@ const sortHighestRating = (arr:ProductDb['reviews']) => {
         const pivot = arr[0]
         const leftArray = []
         const rightArray = []
-        for(let i = 0 ; i < arr.length; i+=1){
-            if(arr[i] > pivot){
+        for(let i = 1 ; i < arr.length; i+=1){
+            if(new Date(arr[i].datePosted).getTime() < new Date(pivot.datePosted).getTime()){
+                
                 leftArray.push(arr[i])
             }else{
                 rightArray.push(arr[i])
             }
         }
-        return [...leftArray,pivot,...rightArray]
-    } 
-}
-
-const sortRecentDate = (arr:ProductDb['reviews']) => {
-    if(arr){
-        if(arr.length < 1){
-            return arr
-        }
-        const pivot = arr[0].datePosted.getTime()
-        const leftArray = []
-        const rightArray = []
-        for(let i = 0 ; i < arr.length; i+=1){
-            if(arr[i].datePosted.getTime() > pivot){
-                leftArray.push(arr[i])
-            }else{
-                rightArray.push(arr[i])
-            }
-        }
-        return [...leftArray,pivot,...rightArray]
-    } 
-}
-
-const sortOldestDate = (arr:ProductDb['reviews']) => {
-    if(arr){
-        if(arr.length < 1){
-            return arr
-        }
-        const pivot = arr[0].datePosted.getTime()
-        const leftArray = []
-        const rightArray = []
-        for(let i = 0 ; i < arr.length; i+=1){
-            if(arr[i].datePosted.getTime() < pivot){
-                leftArray.push(arr[i])
-            }else{
-                rightArray.push(arr[i])
-            }
-        }
-        return [...leftArray,pivot,...rightArray]
+        return [...sortOldestDate(leftArray) as ReviewType[],pivot,...sortOldestDate(rightArray) as ReviewType[]] 
     } 
 }
 
 const formatTimeDifference = (time:Date) => {
 
-    const currentDate = new Date();
-    const timeDifferenceMilliseconds = currentDate.getTime() - time.getDate();
-    const seconds = Math.floor(timeDifferenceMilliseconds / 1000);
-    const minutes = Math.floor(seconds / 60);
-    const hours = Math.floor(minutes / 60);
-    const days = Math.floor(hours / 24);
-    const weeks = Math.floor(days / 7);
-    const months = Math.floor(weeks / 4); // Approximating a month as 4 weeks
-    const years = Math.floor(months / 12);
-
-    if (years > 0) {
-        return years === 1 ? "1 year ago" : `${years} years ago`;
-    } else if (months > 0) {
-        return months === 1 ? "1 month ago" : `${months} months ago`;
-    } else if (weeks > 0) {
-        return weeks === 1 ? "1 week ago" : `${weeks} weeks ago`;
-    } else if (days > 0) {
-        return days === 1 ? "1 day ago" : `${days} days ago`;
-    } else if (hours > 0) {
-        return hours === 1 ? "1 hour ago" : `${hours} hours ago`;
-    } else if (minutes > 0) {
-        return minutes === 1 ? "1 minute ago" : `${minutes} minutes ago`;
-    } else {
-        return seconds === 1 ? "1 second ago" : `${seconds} seconds ago`;
+    const postedDate = new Date(time).toLocaleString()
+    const distanceDate = formatDistanceToNowStrict(new Date(postedDate))
+    if(distanceDate.split(' ')[1] === 'year'){
+        return postedDate
+    }else{
+        return (`${distanceDate} ago`)
     }
-
 }
 
 export {sortReviewsInDiffArray,

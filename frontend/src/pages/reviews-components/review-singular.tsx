@@ -1,21 +1,23 @@
+import { formatTimeDifference } from "../../utils/sort-reviews"
 import { ReviewType } from "../../utils/types"
 import StarRating from "./star-rating"
 
 
 
-const ReviewSingular = (review:ReviewType) => {
+const ReviewSingular = ({review}:{review:ReviewType}) => {
+    const date = formatTimeDifference(review.datePosted)
+    const name = `${review.postedBy.firstName} ${review.postedBy.lastName[0]}.`
     return (
-        <div className="review">
+        <div className="review"  >
             <div className="review-post-by-container">
-                <p className="review-posted-by">{review.postedBy.firstName}</p>
+                <StarRating rating={review.rating} size={"20"} type={"review-single"} />
+                <p className="review-posted-by">{name}</p>
+                <p className="review-posted-date">{`${date}`}</p>
             </div>
             <div className="review-details">
-                <StarRating rating={review.rating} size={"10"} type={"review"} />
-                <p className="review-title">{review.reviewTitle}</p>
+                
+                <h3 className="review-title">{review.reviewTitle}</h3>
                 <p className="review-description">{review.reviewDesc}</p>
-            </div>
-            <div>
-                <p>{`${review.datePosted}`}</p>
             </div>
         </div>
     )

@@ -1,10 +1,17 @@
 import usePagination from "../hooks/pagination";
+import disabledBackArrow from '../assets/imgs/svg-imgs/arrow-back-disabled.svg'
+import disabledFrontArrow from  '../assets/imgs/svg-imgs/arrow-forward-disabled.svg'
+import backArrow from  '../assets/imgs/svg-imgs/arrow_back_ios_new_FILL0_wght100_GRAD0_opsz48.svg'
+import frontArrow from  '../assets/imgs/svg-imgs/arrow_forward_ios_FILL0_wght100_GRAD-25_opsz48.svg'
+
 
 interface PaginationTypes {
   onPageChange:(num : number) => void,
   totalCount:number,
   currentPage:number,
   pageSize:number,
+  siblingCount:number
+  slideToView:() => void
 }
 
 
@@ -12,61 +19,66 @@ const Pagination = (
 {  onPageChange,
   totalCount,
   currentPage,
-  pageSize,}:PaginationTypes,siblingCount = 1
+  siblingCount,
+  pageSize,
+ slideToView}:PaginationTypes
 ) => {
 
     const paginationRange = usePagination(
-        currentPage,
         totalCount,
+        pageSize,
         siblingCount,
-        pageSize
+        currentPage,
     )
-
+    
     const DOTS = '...'
 
-    if (currentPage === 0 || paginationRange.length < 2) {
+    if (currentPage === 0 || paginationRange && paginationRange.length < 2) {
         return null;
       }
     
       const onNext = () => {
         onPageChange(currentPage + 1)
+        slideToView()
       }
     
       const onPrevious = () => {
         onPageChange(currentPage - 1)
+        slideToView()
       }
     
-      const lastPage = paginationRange[paginationRange.length - 1]
+      const lastPage = paginationRange && paginationRange[paginationRange.length - 1]
 
      
       return (
         <ul className={'pagination-container'}>
-          <li
-            className={currentPage === 1 ? 'pagination-item disabled':'pagination-item'}
+          <button
+            className={currentPage === 1 ? 'arrow left disabled':'arrow left'}
             onClick={onPrevious}>
-            <div className="arrow left" />
-          </li>
-          {paginationRange.map(pageNumber => {
-             
+            <img src={currentPage === 1 ? disabledBackArrow:backArrow}/>
+          </button>
+          {paginationRange && paginationRange.map((pageNumber,index) => {
             if (pageNumber === DOTS) {
-              return <li className="pagination-item dots">&#8230;</li>;
+              return <li key={index} className="pagination-item dots">&#8230;</li>;
             }
-            
             return (
-              <li
-                className={pageNumber === currentPage ? 'pagination-item-selected' : 'pagination-item'}
-                // onClick={() => onPageChange(pageNumber)}
+              <button
+                key={index}
+                className={pageNumber === currentPage ? 'pagination-item selected' : 'pagination-item'}
+                onClick={() => {
+                  onPageChange(Number(pageNumber))
+                  slideToView()}}
               >
                 {pageNumber}
-              </li>
+              </button>
             )
           })}
-          <li
-            className={currentPage === lastPage ? 'pagination-item disabled':'pagination-item' }
+          <button
+            className={currentPage === lastPage ? 'arrow right disabled':'arrow right' }
             onClick={onNext}
           >
-            <div className="arrow right" />
-          </li>
+            <img src={currentPage === lastPage ? disabledFrontArrow:frontArrow}/>
+          </button>
         </ul>
       )
 }

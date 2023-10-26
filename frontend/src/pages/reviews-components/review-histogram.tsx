@@ -18,15 +18,17 @@ interface ReviewMatrixType{
 
 const ReviewHistogram = ({arr,allReviewsLength}:ReviewMatrixType) => {
     return(
-        <div className="histogram">
+        <div className="histogram-container">
+            <p className="histogram-title">Summary</p>
             {[...Array(5)].map((_bar,i) => {
-                const starValue = i + 1
-                const widthLength = arr && allReviewsLength ? ((arr[i].length)/allReviewsLength) * 100 : 0
+                const starValue = 5 - i 
+                const arrIndex = 4 - i
+                const widthLength = arr && allReviewsLength ? ((arr[arrIndex].length)/allReviewsLength) * 100 : 0
                 return(
                     <div key={i} className="singular-bar">
-                        <StarRating rating={starValue} size={"10"} type={"histogram"}/>
+                        <StarRating rating={starValue} size={"15"} type={"histogram"}/>
                             <div className="bar">
-                            <div className="rating bar" style={{width:`${widthLength}%`}}></div>
+                            <div className="rating-bar" style={{width:`${widthLength}%`}}></div>
                             </div>
                     </div>
                     

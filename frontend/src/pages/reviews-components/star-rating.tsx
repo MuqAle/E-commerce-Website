@@ -25,7 +25,6 @@ const StarRating = ({rating,size,type}:{rating:number,size:string,type:string}) 
     for(let i=1; i<=emptyStars; i++) {
         starArray.push(0);
     }
-
     }
 
     return(
@@ -34,7 +33,7 @@ const StarRating = ({rating,size,type}:{rating:number,size:string,type:string}) 
                 const randomNumber = uuidv4()
                 const uniqueGradientId = `star-rating-gradient-${randomNumber}`
                 const firstOffSet = `${(star === 0 ? star - 1 : star) * 100}%`
-                const secondOffSet = `${(star === 0 ? star : 1-star) * 100}%`
+                const secondOffSet = `${-(star === 0 ? star : 1-star) * 100}%`
                 return(
                     <div key={i} >
                         <svg width="0" height="0">

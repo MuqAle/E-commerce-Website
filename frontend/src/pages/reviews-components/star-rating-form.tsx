@@ -14,12 +14,12 @@ const StarRatingForm = () => {
                     <label>
                         <input
                             type='radio'
-                            name='rating-form'
+                            name='star-rating-form'
                             value={ratingValue}
                             onClick={() => setRating(ratingValue)}
                         />
                         <FaStar
-                            className = 'star'
+                            className = 'star-form'
                             color = {ratingValue <= (hover ?? rating ?? 0) ? "e7b9c0": "e4e5e9"}
                             onMouseEnter = {() => setHover(ratingValue)}
                             onMouseLeave = {() => setHover(null)}

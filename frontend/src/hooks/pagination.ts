@@ -4,10 +4,8 @@ import { useMemo } from "react"
 
 const range = (start:number, end:number) => {
     const length = end - start + 1
-
     return Array.from({ length }, (_, idx) => idx + start)
   }
-
 
 const usePagination = ( 
     totalCount:number,
@@ -15,17 +13,18 @@ const usePagination = (
     siblingCount = 1,
     currentPage:number) => {
 
-
     const DOTS = '...'
 
     const paginationRange = useMemo(() => {
         const totalPageCount = Math.ceil(totalCount / pageSize)
 
         const totalPageNumbers = siblingCount + 5
+        
 
         if (totalPageNumbers >= totalPageCount) {
             return range(1, totalPageCount)
           }
+
         const leftSiblingIndex = Math.max(currentPage - siblingCount, 1);
         const rightSiblingIndex = Math.min(
             currentPage + siblingCount,
@@ -40,7 +39,7 @@ const usePagination = (
         if (!shouldShowLeftDots && shouldShowRightDots) {
             const leftItemCount = 3 + 2 * siblingCount
             const leftRange = range(1, leftItemCount)
-      
+            
             return [...leftRange, DOTS, totalPageCount]
           }
         if (shouldShowLeftDots && !shouldShowRightDots) {
@@ -55,10 +54,11 @@ const usePagination = (
             const middleRange = range(leftSiblingIndex, rightSiblingIndex)
             return [firstPageIndex, DOTS, ...middleRange, DOTS, lastPageIndex]
         }
-        return []
     },[totalCount, pageSize, siblingCount, currentPage])
 
-    return paginationRange
+
+    return paginationRange || []
+    
 }
 
 export default usePagination

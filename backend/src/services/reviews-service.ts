@@ -13,7 +13,7 @@ const updatedRating = async (id:string) => {
             const reviewSum = getAllReviews?.reviews.map((product) => product.rating)
             .reduce((prev,curr) => prev + curr, 0)
             if(reviewSum && totalReviews){
-            actualRating = evenRound((reviewSum/totalReviews),2) 
+            actualRating = evenRound((reviewSum/totalReviews),1) 
         }
         }
         if(getAllReviews){

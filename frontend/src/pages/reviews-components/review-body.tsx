@@ -5,9 +5,15 @@ import {
     sortHighestRating,
     sortLowestRating,
     sortOldestDate,
-    sortRecentDate } from "../../utils/sort-reviews";
-import { Updater, useImmer } from "use-immer";
+    sortRecentDate} from "../../utils/sort-reviews";
+import { useImmer } from "use-immer";
 import DropDownButton from "./dropdown";
+import {useMemo} from "react";
+import Pagination from "../../components/pagination";
+import useOutsideClick from "../../hooks/outside-click";
+import arrow from '../../assets/imgs/svg-imgs/arrow_forward_ios_FILL0_wght100_GRAD-25_opsz48.svg'
+
+
 
 
 
@@ -15,107 +21,227 @@ import DropDownButton from "./dropdown";
 
 interface ReviewBodyType{
     filterReviewArray: ReviewType[][] | undefined,
-    setDisplayReviews: Updater<ReviewType[] | undefined>
-    displayReviews:ReviewType[] | undefined
     reviews:ReviewType[] | undefined
+    scrollToTop: () => void
+    myRef:React.RefObject<HTMLDivElement>
 }
 
 interface ActiveType{
     type:string,
     name:string,
-    reviewArray:ReviewType[] | undefined
-    
+    fnc?:(arr: ReviewType[] | undefined) => ReviewType[] | undefined
+    filterReview?:ReviewType[] | undefined
 }
 
+const PageSize = 6
 
-const ReviewBody = ({filterReviewArray,setDisplayReviews,displayReviews,reviews}:ReviewBodyType) => {
+const ReviewBody = ({filterReviewArray,reviews,scrollToTop,myRef}:ReviewBodyType) => {
 
+
+    const [displayReviews,setDisplayReviews] = useImmer<ReviewType[] | undefined>(reviews || [])
+    const [ratingFilter,setRatingFilter] = useImmer<ReviewType[] | undefined>(reviews || [])
+    const [sortFunction,setSortFunction] = useImmer<(arr:ReviewType[] | undefined) => ReviewType[] | undefined>(sortOldestDate)
     const [actives,setActives] = useImmer<ActiveType[]>([])
+    const [dropDownShow,setDropDownShow] = useImmer({filter:false,sort: false })
     const filterArrayName = ['5 Star','4 Star','3 Star','2 Star','1 Star']
     const sortArrayName = ['Highest Rating','Lowest Rating','Oldest','Newest']
     const sortArrayFunction = [sortHighestRating,sortLowestRating,sortOldestDate,sortRecentDate]
+    const [currentPage, setCurrentPage] = useImmer(1)
 
-    const addFilter = (type:string,name:string,reviewArray:ReviewType[] | (ReviewType[] | undefined)) => {
-        setActives(active => {
-            const inActive = active.find(a => a.type === type)
-            if(inActive){
-                inActive.name = name,
-                inActive.reviewArray = reviewArray
+    const currentData = useMemo(() => {
+        const firstPageIndex = (currentPage - 1) * PageSize;
+        const lastPageIndex = firstPageIndex + PageSize;
+        return displayReviews?.slice(firstPageIndex, lastPageIndex);
+      }, [currentPage, displayReviews])
+
+
+
+      const handleSortOutsideClick = () => {
+        setDropDownShow(drop => {
+            drop.sort = false
+            return drop
+        })
+      }
+      const handleFilterOutsideClick = () => {
+        setDropDownShow(drop => {
+            drop.filter = false
+            return drop
+        })
+      }
+
+      const closeBothDropDown = () => {
+        setDropDownShow(drop => {
+            drop.filter = false
+            drop.sort = false
+            return drop
+        })
+      }
+
+      const ref = useOutsideClick(handleSortOutsideClick)
+      const filterRef = useOutsideClick(handleFilterOutsideClick)
+      
+
+      const openDropDown = (type:string,event:React.MouseEvent) => {
+        event.stopPropagation()
+        if(type === 'filter'){
+            setDropDownShow(drop => {
+                drop.filter = !drop.filter
+            })
+        }if(type === 'sort'){
+            setDropDownShow(drop => {
+                drop.sort = !drop.sort
+            })
+        }
+      }
+
+
+    const applyFilter = (filterName:string,filteredReviews:ReviewType[] | undefined) => {
+        setRatingFilter(() => filteredReviews)
+        
+        setActives((draft) => {
+            const index = draft.findIndex((active) => active.type === 'filter')
+            if(index !== -1){
+                draft[index].name = filterName
             }else{
-                active.push(
-                    {
-                        type:type,
-                        name:name,
-                        reviewArray:reviewArray
-                    }
-                )
+                draft.push({ type: 'filter', name: filterName, filterReview:filteredReviews})
             }
-            setDisplayReviews(active[active.length - 1].reviewArray)
-        }
-        )
-    }
+            if(draft.length === 2){
+                setDisplayReviews(() => sortFunction(filteredReviews))
+            }else{
+                setDisplayReviews(() => filteredReviews)
+            }
+        })
+        
+        closeBothDropDown()
+      }
 
-    const deleteFilter = (type:string) => {
-        setActives((prevActives) => prevActives.filter((active) => active.type !== type))
-        if(actives.length > 0){
-            setDisplayReviews(actives[actives.length - 1].reviewArray)
-        }else{
-            setDisplayReviews(reviews)
+      const checkActives = (buttonType:string) => {
+        for (const active of actives){
+           if(active.type === buttonType){
+            return true
+           }
         }
-    }
+        return false
+      }
+    
+      const applySort = (sortName:string,sortedReviews:ReviewType[] | undefined,
+        fnc:(arr: ReviewType[] | undefined) => ReviewType[] | undefined) => {
+        setSortFunction(() => fnc)
+        setActives((draft) => {
+            const index = draft.findIndex((active) => active.type === 'sort')
+            if(index !== -1){
+                draft[index].name = sortName
+                draft[index].fnc = fnc
+            }else{
+                draft.push({ type: 'sort', name: sortName,fnc:fnc })
+            }
+            if(draft.length === 2){
+                setDisplayReviews(fnc(ratingFilter))
+            }else{
+                setDisplayReviews(sortedReviews)
+            }
+        })
+        setCurrentPage(() => 1)
+        
+        closeBothDropDown()
+      }
+
+      const clearActive = (activeName:string) => {
+        if(activeName === 'filter'){
+            setRatingFilter(reviews)
+        }
+        setActives((draft) => {
+            const index = draft.findIndex((active) => active.name === activeName)
+            if (index !== -1) {
+              draft.splice(index, 1)
+            }
+            if(draft.length === 0){
+                setDisplayReviews(reviews)
+            }else{
+                if(draft[0].type === 'filter'){
+                    setDisplayReviews(ratingFilter)
+                }if(draft[0].type === 'sort'){
+                    setDisplayReviews(draft[0].fnc && draft[0].fnc(reviews))
+                }
+            }
+            return draft
+          })
+
+      }
+
+      const clearAllActives = () => {
+        setActives([])
+        setDisplayReviews(reviews)
+      }
 
 
     return(
         <div className="reviews-body">
                 <div className="reviews-button">
-                    <div className="filter-reviews">
-                        <button className="dropdown-btn">Filter</button>
-                        <div className="dropdown-content">
-                            {filterReviewArray?.map((_arr,i) => {
-                                const index = 4 - i
-                                return(
-                                    <DropDownButton key={i}
-                                    title={filterArrayName[i]}
-                                    applyActive = {() => addFilter('filter',filterArrayName[i],filterReviewArray[index]) }/>
-                                )
-                            })}
-                        </div>
-                    </div>
-                    <div className="sort-reviews">
-                        <button className="dropdown-toggle-btn">Sort</button>
-                            <div className="dropdown-content">
-                                {sortArrayFunction.map((arr,i) => 
-                                {
+                    <div ref={myRef}  className="reviews-btn-container">
+                        <div ref={filterRef} className={dropDownShow.filter || checkActives('filter') ? "filter-reviews active" : "filter-reviews"}>
+                            <button  className="dropdown-toggle-btn" onClick={(e) => openDropDown('filter',e)}>Filter
+                            <img src={arrow}/>
+                            </button>
+                            <div style={dropDownShow.filter ? {maxHeight: '1000px',transition: 'max-height 1.3s ease-in-out'}:{maxHeight:'0'}} className="dropdown-content">
+                                {filterArrayName.map((name,i) => {
+                                    const index = 4 - i
                                     return(
                                         <DropDownButton key={i}
-                                        title={sortArrayName[i]}
-                                        applyActive={() => addFilter('sort',sortArrayName[i],arr(displayReviews))}/>
+                                        title={name}
+                                        applyActive = {() => filterReviewArray && applyFilter(name,filterReviewArray[index])}/>
                                     )
                                 })}
                             </div>
+                        </div>
+                        <div ref={ref} className={dropDownShow.sort || checkActives('sort') ? "sort-reviews active" : "sort-reviews"}>
+                            <button  className="dropdown-toggle-btn" onClick={(e) => openDropDown('sort',e)}>
+                                Sort
+                            <img src={arrow}/></button>
+                                <div style={dropDownShow.sort ? {maxHeight: '1000px',transition: 'max-height 1.3s ease-in-out '}:{maxHeight:'0'}} className="dropdown-content">
+                                    {sortArrayFunction.map((arr,i) =>
+                                    {
+                                        return(
+                                            <DropDownButton key={i}
+                                            title={sortArrayName[i]}
+                                            applyActive={() => applySort(sortArrayName[i],arr(displayReviews),arr)}/>
+                                        )
+                                    })}
+                                </div>
+                        </div>
                     </div>
-                    <div className="active-applied">
                         {
-                            actives.map(active => {
-                                return(
-                                    <div>
-                                        <p>{active.name}</p>
-                                        <button onClick={() => deleteFilter(active.type)}>&times;</button>
-                                    </div>
-                                )
-                            })
+                            actives.length > 0 ?
+                            <div className="active-applied">
+                                {actives.map(active => {
+                                    return(
+                                        <div key={active.name}>
+                                            <p>{active.name}</p>
+                                            <button onClick={() =>  clearActive(active.name)}>&times;</button>
+                                        </div>
+                                    )
+                                })}
+                                <button className="clear-all-actives" onClick={clearAllActives}>Clear All</button>
+                            </div>
+                            : 
+                            null
                         }
-                    </div>
                 </div>
-                <div className="reviews-list">
+                <div  className="reviews-list">
                     {
-                        displayReviews?.map(review => {
+                        currentData && currentData.map(review => {
                             return(
                                 <ReviewSingular review={review} key={uuidv4()}/>
                             )
                         }) 
                     }
                 </div>
+                <Pagination 
+                slideToView={scrollToTop}
+                onPageChange={page => setCurrentPage(page)}
+                totalCount={displayReviews ? displayReviews.length : 0}
+                currentPage={currentPage}
+                pageSize={PageSize} siblingCount={1} />
             </div>
     )
 }

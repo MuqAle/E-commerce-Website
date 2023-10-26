@@ -15,8 +15,37 @@
     .product-images{
         width: 100% !important;
     }
+    .reviews-body .reviews-list .review{
+        display: block;
+        padding: 30px 10px 70px;
+        .review-post-by-container{
+            .review-posted-by{
+                position: absolute;
+                margin: 30px 0;
+                padding: 0;
+                top: auto;
+                bottom: 0;
+                font-size: 14px;
+                font-weight: bold;
+            }
+            .star-rating-container.review-single{
+                margin-left: 10px ;
+            }
+            .review-posted-date{
+                font-size: 14px;
+                bottom: 30px;
+                top: auto;
+            }
+        }
+        .review-details{
+            .review-description{
+                font-size: 14px;
+            }
+        } 
+    }
 
 }
+
 
 
 .product-page{
@@ -25,6 +54,7 @@
     gap: 20px;
     margin: 30px;
 }
+
 
 .gallery{
     display: flex;
@@ -156,6 +186,237 @@
 
 .star-rating-container{
     display: flex;
-    margin-top: -25px;
-    margin-bottom: 20;
+    
 }
+
+.product-rating-top-page{
+    display: flex;
+    margin-bottom: 20;
+    margin-top: -25px;
+    align-items: center;
+    gap: 5px;
+    button{
+        font-size: 15px;
+        &:hover{
+            text-decoration: underline;
+        }
+    }
+}
+
+
+.reviews-section{
+    padding-top: 120px;
+    margin: 0px 30px 70px 30px;
+    h2{
+        font-size: 35px;
+        margin-bottom: 15px;
+    }
+    .reviews-header{
+        padding: 15px 0;
+        margin-bottom: -70px;
+        border-top: 1px solid rgb(203, 202, 202);
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
+        align-items: center;
+        .overall-rating-header{
+            margin-left: 20px;
+            margin-top: 20px;
+        }
+
+        .overall-rating-header-right{
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            p{
+                font-size: 40px;
+            }
+        }
+    }
+    .histogram-container{
+        margin-top: 20px;
+        min-width: 290px;
+        width: 30%;
+        max-width: 400px;
+        .histogram-title{
+            margin-bottom: 10px;
+        }
+        .singular-bar{
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        .histogram{
+            align-items: center;
+        }
+        }
+        .bar{
+            flex: 1 1 0%;
+            width: 100%;
+            height: 9px;
+            border-radius: 10px;
+            background-color:#a1a1a1;
+            margin-bottom: 2px;
+            .rating-bar{
+                border-radius: 10px;
+                background-color: card.$accent-color;
+                height: 100%;
+            }
+        }
+    }
+}
+
+.reviews-body{
+    .reviews-btn-container{
+        display: flex;
+        gap: 20px;
+        margin-bottom: 20px;
+        padding-top: 120px;
+        div{
+            position: relative;
+            .dropdown-toggle-btn{
+                background-color: #e3e2e2;
+                width: 100px;
+                height: 45px;
+                border-radius: 10px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 7px;
+                img{
+                    transform: rotate(0.25turn);
+                    height: 20px;
+                    width: 20px;
+                    transition:ease-out .2s
+                }
+                &:hover{
+                    background-color: #f4f2f2 ;
+                    transition: ease-out .2s;
+                    
+                }
+               
+            }
+            &.active{
+                .dropdown-toggle-btn{
+                    background-color: card.$accent-color;
+
+                }
+                img{
+                    transform: rotate(-0.25turn);
+                    transition:ease-out .3s
+                }
+            }
+        }
+        .dropdown-content{
+            overflow: hidden;
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            background-color: white;
+            width: 180px;
+            box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 6px;
+            margin-top: 10px;
+            border-radius: 6px;
+            transition: max-height .5s ease;
+            z-index: 2;
+            
+            
+            .dropdown-btn{
+                text-align: start;
+                padding: 10px 20px;
+                font-size: 16px;
+                &:hover{
+                    text-decoration: underline;
+                }
+
+                &:last-of-type{
+                    padding-bottom: 22px;
+                }
+                &:first-of-type{
+                    padding-top: 22px;
+                }
+            }
+        }
+    }
+    .reviews-button{
+        .active-applied{
+            display: flex;
+            gap: 10px;
+            max-width: 350px;
+            align-items: center;
+            flex-wrap: wrap;
+            div{
+                display: flex;
+                gap: 5px;
+                align-items: center;
+                outline: #e3e2e2 1.5px solid;
+                border-radius: 5px;
+                p{
+                    padding-left: 10px;
+                    text-wrap: nowrap;
+                }
+                button{
+                    font-size: 25px;
+                    color: gray;
+                    padding-right: 10px;
+                    &:hover{
+                        color: black;
+                    }
+                }
+            }
+            .clear-all-actives{
+                &:hover{
+                    text-decoration: underline;
+                }
+                font-size: 16px;
+                text-wrap: nowrap;
+                padding-left: 3px;
+            }
+
+        }
+    }
+}
+
+.reviews-list{
+    margin-top: 50px;
+    .review{
+            border-top: 1px solid rgb(203, 202, 202);
+            display: grid;
+            position: relative;
+            grid-template-columns: 25% auto;
+            padding: 35px 10px 35px;
+            .review-post-by-container{
+                display: flex;
+                align-items: center;
+                width: 100%;
+                .star-rating-container {
+                    &.review-single{
+                        position: absolute;
+                        top:19px;
+                        left: 0;
+                        margin-left: 25%;
+                    }
+            }
+            .review-posted-by{
+                padding: 32px;
+            }
+            .review-posted-date{
+                position: absolute;
+                width: auto;
+                top: 20px;
+                font-size: 16px;
+                right: 10px;
+            }
+        }
+            .review-details{
+                margin: 10px 0;
+
+                .review-title{
+                    font-size: 16px;
+                    margin-top: 18px;
+                    margin-bottom: 7px;
+                }
+            }
+    }
+}
+
+

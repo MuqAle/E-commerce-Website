@@ -1,16 +1,11 @@
-import { ReviewType } from "../../utils/types"
 
-const DropDownButton = ({title,filterArray,setArray}:{
+const DropDownButton = ({title,applyActive}:{
     title:string,
-    filterArray:ReviewType[] | undefined,
-    setArray:React.Dispatch<React.SetStateAction<ReviewType[] | undefined>>}) => {
+    applyActive:() => void}) => {
+        
 
-
-    const onClick = () => {
-        setArray(filterArray)
-    }
     return(
-        <button onClick={onClick} className={`dropdown-btn`}>{title}</button>
+        <button onClick={applyActive} className={`dropdown-btn`}>{title}</button>
     )
 }
 
