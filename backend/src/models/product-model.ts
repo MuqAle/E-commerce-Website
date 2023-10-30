@@ -53,12 +53,20 @@ const inventorySchema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref:'User'
         },
-        reviewDesc: String,
+        reviewDesc: {
+            type:String,
+            required:true,
+            minLength:10
+        },
         rating: Number,
-        reviewTitle:String,
+        reviewTitle:{
+            type:String,
+            required:true,
+            maxLength:50
+        },
         datePosted:{
             type:Date,
-            default:new Date()
+            default:new Date().toUTCString()
         }
     }],
     images:[{
