@@ -19,7 +19,7 @@ interface ReviewMatrixType{
 const ReviewHistogram = ({arr,allReviewsLength}:ReviewMatrixType) => {
     return(
         <div className="histogram-container">
-            <p className="histogram-title">Summary</p>
+            <p className="histogram-title">Review Summary</p>
             {[...Array(5)].map((_bar,i) => {
                 const starValue = 5 - i 
                 const arrIndex = 4 - i

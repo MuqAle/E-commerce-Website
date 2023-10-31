@@ -8,7 +8,7 @@ import {
     sortRecentDate} from "../../utils/sort-reviews";
 import { useImmer } from "use-immer";
 import DropDownButton from "./dropdown";
-import {useMemo} from "react";
+import {useEffect, useMemo} from "react";
 import Pagination from "../../components/pagination";
 import useOutsideClick from "../../hooks/outside-click";
 import arrow from '../../assets/imgs/svg-imgs/arrow_forward_ios_FILL0_wght100_GRAD-25_opsz48.svg'
@@ -47,6 +47,11 @@ const ReviewBody = ({filterReviewArray,reviews,scrollToTop,myRef}:ReviewBodyType
     const sortArrayName = ['Highest Rating','Lowest Rating','Oldest','Newest']
     const sortArrayFunction = [sortHighestRating,sortLowestRating,sortOldestDate,sortRecentDate]
     const [currentPage, setCurrentPage] = useImmer(1)
+
+    useEffect(() => {
+        setDisplayReviews(reviews)
+        setActives([])
+    },[reviews, setActives, setDisplayReviews])
 
     const currentData = useMemo(() => {
         const firstPageIndex = (currentPage - 1) * PageSize;
