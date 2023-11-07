@@ -61,7 +61,6 @@ const inventorySchema = new mongoose.Schema({
         rating: Number,
         reviewTitle:{
             type:String,
-            required:true,
             maxLength:50
         },
         datePosted:{

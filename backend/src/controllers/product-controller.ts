@@ -2,15 +2,55 @@ import Product from "../models/product-model"
 import {ProductDb} from "../types/type"
 import { Request,Response,NextFunction } from "express"
 import {deleteImage} from "../utils/cloudinary"
-import { addProductDB, deleteProductReviews, deleteProductSession, deleteProductUser, updateProductDB } from "../services/product-service"
+import { addProductDB, 
+    deleteProductReviews, 
+    deleteProductSession, 
+    deleteProductUser, 
+    updateProductDB } from "../services/product-service"
 
 
+interface FilterTypes{
+    category: string ,
+    price:{ $gte: number; $lte: number; },
+    colors:{ $in: string[]; }
+    onSale: string,
+    metal: string
+}
 
-
-const getAllProducts = async (_req:Request,res:Response,next:NextFunction)=> {
+const getAllProducts = async (req:Request,res:Response,next:NextFunction)=> {
+    const page = req.query.page as string
+    const sortBy = req.query.sort as string || '-createdAt'
+    const { category, minPrice, maxPrice,onSale,metal} = req.query 
+    const colors = req.query.colors ? (req.query.colors as string).split(',') : []
+    const itemsPerPage = 20
+    const skip = (+page - 1) * itemsPerPage
+    const filter:Partial<FilterTypes> = {} 
+    
     try{
-        const product:ProductDb[] = await Product.find({})
-          res.status(200).json(product)
+        if(category){
+            filter.category = category as string
+        }
+        if(minPrice && maxPrice){
+            filter.price = {$gte: +minPrice, $lte: +maxPrice} 
+        }
+        if(colors.length > 0){
+            filter.colors = { $in: colors }
+        }
+        if(onSale){
+            filter.onSale = onSale as string
+        }
+        if(metal){
+            filter.metal = metal as string
+        }
+        const totalProducts = await Product.countDocuments(filter)
+
+
+        const product:ProductDb[] = await Product.find(filter)
+            .sort(sortBy)
+            .skip(skip)
+            .limit(20)
+            .exec()
+          res.status(200).json({product,totalProducts})
     }catch(error){
         next(error)
     } 
@@ -86,15 +126,33 @@ const updatedProducts = async (req:Request,res:Response,next:NextFunction) => {
     }catch(error){
         next(error)
     }
-   
-
 }
 
+const searchProducts = async(req:Request,res:Response,next:NextFunction) => {
+    try{
+        const {key} = req.params
+
+        const data = await Product.find({
+
+            $or:[
+                {name:{$regex:key}},
+                {type:{$regex:key}},
+                {colors:{$regex:key}},
+                {metal:{$regex:key}}
+            ]
+        })
+
+        res.status(200).json(data)
+    }catch(error){
+        next()
+    }
+}
 
 export {
     getAllProducts,
     getProduct,
     deleteProduct,
     addProduct,
-    updatedProducts
+    updatedProducts,
+    searchProducts
 }

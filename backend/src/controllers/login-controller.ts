@@ -75,7 +75,12 @@ const loginUser =  async(req:Request<ParamsDictionary, unknown, UserRequest>,res
         })
     }
 
-    return res.status(200).send({token,email:user.email, name:`${user.firstName} ${user.lastName}`})
+    return res.status(200).send({
+        token,
+        email:user.email, 
+        name:`${user.firstName} ${user.lastName}`,
+        isAdmin:user.isAdmin,
+        })
 }
 
 export default loginUser
