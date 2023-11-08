@@ -44,13 +44,85 @@ const getAllProducts = async (req:Request,res:Response,next:NextFunction)=> {
         }
         const totalProducts = await Product.countDocuments(filter)
 
+        
+
+        const aggregate = [
+         {
+                $match: filter 
+         },
+          {
+            $facet: {
+              colors: [
+                {
+                  $unwind: '$colors'
+                },
+                {
+                  $group: {
+                    _id: '$colors',
+                    count: { $sum: 1 }
+                  }
+                },
+                {
+                  $project: {
+                    _id: 0,
+                    color: '$_id',
+                    count: 1
+                  }
+                }
+              ],
+              metal: [
+                {
+                  $group: {
+                    _id: '$metal',
+                    count: { $sum: 1 }
+                  }
+                },
+                {
+                  $project: {
+                    _id: 0,
+                    metal: '$_id',
+                    count: 1
+                  }
+                }
+              ],
+              priceRange: [
+                
+                {
+                  $group: {
+                    _id: {
+                      $switch: {
+                        branches: [
+                        { case: { $gte: ['$price', 31] }, then: 'Above 30' },
+                        { case: { $and: [ { $gte: ['$price', 21] }, { $lte: ['$price', 30] } ] }, then: '21-30' },
+                        { case: { $and: [ { $gte: ['$price', 11] }, { $lte: ['$price', 20] } ] }, then: '11-20' },
+                        { case: { $and: [ { $gte: ['$price', 0] }, { $lte: ['$price', 10] } ] }, then: '1-10' },
+                        ],
+                        default: 'No products found'
+                      }
+                    },
+                    count: { $sum: 1 }
+                  }
+                },
+                {
+                  $project: {
+                    _id: 0,
+                    priceRange: '$_id',
+                    count: 1
+                  }
+                }
+              ]
+            }
+          }
+        ]
+
+        const productAggregate = await Product.aggregate(aggregate).exec()
 
         const product:ProductDb[] = await Product.find(filter)
             .sort(sortBy)
             .skip(skip)
             .limit(20)
             .exec()
-          res.status(200).json({product,totalProducts})
+          res.status(200).json({product,totalProducts,productAggregate})
     }catch(error){
         next(error)
     } 
