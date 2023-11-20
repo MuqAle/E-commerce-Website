@@ -7,28 +7,33 @@ import { addProductDB,
     deleteProductSession, 
     deleteProductUser, 
     updateProductDB } from "../services/product-service"
+import { PipelineStage } from "mongoose"
 
 
 interface FilterTypes{
-    category: string ,
-    price:{ $gte: number; $lte: number; },
-    colors:{ $in: string[]; }
+    type: string ,
+    price:{ $gte: number; $lte: number; } | {$gt:number},
+    colors:{ $in: string[] }
     onSale: string,
-    metal: string
+    metal: { $in: string[] }
 }
 
 const getAllProducts = async (req:Request,res:Response,next:NextFunction)=> {
     const page = req.query.page as string
     const sortBy = req.query.sort as string || '-createdAt'
-    const { category, minPrice, maxPrice,onSale,metal} = req.query 
+    const { category, minPrice, maxPrice,onSale} = req.query 
     const colors = req.query.colors ? (req.query.colors as string).split(',') : []
+    const metal = req.query.metal ? (req.query.metal as string).split(',') : []
     const itemsPerPage = 20
     const skip = (+page - 1) * itemsPerPage
     const filter:Partial<FilterTypes> = {} 
     
     try{
         if(category){
-            filter.category = category as string
+            filter.type = category as string
+        }
+        if(minPrice){
+          filter.price = {$gt:+minPrice}
         }
         if(minPrice && maxPrice){
             filter.price = {$gte: +minPrice, $lte: +maxPrice} 
@@ -39,83 +44,81 @@ const getAllProducts = async (req:Request,res:Response,next:NextFunction)=> {
         if(onSale){
             filter.onSale = onSale as string
         }
-        if(metal){
-            filter.metal = metal as string
+        if(metal.length > 0){
+            filter.metal = { $in: metal}
         }
         const totalProducts = await Product.countDocuments(filter)
 
-        
 
-        const aggregate = [
-         {
-                $match: filter 
-         },
+        const filterKeys = ['colors', 'metal', 'priceRange']
+
+        const aggregate:PipelineStage[] = [
           {
-            $facet: {
-              colors: [
-                {
-                  $unwind: '$colors'
-                },
-                {
-                  $group: {
-                    _id: '$colors',
-                    count: { $sum: 1 }
-                  }
-                },
-                {
-                  $project: {
-                    _id: 0,
-                    color: '$_id',
-                    count: 1
-                  }
-                }
-              ],
-              metal: [
-                {
-                  $group: {
-                    _id: '$metal',
-                    count: { $sum: 1 }
-                  }
-                },
-                {
-                  $project: {
-                    _id: 0,
-                    metal: '$_id',
-                    count: 1
-                  }
-                }
-              ],
-              priceRange: [
-                
-                {
-                  $group: {
-                    _id: {
-                      $switch: {
-                        branches: [
-                        { case: { $gte: ['$price', 31] }, then: 'Above 30' },
-                        { case: { $and: [ { $gte: ['$price', 21] }, { $lte: ['$price', 30] } ] }, then: '21-30' },
-                        { case: { $and: [ { $gte: ['$price', 11] }, { $lte: ['$price', 20] } ] }, then: '11-20' },
-                        { case: { $and: [ { $gte: ['$price', 0] }, { $lte: ['$price', 10] } ] }, then: '1-10' },
-                        ],
-                        default: 'No products found'
-                      }
-                    },
-                    count: { $sum: 1 }
-                  }
-                },
-                {
-                  $project: {
-                    _id: 0,
-                    priceRange: '$_id',
-                    count: 1
-                  }
-                }
-              ]
-            }
+            $match: filter 
+          },
+          {
+            $facet: {}  as Record<string, PipelineStage.FacetPipelineStage[]>
           }
         ]
 
+        const facetStage = aggregate[1] as { $facet: Record<string, PipelineStage.FacetPipelineStage[]> }
+
+        for (const filterKey of filterKeys) {
+          if (filterKey !== 'priceRange') {
+            facetStage.$facet[filterKey] = [
+          {
+            $unwind: `$${filterKey}`
+          },
+          {
+            $sortByCount: `$${filterKey}`
+          },
+          {
+            $project: {
+              _id: 0,
+              filter: '$_id',
+              count: 1
+            }
+          },
+          {
+            $sort: { filter: 1 }
+          }
+        ]
+        } else if (filterKey === 'priceRange') {
+          facetStage.$facet[filterKey] = [
+          {
+            $group: {
+              _id: {
+                $switch: {
+                  branches: [
+                    { case: { $gt: ['$price', 30] }, then: 'Above $30' },
+                    { case: { $and: [{ $gte: ['$price', 21] }, { $lte: ['$price', 30] }] }, then: '21-$30' },
+                    { case: { $and: [{ $gte: ['$price', 11] }, { $lte: ['$price', 20] }] }, then: '11-$20' },
+                    { case: { $and: [{ $gte: ['$price', 0] }, { $lte: ['$price', 10] }] }, then: '1-$10' },
+                  ],
+                  default: 'No products found'
+                }
+              },
+              count: { $sum: 1 }
+            }
+          },
+          {
+            $project: {
+              _id: 0,
+              filter: '$_id',
+              count: 1
+            }
+          },
+          {
+            $sort: { filter: 1 }
+          }
+          ]
+          }
+        } 
+
+
+
         const productAggregate = await Product.aggregate(aggregate).exec()
+        
 
         const product:ProductDb[] = await Product.find(filter)
             .sort(sortBy)
