@@ -7,7 +7,7 @@ const stripe = new Stripe(STRIPE_KEY as string, {
 import { NextFunction, Request,Response } from "express";
 import { CartTypes} from '../types/type';
 import Cart from '../models/shopping-cart-model';
-import { checkoutSessionConfig, createCustomer, createLineItems,createOrder} from '../services/stripe-service';
+import { checkoutSessionConfig, clearCart, createCustomer, createLineItems,createOrder} from '../services/stripe-service';
 
 
 
@@ -18,8 +18,10 @@ const checkoutSession =  async (req:Request, res:Response) => {
     const {user} = req
     let cartItems:Stripe.Checkout.SessionCreateParams.LineItem[] = []
     let customer:Stripe.Customer | Stripe.DeletedCustomer | undefined
+
     if(user){
         const cart = await Cart.findById(user.shoppingCart) as CartTypes
+        
         if(!user.stripeId){
           customer = await stripe.customers.create(createCustomer(user))
 
@@ -30,18 +32,18 @@ const checkoutSession =  async (req:Request, res:Response) => {
         }
         const userCart = cart?.products
         
-        if(!userCart){
+        if(userCart){
             cartItems = await createLineItems(userCart) as []
+            
         }
        
     }else{
         if(!guestCart){
-          return res.status(400).send('No Items In Cart').end()
+          return res.status(400).send('No Items In Cart')
         }else{
           cartItems = await createLineItems(guestCart.products) as []
           customer = undefined
         }
-          
     }
     if(cartItems.length === 0){
       return res.status(400).send('No Items In Cart')
@@ -54,7 +56,6 @@ const checkoutSession =  async (req:Request, res:Response) => {
       ))
       return res.json(session.url)
     }
-
 }
 
 
@@ -64,7 +65,7 @@ const stripeWebhook = async (req:Request,res:Response,_next:NextFunction) => {
   const webhookSecret = STRIPE_WEBHOOK
   const body = req.rawBody as string
 
-  
+
 
   if(!webhookSecret){
     return res.status(400).send('Webhook secret is not configured.')
@@ -84,7 +85,7 @@ const stripeWebhook = async (req:Request,res:Response,_next:NextFunction) => {
       if (error instanceof Stripe.errors.StripeSignatureVerificationError) {
         return res.status(400).send(`Webhook Error: ${error.message}`);
       } else {
-        return res.status(500).send('Internal server error.');
+        return res.status(500).send('Internal server error');
       }
     }
     const data = event.data.object as Stripe.Checkout.Session
@@ -101,6 +102,8 @@ const stripeWebhook = async (req:Request,res:Response,_next:NextFunction) => {
       }
       try{
         await createOrder(data,customer)
+        await clearCart(data)
+ 
       }catch(error){
         console.log(error)
       }

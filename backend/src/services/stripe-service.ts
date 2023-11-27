@@ -4,6 +4,12 @@ import { CartTypes,StripeCart,UserTypes } from "../types/type"
 import Stripe from "stripe"
 import { STRIPE_KEY } from "../config/config"
 import Order from "../models/orders-model"
+import evenRound from "../utils/rounding"
+import Cart from "../models/shopping-cart-model"
+import Session from "../models/session-model"
+import User from "../models/user-model"
+
+
 const stripe = new Stripe(STRIPE_KEY as string, {
     apiVersion: '2023-08-16',
   })
@@ -25,8 +31,8 @@ const createPriceData = async (productId : Types.ObjectId, quantity:number) => {
                     }
                 },
                 unit_amount:product.onSale ? 
-                product.salePrice && (product.salePrice * 100):
-                product.price * 100
+                product.salePrice && evenRound((product.salePrice * 100),0):
+                evenRound(product.price * 100,0)
             },
             quantity:quantity,
         }
@@ -59,17 +65,19 @@ const createCustomer =(user:UserTypes) => {
 const checkoutSessionConfig = (user:UserTypes,sessionID:string,customer:string | undefined,cartItems:Stripe.Checkout.SessionCreateParams.LineItem[]) =>  {
 
    return ({line_items: cartItems ,
-    client_reference_id: user ? user.id.toString() : sessionID,
-    customer_email:user ? user.email : undefined,
-    customer:customer,
+    client_reference_id: user ? user.shoppingCart.toString() : sessionID,
+    customer:user ? customer : undefined,
     automatic_tax:{
       enabled:true
+    },
+    customer_update:{
+      shipping:user ? 'auto' : undefined
     },
     shipping_address_collection:{
       allowed_countries:['US']
     },
     mode: 'payment',
-    success_url:'https://e-commerce-website-1mzt-gnix8wc29-muqale.vercel.app/',
+    success_url:'http://localhost:5173',
     shipping_options: [
       {
 
@@ -165,6 +173,11 @@ const createOrder = async (data:Stripe.Checkout.Session,customer:Stripe.Customer
     })
   
     try{
+      if(customer){
+        const user = await User.findById(customer.metadata.userId)
+        user?.orders?.push(newOrder._id)
+        await user?.save()
+      }
        await newOrder.save()
        await updateProductInventory(products)
     }catch(error){
@@ -172,10 +185,34 @@ const createOrder = async (data:Stripe.Checkout.Session,customer:Stripe.Customer
     }
   }
 
+  const clearCart = async(session:Stripe.Checkout.Session) => {
+    
+   
+    if(session.customer){
+      const userCart = await Cart.findById(session.client_reference_id) 
+      if(userCart){
+        userCart.products = []
+        userCart.cartPrice = 0
+        userCart.cartTotal = 0
+        await userCart.save()
+      }
+    }else{
+      const guestCart =  await Session.findById(session.client_reference_id)
+      if(guestCart){
+        guestCart.session.guestCart.products = []
+        guestCart.session.guestCart.cartPrice = 0
+        guestCart.session.guestCart.cartTotal = 0
+        await guestCart.save()
+      }
+    }
+  }
+
+
 export {
     createLineItems,
     createCustomer,
     checkoutSessionConfig,
     createOrder,
+    clearCart,
     updateProductInventory
 }
