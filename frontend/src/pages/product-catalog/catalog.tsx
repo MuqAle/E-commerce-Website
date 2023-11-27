@@ -13,7 +13,7 @@ import { useLocation, useNavigate } from "react-router";
 import EmptyCard from "../../components/empty-card";
 import CatalogHeader from "./catalog-header";
 import { AnimatePresence } from "framer-motion";
-import disableScrollModal from "../../utils/stop-scrolling";
+
 
 
 
@@ -36,10 +36,11 @@ interface FilterCountType {
 
 }
 
-const Catalog = ({title,addToCart,addFavorite, favorited}:CatalogueTypes) => {
+const Catalog = ({title,addToCart,addFavorite,favorited,setLoading}:CatalogueTypes) => {
 
     const navigate = useNavigate()
     const location = useLocation()
+
 
     const [products,setProducts] = useImmer<ProductDb[]>([])
     const [productFilterCounts,setProductFilterCounts] = useImmer<Partial<FilterCountType>>({})
@@ -50,9 +51,10 @@ const Catalog = ({title,addToCart,addFavorite, favorited}:CatalogueTypes) => {
     const [totalProducts, setTotalProducts] = useImmer(0)
     const [sortProducts,setSortProducts] = useImmer('-createdAt')
     const [isLoading,setIsLoading] = useImmer(true)
-    const [filterLoading,setFilterLoading] = useImmer(false)
     const sortNameArray = ['Newest', 'Best Seller','Highest Rated','Price [Low-High]','Price [High-Low]']
     const sortArray = ['-createdAt','-sold','-overallRating','price','-price']
+
+
 
     const generateQueryString = () => {
 
@@ -65,21 +67,42 @@ const Catalog = ({title,addToCart,addFavorite, favorited}:CatalogueTypes) => {
                 params[key] = value.join(',')
             }
           }
-
         const queryParams = new URLSearchParams(params)
-        return queryParams.toString();
+        return queryParams.toString()
       }
 
+    const generateFilterQuery = () => {
+        const locationPath = location.pathname.slice(1)
+        let param = ''
+        if(locationPath === 'shop-all'){
+            param
+        }
+        else if(locationPath === 'on-sale'){
+            param = '&onSale=true'
+        }else if(locationPath === 'search' ){
+            param = `keyword=${window.sessionStorage.getItem('searchItem')}`
+        }
+        else{
+            param = `&category=${locationPath}`
+        }
+        
+        return param
+    }
 
+    
     useEffect(() => {
         setIsLoading(true)
     },[])
-      
 
+   
 
     useEffect(() => {
         const controller = new AbortController()
-        const query = `?page=${page}&sort=${sortProducts}&${generateQueryString()}`
+        const query = `?${generateFilterQuery()}&page=${page}&sort=${sortProducts}&${generateQueryString()}`
+        navigate({
+            pathname:location.pathname,
+            search:query
+        })
         getAllProducts(query).then(products => {
             const newProducts = products.product as ProductDb[]
             const newTotalProducts = products.totalProducts as number
@@ -111,7 +134,7 @@ const Catalog = ({title,addToCart,addFavorite, favorited}:CatalogueTypes) => {
         }).catch(err => console.log(err))
         .finally(() => {
             setIsLoading(false)
-            setFilterLoading(false)})
+            setLoading(false)})
         
         return () => {
           controller.abort()
@@ -128,17 +151,14 @@ const Catalog = ({title,addToCart,addFavorite, favorited}:CatalogueTypes) => {
         setTotalProducts, 
         sortProducts])
 
-        useEffect(() => {
-            disableScrollModal(filterLoading)
-         
-          }, [filterLoading])
+ 
 
 
 
 
       const sortFnc = (i:number) => {
         if(sortProducts !== sortArray[i]){
-            setFilterLoading(true)
+            setLoading(true)
             setPage(1)
             setProducts([])
         }
@@ -148,7 +168,7 @@ const Catalog = ({title,addToCart,addFavorite, favorited}:CatalogueTypes) => {
 
 
       const filterFnc = (key:keyof Partial<FilterQueryType>,e:React.ChangeEvent<HTMLInputElement>) => {
-        setFilterLoading(true)
+        setLoading(true)
         setPage(1)
         setProducts([])
         setTrackFilter(key)
@@ -170,7 +190,7 @@ const Catalog = ({title,addToCart,addFavorite, favorited}:CatalogueTypes) => {
       }
 
       const updatePriceFilter =(key:keyof Partial<FilterQueryType>,e:React.ChangeEvent<HTMLInputElement>) => {
-        setFilterLoading(true)
+        setLoading(true)
         setPage(1)
         setProducts([])
         setTrackFilter(key)
@@ -195,21 +215,37 @@ const Catalog = ({title,addToCart,addFavorite, favorited}:CatalogueTypes) => {
       }
 
       const clearFilters = () => {
-        setFilterLoading(true)
+        setLoading(true)
         setPage(1)
         setProducts([])
         setFiltersApplied({})
         setSortProducts('-createdAt')
       }
-      
+
+      const addToCartFnc = async(id:string) => {
+        try{
+            setLoading(true)
+            await addToCart(id) 
+        }catch(err){
+            console.log(err)
+        }finally{
+            setLoading(false)
+        }
+      }
+
+      const addToFavoriteFnc = async(id:string) => {
+        try{
+            setLoading(true)
+            await addFavorite(id)
+        }catch(err){
+            console.log(err)
+        }finally{
+            setLoading(false)
+        }
+      }
 
         return (
             <div className="container">
-                {filterLoading &&
-                    <div className="loader-container">
-                    <div className="loader"></div>
-                    </div>
-                }
                 <Breadcrumbs name={null}/>
                 <h1 className="title">{title}</h1>
                 <AnimatePresence>
@@ -234,9 +270,9 @@ const Catalog = ({title,addToCart,addFavorite, favorited}:CatalogueTypes) => {
                         <Link className="product-link" to={d._id} >
                             <Card cardInfo={d}></Card>
                         </Link>
-                    <button style = {favorited(d._id) ? {visibility:"visible", opacity:'100%'} : {visibility:'hidden', opacity:'0'}} className="left-btn" onClick={()=> addFavorite(d._id)}><img src={favorited(d._id) ? heartFilled:heartOutline} alt="add-favorite" />
+                    <button style = {favorited(d._id) ? {visibility:"visible", opacity:'100%'} : {visibility:'hidden', opacity:'0'}} className="left-btn" onClick={()=> addToFavoriteFnc(d._id)}><img src={favorited(d._id) ? heartFilled:heartOutline} alt="add-favorite" />
                     </button>
-                    <button className="right-btn" onClick={() => addToCart(d._id)}><img src={shoppingBag} alt='add-to-cart'></img></button>
+                    <button className="right-btn" onClick={() => {addToCartFnc(d._id)}}><img src={shoppingBag} alt='add-to-cart'></img></button>
                     </div>
                     ))
                     :
@@ -255,7 +291,7 @@ const Catalog = ({title,addToCart,addFavorite, favorited}:CatalogueTypes) => {
                     {
                         products.length === totalProducts ? null :
                         <button className="load-more-btn" disabled={isLoading ? true : false} onClick={() => {
-                            setFilterLoading(true)
+                            setLoading(true)
                             setPage(page + 1)}}>Load More</button>
                     }
                     

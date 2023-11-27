@@ -1,31 +1,48 @@
 import { NavLink } from 'react-router-dom'
-import { useState,useEffect,useRef} from "react";
+import { useState,useEffect,useRef, RefObject} from "react";
 import heartOutline from '../../assets/imgs/svg-imgs/heart-outline.svg'
 import shoppingBag from '../../assets/imgs/svg-imgs/shopping-bag.svg'
-import search from '../../assets/imgs/svg-imgs/search.svg'
+import searchImg from '../../assets/imgs/svg-imgs/search.svg'
 import logo from '../../assets/imgs/svg-imgs/icons8-logo.svg'
 import menu from '../../assets/imgs/svg-imgs/menu_FILL0_wght100_GRAD0_opsz48.svg'
 import close from '../../assets/imgs/svg-imgs/close_FILL0_wght100_GRAD0_opsz48.svg'
 import arrow from '../../assets/imgs/svg-imgs/arrow.svg'
+import user from '../../assets/imgs/svg-imgs/account_circle_FILL0_wght200_GRAD0_opsz48.svg'
+import { LoginTypes } from '../../utils/types';
+import disableScrollModal from '../../utils/stop-scrolling';
+import useOutsideClick from '../../hooks/outside-click';
+import { useImmer } from 'use-immer';
+import { useNavigate } from 'react-router-dom';
 
 interface Header{
     shoppingCart:number,
-    favorites:number
+    favorites:number,
+    logInModal:boolean,
+    loggedUser:LoginTypes | null
+    setLoginModal : React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const Header = ({favorites, shoppingCart}:Header) => {
+const Header = ({favorites, shoppingCart,logInModal,setLoginModal,loggedUser}:Header) => {
 
     const [openMenu,setOpenMenu] = useState(false)
     const [openSearch, setOpenSearch] = useState(false)
+    const [search,setSearch] = useImmer('')
     const searchRef = useRef<HTMLInputElement>(null)
+    const navigate = useNavigate()
 
-    const preventScroll = (event: TouchEvent) => {
-        event.preventDefault();
-      };
 
     const toggleMenu = () => {
         setOpenMenu((menu) => !menu )
         
+    }
+
+    const loginModal = (e : React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+        if(!logInModal && !loggedUser){
+            e.preventDefault()
+            setLoginModal(true)
+        }else{
+            return
+        }
     }
 
     const toggleSearch = () => {
@@ -33,19 +50,16 @@ const Header = ({favorites, shoppingCart}:Header) => {
         !openSearch ?  searchRef.current?.focus() : searchRef.current?.blur()
     }
 
+    const closeSearch = () => {
+        setOpenSearch(false)
+    }
+
 
     useEffect(() => {
-    const body = document.querySelector("body")
-    
-      if(body ){
-          body.style.overflow = openMenu ? 'hidden' : 'visible';
-          openMenu ? body.addEventListener("touchmove", preventScroll, { passive: false }) : body.removeEventListener("touchmove", preventScroll)
-      }
-      return () => {
-        document.body.removeEventListener("touchmove", preventScroll);
-      };
-      }, [])
+        disableScrollModal(openMenu)
+      }, [openMenu])
 
+    const outSideSearch = useOutsideClick(closeSearch) 
 
 
       return(
@@ -55,44 +69,60 @@ const Header = ({favorites, shoppingCart}:Header) => {
                     <img src={logo} alt="logo" />
             </NavLink>
             <div id="left-side-nav">
-                <NavLink className = 'header-link' to={"shop-all"}>Shop All</NavLink>
-                <NavLink className = 'header-link' to={"necklace"}>Necklaces</NavLink>
-                <NavLink className = 'header-link' to={"bracelet"}>Bracelets</NavLink>
-                <NavLink className = 'header-link' to={"earrings"}>Earrings</NavLink>
-                <NavLink className = 'header-link' to={"on-sale"}>On Sale</NavLink>
+                <NavLink reloadDocument={true} className = 'header-link' to={"shop-all"}>Shop All</NavLink>
+                <NavLink reloadDocument={true} className = 'header-link' to={"necklace"}>Necklaces</NavLink>
+                <NavLink reloadDocument={true} className = 'header-link' to={"bracelet"}>Bracelets</NavLink>
+                <NavLink reloadDocument={true} className = 'header-link' to={"earrings"}>Earrings</NavLink>
+                <NavLink reloadDocument={true} className = 'header-link' to={"on-sale"}>On Sale</NavLink>
                 <NavLink className = 'header-link' to={"about-us"}>About Us</NavLink>
             </div>
             <div className="nav-bar-container" style={openMenu ? {background:'rgba(0, 0, 0, 0.6)' } : {background:'transparent',visibility:'hidden'}}>
                 <div id="left-side-nav-mobile" style={openMenu ? {width:'100%'} : {width:'0px'}}>
                      <button className="close-menu" onClick={toggleMenu}><img src={close} alt="close menu" /></button>
-                    <NavLink className = 'header-link' to={"shop-all"} onClick={toggleMenu}>Shop All</NavLink>
-                    <NavLink className = 'header-link' to={"necklace"} onClick={toggleMenu}>Necklaces</NavLink>
-                    <NavLink className = 'header-link' to={"bracelet"} onClick={toggleMenu}>Bracelets</NavLink>
-                    <NavLink className = 'header-link' to={"earrings"} onClick={toggleMenu}>Earrings</NavLink>
-                    <NavLink className = 'header-link' to={"on-sale"} onClick={toggleMenu}>On Sale</NavLink>
+                    <NavLink reloadDocument={true} className = 'header-link' to={"shop-all"} onClick={toggleMenu}>Shop All</NavLink>
+                    <NavLink reloadDocument={true} className = 'header-link' to={"necklace"} onClick={toggleMenu}>Necklaces</NavLink>
+                    <NavLink reloadDocument={true} className = 'header-link' to={"bracelet"} onClick={toggleMenu}>Bracelets</NavLink>
+                    <NavLink reloadDocument={true} className = 'header-link' to={"earrings"} onClick={toggleMenu}>Earrings</NavLink>
+                    <NavLink reloadDocument={true} className = 'header-link' to={"on-sale"} onClick={toggleMenu}>On Sale</NavLink>
                     <NavLink className = 'header-link' to={"about-us"} onClick={toggleMenu}>About Us</NavLink>
                 </div>
             </div>
             <div id="right-side-nav">
+                <div>
+
+                </div>
+                <NavLink id='user-account' onClick={loginModal}  to={'user-account'}>
+                    <img src={user} alt='user settings'/>
+                </NavLink>
                 <button onClick={toggleSearch} className="btn-search">
-                    <img src={search} alt="search" />
+                    <img src={searchImg} alt="search" />
                 </button>
                 <NavLink id="wish-list" to={"wish-list"}>
                     {favorites === 0? null:<span className="favorite-span">{favorites}</span>}
-                    <img src={heartOutline} alt="favorite-item"/>
+                    <img src={heartOutline} alt="favorite items"/>
                 </NavLink>
                 <NavLink id="shopping-cart" to={"shopping-cart"}>
                     {shoppingCart === 0?null:<span className="shopping-cart-span">{shoppingCart}</span>}
-                    <img src={shoppingBag} alt="add-to-cart"/>
+                    <img src={shoppingBag} alt="add to cart"/>
                 </NavLink>
                 <button className="menu" onClick={toggleMenu}><img src={menu} alt="open menu" /></button>
             </div>
         </nav>
-        <div className="input-container"  style={openSearch ? {height:'80px'} : {height:'0px',padding:0}}>
-            <div className="search-container">
-                <input className="input-search" ref={searchRef} type="text" ></input>
-                <button className="search-submit"><img src={arrow}/></button>
-            </div>
+        <div className="input-container" style={openSearch ? {height:'80px'} : {height:'0px',padding:0}}>
+            <form className="search-container" ref={outSideSearch as RefObject<HTMLFormElement>}>
+                <input className="input-search" value={search} onChange={(e) => setSearch(e.target.value)} id='input-search-bar'  ref={searchRef} type="text" ></input>
+                    <button className="search-submit" onClick={(e) => {
+                        e.preventDefault()
+                        if(search === ''){
+                            return 
+                        }else{
+                            window.sessionStorage.setItem('searchItem',search)
+                            navigate('search')
+                            navigate(0)
+                           setSearch('')
+                        }
+                        }}><img src={arrow}/></button>
+            </form>
         </div>
     </header>
     )
