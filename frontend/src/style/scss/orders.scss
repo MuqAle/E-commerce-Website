@@ -1,0 +1,54 @@
+@use 'card';
+
+@media screen and (max-width:1100px){
+    .right-side{
+        width: 100%;
+        margin-top: 20px;
+        margin-right: 0 !important;
+    }
+}
+
+.order-title{
+    margin-bottom: 15px;
+}
+
+
+
+.order-container{
+    display: flex;
+    width: 100%;
+    margin-top: 10px;
+    border-top: 1px solid black;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    flex-wrap: wrap;
+    .right-side{
+        min-width: 200px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-right: 10%;
+        a{
+            width: 100%;
+        }
+        .detail-btn{
+            width: inherit;
+            height: 30px;
+            font-size: 16px;
+            background-color: card.$accent-color;
+        }
+    }
+    .left-side{
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        flex-grow: 1;
+        .order-detail{
+            span{
+                font-weight: bold;
+                margin-right: 5px;
+            }
+        }
+    }
+}
+
