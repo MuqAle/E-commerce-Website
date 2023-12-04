@@ -7,7 +7,9 @@ import { addProductDB,
     deleteProductSession, 
     deleteProductUser, 
     updateProductDB } from "../services/product-service"
-import { PipelineStage } from "mongoose"
+import { PipelineStage} from "mongoose"
+
+
 
 
 interface FilterTypes{
@@ -16,19 +18,34 @@ interface FilterTypes{
     colors:{ $in: string[] }
     onSale: string,
     metal: { $in: string[] }
+    $or: (
+      { name: { $regex: string ; $options: string; }; } | 
+      { type: { $regex: string ; $options: string; }; } | 
+      { colors: { $regex: string; $options: string; };} | 
+      { metal: { $regex: string; $options: string; };})[] 
 }
 
 const getAllProducts = async (req:Request,res:Response,next:NextFunction)=> {
     const page = req.query.page as string
     const sortBy = req.query.sort as string || '-createdAt'
-    const { category, minPrice, maxPrice,onSale} = req.query 
+    const { category, minPrice, maxPrice,onSale,keyword} = req.query 
     const colors = req.query.colors ? (req.query.colors as string).split(',') : []
     const metal = req.query.metal ? (req.query.metal as string).split(',') : []
     const itemsPerPage = 20
     const skip = (+page - 1) * itemsPerPage
     const filter:Partial<FilterTypes> = {} 
     
+    
     try{
+        
+        if(keyword){
+        filter.$or = [
+          {name:{$regex:keyword as string,$options:'i'}},
+          {type:{$regex:keyword as string,$options:'i'}},
+          {colors:{$regex:keyword as string,$options:'i'}},
+          {metal:{$regex:keyword as string,$options:'i'}}
+        ]
+        }
         if(category){
             filter.type = category as string
         }
@@ -47,6 +64,7 @@ const getAllProducts = async (req:Request,res:Response,next:NextFunction)=> {
         if(metal.length > 0){
             filter.metal = { $in: metal}
         }
+
         const totalProducts = await Product.countDocuments(filter)
 
 
@@ -203,25 +221,6 @@ const updatedProducts = async (req:Request,res:Response,next:NextFunction) => {
     }
 }
 
-const searchProducts = async(req:Request,res:Response,next:NextFunction) => {
-    try{
-        const {key} = req.params
-
-        const data = await Product.find({
-
-            $or:[
-                {name:{$regex:key}},
-                {type:{$regex:key}},
-                {colors:{$regex:key}},
-                {metal:{$regex:key}}
-            ]
-        })
-
-        res.status(200).json(data)
-    }catch(error){
-        next()
-    }
-}
 
 export {
     getAllProducts,
@@ -229,5 +228,4 @@ export {
     deleteProduct,
     addProduct,
     updatedProducts,
-    searchProducts
 }

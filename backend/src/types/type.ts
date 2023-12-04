@@ -71,6 +71,7 @@ interface OrderType{
     }[],
     name:string,
     email:string,
+    shippingName:string,
     shippingAddress:{
         line1:string,
         line2:string,

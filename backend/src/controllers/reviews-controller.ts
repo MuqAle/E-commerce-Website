@@ -40,7 +40,7 @@ const deleteReview = async (req:Request,res:Response,next:NextFunction) => {
 
         const id = req.params.id
 
-        const product = await Product.findById(req.params.id)
+        const product = await Product.findById(id)
 
         const reviewPosted = product?.reviews?.find(
             userId => userId.postedBy.toString() === user.id.toString()

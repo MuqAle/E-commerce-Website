@@ -30,7 +30,11 @@ const userExtractor = async (req:Request,res:Response,next:NextFunction) => {
               model: 'Product', 
               select: 'name price images onSale salePercentage salePrice type' 
             })
-            .populate('orders')as UserTypes
+            .populate({
+                path:'orders',
+                model:'Order',
+                select:'createdAt orderStatus total'
+            }) as UserTypes
         }
         return next()
     }catch(error){

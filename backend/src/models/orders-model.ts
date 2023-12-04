@@ -21,6 +21,10 @@ const orderSchema = new mongoose.Schema({
         type:String,
         required:true
     },
+    shippingName:{
+        type:String,
+        required:true
+    },
     shippingAddress:{
         line1:String,
         line2:String,

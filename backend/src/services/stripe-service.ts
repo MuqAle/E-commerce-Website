@@ -163,6 +163,7 @@ const createOrder = async (data:Stripe.Checkout.Session,customer:Stripe.Customer
       products:products,
       name:data.customer_details?.name,
       email:data.customer_details?.email,
+      shippingName:data.shipping_details?.name,
       shippingAddress: data.customer_details?.address,
       userId:data.customer ? customer?.metadata.userId : 'Guest User',
       paymentIntentId: data.payment_intent,
