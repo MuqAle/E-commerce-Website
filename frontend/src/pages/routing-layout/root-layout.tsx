@@ -1,6 +1,6 @@
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet} from "react-router-dom";
 import {useEffect} from 'react'; 
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import Header from "./header";
 import Footer from "./footer";
 import ScrollToTop from "../../utils/scroll-to-top";
@@ -21,6 +21,12 @@ interface Span{
     setLoginModal : React.Dispatch<React.SetStateAction<boolean>>
     closeModal:() => void,
     loading:boolean
+}
+
+const backdrop = {
+  visible:{opacity:1},
+  hidden:{opacity:0},
+  exit:{opacity:0}
 }
 
 
@@ -88,7 +94,14 @@ const RootLayout = ({
             <AnimatePresence initial={false} mode="wait" onExitComplete={closeModal} >
               {
                 showLoginModal &&
+                <motion.div
+                variants={backdrop}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+                className="modal" onClick={closeModal}>
                 <LoginModal key='modal' closeModal={closeModal} user={user}/>
+                </motion.div>
               }
             </AnimatePresence>
             <main>

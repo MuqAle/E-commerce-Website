@@ -6,11 +6,7 @@ import SignUpForm from "./sign-up"
 import '../../style/css/login.css'
 
 
-const backdrop = {
-    visible:{opacity:1},
-    hidden:{opacity:0},
-    exit:{opacity:0}
-  }
+
 
 const LoginModal = ({user,closeModal}:
     {user:LoginTypes | null,
@@ -19,12 +15,7 @@ const LoginModal = ({user,closeModal}:
     const [showSignIn, setShowSignIn] = useImmer(true)
     
     return(
-        <motion.div
-        variants={backdrop}
-        initial="hidden"
-        animate="visible"
-        exit="exit"
-        className="modal" onClick={closeModal}>
+    
         <div className="sign-in" onClick={e => e.stopPropagation()}>
         <button className="close-modal sign-in-close" onClick={closeModal}>&times;</button>
             <div className="sign-in-btn-container">
@@ -37,7 +28,6 @@ const LoginModal = ({user,closeModal}:
             <SignUpForm user={user}/>
          }
     </div>
-    </motion.div>
     ) 
 }
 
