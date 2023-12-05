@@ -79,6 +79,16 @@ interface OrderType{
         city:string,
         sate:string,
     },
+    paymentType:string,
+    billingDetails:{
+        billingAddress:OrderType['shippingAddress']
+        email:string,
+        name:string
+    }
+    cardInfo:{
+        brand:string,
+        last4:string
+    }
     userId:string | Types.ObjectId,
     paymentIntentId:string,
     orderStatus:string,

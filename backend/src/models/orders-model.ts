@@ -39,6 +39,22 @@ const orderSchema = new mongoose.Schema({
         ref:'User'
     },
     paymentIntentId:String,
+    paymentType:String,
+    billingDetails:{
+        address:{
+            line1:String,
+            line2:String,
+            postal_code:String,
+            city:String,
+            sate:String,
+        },
+        email:String,
+        name:String
+    },
+    cardInfo:{
+        brand:String,
+        last4:String
+    },
     orderStatus:{
         type:String,
         default:"Not Processed",
