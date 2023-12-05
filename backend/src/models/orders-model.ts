@@ -30,7 +30,8 @@ const orderSchema = new mongoose.Schema({
         line2:String,
         postal_code:String,
         city:String,
-        sate:String,
+        state:String,
+        country:String
         
     },
     userId:{
@@ -46,7 +47,8 @@ const orderSchema = new mongoose.Schema({
             line2:String,
             postal_code:String,
             city:String,
-            sate:String,
+            state:String,
+            country:String
         },
         email:String,
         name:String

@@ -77,7 +77,8 @@ interface OrderType{
         line2:string,
         postal_code:string,
         city:string,
-        sate:string,
+        state:string,
+        country:string
     },
     paymentType:string,
     billingDetails:{

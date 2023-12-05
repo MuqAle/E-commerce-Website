@@ -6,7 +6,11 @@ import { filterBody, updateOrderLogic } from "../services/order-service";
 
 const getAllOrders = async(_req:Request,res:Response) => {
 
-    const allOrders = await Order.find({})
+    const allOrders = await Order.find({}).populate({
+        path: 'products.product',
+        model: 'Product', 
+        select: 'name price images onSale salePercentage salePrice type' 
+      })
 
     res.json(allOrders)
 }
@@ -16,7 +20,11 @@ const getOneOrder = async (req:Request,res:Response,next:NextFunction) => {
 
     const id = req.params.id
     try{
-        const order = await Order.findById(id)
+        const order = await Order.findById(id).populate({
+            path: 'products.product',
+            model: 'Product', 
+            select: 'name price images onSale salePercentage salePrice type' 
+          })
 
         if(order){
             res.json(order)
