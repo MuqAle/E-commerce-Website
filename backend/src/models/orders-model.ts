@@ -68,6 +68,7 @@ const orderSchema = new mongoose.Schema({
         ]
     },
     shippingCost:Number,
+    shippingMethod:String,
     tax:Number,
     subtotal:Number,
     total:Number,

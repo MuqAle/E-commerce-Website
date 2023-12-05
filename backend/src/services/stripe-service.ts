@@ -152,9 +152,12 @@ const createOrder = async (data:Stripe.Checkout.Session,customer:Stripe.Customer
       }  
   )
 
+  const shippingType = await stripe.shippingRates.retrieve(data.shipping_cost?.shipping_rate as string)
+
   const paymentMethod = paymentIntent.payment_method as Stripe.PaymentMethod
 
     const Items = checkoutSession.data
+
   
     const products = Items.map((item) => {
       const product = item.price?.product;
@@ -184,6 +187,7 @@ const createOrder = async (data:Stripe.Checkout.Session,customer:Stripe.Customer
         last4:paymentMethod.card?.last4,
       },
       shippingCost:data.shipping_cost?.amount_subtotal as number /100,
+      shippingMethod:shippingType.display_name,
       tax:data.total_details?.amount_tax as number /100,
       subtotal:data.amount_subtotal as number /100,
       total:data.amount_total as number/ 100

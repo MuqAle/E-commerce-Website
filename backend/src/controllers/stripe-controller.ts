@@ -91,8 +91,6 @@ const stripeWebhook = async (req:Request,res:Response,_next:NextFunction) => {
     const data = event.data.object as Stripe.Checkout.Session
     const eventType = event.type
     
-    console.log(data.payment_intent)
-
 
     if(eventType === "checkout.session.completed"){
 

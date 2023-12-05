@@ -93,6 +93,7 @@ interface OrderType{
     paymentIntentId:string,
     orderStatus:string,
     shippingCost:number,
+    shippingMethod:string,
     tax:number,
     subtotal:number,
     total:number
