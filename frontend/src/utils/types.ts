@@ -15,8 +15,13 @@ interface ProductDb {
     colors:string[],
     overallRating:number,
     reviews?:{
-        postedBy:string,
+        postedBy:{
+            id:string,
+            firstName:string,
+            lastName:string
+        },
         reviewDesc:string,
+        reviewTitle:string
         rating:number,
         datePosted:Date
     }[]
@@ -29,15 +34,36 @@ interface UserTypes{
     name:string,
     email:string,
     passwordHash:string
-    wishList?:string[],
+    wishList:ProductDb[],
     shoppingCart:string,
     reviews?:{
-        product:string[],
+        product:ProductDb,
         reviewDesc:string,
+        reviewTitle:string
         rating:number}[],
-    orders?:string[],
+    orders?:OrderType[],
     isAdmin:boolean,
     stripeId?:string
+}
+
+interface UserReviewType{
+    reviews:{
+        reviewDesc:string,
+        reviewTitle:string
+        rating:number | null
+    } | undefined
+}
+
+interface ReviewType{
+    postedBy:{
+        id:string,
+        firstName:string,
+        lastName:string
+    },
+    reviewDesc:string,
+    reviewTitle:string
+    rating:number,
+    datePosted:Date
 }
 
 interface FunctionTypes{
@@ -51,19 +77,19 @@ interface LandingPageTypes extends FunctionTypes{
 }
 
 interface CatalogueTypes extends FunctionTypes{
-    data:ProductDb[],
     title:string,
+    setLoading:React.Dispatch<React.SetStateAction<boolean>>
+}
+interface ProductTypes extends FunctionTypes{
+    loginFnc:() => void,
+    user:LoginTypes | null,
+    userReviews:UserTypes['reviews']
 }
 
 interface CardType{
     cardInfo: ProductDb
 }
 
-interface ReviewType{ 
-    product:string,
-    reviewDesc:string,
-    rating:number[]
-}
 
 interface CartTypes{
     products:{
@@ -83,6 +109,8 @@ interface CartFncType{
 
 interface CartCheckoutTypes extends CartFncType{
     cart:CartTypes,
+    setLoading:React.Dispatch<React.SetStateAction<boolean>>,
+    token:string|null
 }
 
 interface ProductCartType extends CartFncType{
@@ -90,7 +118,50 @@ interface ProductCartType extends CartFncType{
         product:ProductDb,
         quantity:number
     }
+}
 
+interface LoginTypes{
+    email:string,
+    name:string,
+    token:string,
+    isAdmin:boolean
+}
+
+interface OrderType{
+    id:string,
+    createdAt:string,
+    products:{
+        product:ProductDb,
+        quantity:number}[],
+    name:string,
+    email:string,
+    shippingName:string,
+    shippingAddress:{
+        line1:string,
+        line2:string,
+        postal_code:string,
+        city:string,
+        state:string,
+        country:string
+    },
+    paymentType:string,
+    billingDetails:{
+        address:OrderType['shippingAddress']
+        email:string,
+        name:string
+    }
+    cardInfo:{
+        brand:string,
+        last4:string
+    }
+    userId:string,
+    paymentIntentId:string,
+    orderStatus:string,
+    shippingMethod:string,
+    shippingCost:number,
+    tax:number,
+    subtotal:number,
+    total:number
 }
 
 export type {
@@ -104,5 +175,9 @@ export type {
     FunctionTypes,
     CartTypes,
     LandingPageTypes,
-    CartFncType
+    CartFncType,
+    LoginTypes,
+    ProductTypes,
+    UserReviewType,
+    OrderType
 }
