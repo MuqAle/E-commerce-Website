@@ -1,0 +1,100 @@
+@use 'card';
+
+.user-review-main{
+    .review-title{
+        margin-bottom: 15px;
+    }
+
+    .modal-content{
+        flex-direction: column;
+        justify-content: center;
+        padding: 40px;
+        font-size: 19px;
+        aspect-ratio: 1.3/0.7;
+        .delete-btns{
+            margin-top: 50px;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            button{
+                font-size: 18px;
+                background-color: card.$accent-color;
+                width: 130px;
+                height: 50px;
+            }
+        }
+        .success-delete{
+            margin-top: 20px;
+        }
+    }
+}
+
+
+.user-review-container{
+    display: flex;
+    width: 100%;
+    margin-top: 10px;
+    border-top: 1px solid black;
+    padding-top: 30px;
+    padding-bottom: 10px;
+    .review-main{
+        display: flex;
+        flex-grow: 1;
+        gap: 20px;
+        
+        .right-container{
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            flex-grow: 1;
+            p{
+                span{
+                    margin-right: 5px;
+                    font-weight: bold;
+                }
+            }
+            button{
+                margin-top: -5px;
+                font-size: 15px;
+                color: rgb(19, 107, 234);
+            }
+            button:hover{
+                text-decoration: underline;
+            }
+            .user-star-rating{
+                display: flex;
+                span{
+                    margin-right: 5px;
+                    font-weight: bold;
+                }
+            }
+        }
+        .right-container:last-child{
+            max-width: 200ch;
+            width: 10ch;
+        }
+        .left-container{
+            a{
+                img{
+                    width: 80px;
+                    display: block;
+                }
+            }
+            
+        }
+        
+    }
+    .review-btn-container{
+        display: flex;
+        flex-direction: column;
+        gap: 17px;
+        min-width: 200px;
+        button{
+            background-color: card.$accent-color;
+            height: 35px;
+        }
+
+    }
+
+}
+

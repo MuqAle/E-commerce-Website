@@ -55,4 +55,51 @@
   margin-top: 5px;
 }
 
-/*# sourceMappingURL=card.css.map */
+@media screen and (max-width: 1100px) {
+  .right-side {
+    width: 100%;
+    margin-top: 20px;
+    margin-right: 0 !important;
+  }
+}
+.order-title {
+  margin-bottom: 15px;
+}
+
+.order-container {
+  display: flex;
+  width: 100%;
+  margin-top: 10px;
+  border-top: 1px solid black;
+  padding-top: 20px;
+  padding-bottom: 10px;
+  flex-wrap: wrap;
+}
+.order-container .right-side {
+  min-width: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 10%;
+}
+.order-container .right-side a {
+  width: 100%;
+}
+.order-container .right-side .detail-btn {
+  width: inherit;
+  height: 30px;
+  font-size: 16px;
+  background-color: rgb(231, 185, 192);
+}
+.order-container .left-side {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex-grow: 1;
+}
+.order-container .left-side .order-detail span {
+  font-weight: bold;
+  margin-right: 5px;
+}
+
+/*# sourceMappingURL=orders.css.map */

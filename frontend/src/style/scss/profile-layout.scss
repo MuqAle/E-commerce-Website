@@ -2,15 +2,29 @@
 .user-container{
     display: flex;
     margin: 30px 30px 0px 30px;
+    gap: 40px;
 
     .user-nav{
         max-width: 300px;
-        width: 30%;
+        width: 15%;
     
         margin-left: 30px;
         li{
             margin: 10px 0 10px 0;
             padding: 10px 0 10px 0;
+
+            a, button{
+                padding: 10px 0 10px 20px;
+                width: 100%;
+                display: block;
+            }
+            & a.active{
+                background-color:rgb(226, 225, 225);
+            }
+            button{
+                font-size: 16px;
+                text-align: start;
+            }
         }
     }
     .user-main{

@@ -1,0 +1,31 @@
+.user-container {
+  display: flex;
+  margin: 30px 30px 0px 30px;
+  gap: 40px;
+}
+.user-container .user-nav {
+  max-width: 300px;
+  width: 15%;
+  margin-left: 30px;
+}
+.user-container .user-nav li {
+  margin: 10px 0 10px 0;
+  padding: 10px 0 10px 0;
+}
+.user-container .user-nav li a, .user-container .user-nav li button {
+  padding: 10px 0 10px 20px;
+  width: 100%;
+  display: block;
+}
+.user-container .user-nav li a.active {
+  background-color: rgb(226, 225, 225);
+}
+.user-container .user-nav li button {
+  font-size: 16px;
+  text-align: start;
+}
+.user-container .user-main {
+  flex-grow: 1;
+}
+
+/*# sourceMappingURL=profile-layout.css.map */

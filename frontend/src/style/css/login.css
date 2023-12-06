@@ -33,6 +33,8 @@
 
 .label {
   margin-top: 20px;
+  height: 90px;
+  overflow: hidden;
 }
 .label .card-name {
   margin-bottom: 5px;
@@ -48,10 +50,18 @@
   font-weight: 200;
 }
 
+.star-rating-container.card {
+  display: flex;
+  margin-top: 5px;
+}
+
 @media screen and (max-width: 640px) {
   .sign-in {
     width: 100%;
     aspect-ratio: 1.3/1;
+    height: 85dvh;
+    height: 85vh;
+    min-width: 400px !important;
   }
   .sign-in-close {
     margin-right: 15px;
@@ -84,10 +94,9 @@
   position: relative;
   flex-direction: column;
   display: flex;
-  min-width: 400px;
+  min-width: 450px;
   aspect-ratio: 1.2/1.5;
   max-width: 40rem;
-  height: 85vh;
   align-items: center;
   justify-content: center;
 }
