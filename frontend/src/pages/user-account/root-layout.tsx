@@ -3,6 +3,7 @@ import {  NavLink } from "react-router-dom";
 import { v4 as uuidv4 } from 'uuid'
 import '../../style/css/orders.css'
 import '../../style/css/profile-layout.css'
+import '../../style/css/user-profile-reviews.css'
 
 
 const UserLayout = () => {
@@ -12,7 +13,7 @@ const UserLayout = () => {
         <div className="user-container">
         <ul className="user-nav">
             <li key={uuidv4()}>
-                <NavLink className='user-nav-link' to="profile">Profile</NavLink>
+                <NavLink className='user-nav-link' to='profile'>Profile</NavLink>
             </li>
             <li key={uuidv4()}>
                 <NavLink className='user-nav-link' to="orders">Orders</NavLink>

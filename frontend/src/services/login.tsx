@@ -1,11 +1,13 @@
 import axios from "axios"
-const baseUrl = 'http://localhost:3003/api/login'
+import BASEURL from "../utils/constants"
+
+axios.defaults.withCredentials = true
 
 const login = async (credentials:{
     email:string,
     password:string
 }) => {
-    const response = await axios.post(baseUrl,credentials) 
+    const response = await axios.post(`${BASEURL}/login`,credentials) 
     return response.data
 }
 

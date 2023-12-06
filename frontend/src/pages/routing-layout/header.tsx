@@ -91,7 +91,7 @@ const Header = ({favorites, shoppingCart,logInModal,setLoginModal,loggedUser}:He
                 <div>
 
                 </div>
-                <NavLink id='user-account' onClick={loginModal}  to={'user-account'}>
+                <NavLink reloadDocument={true} id='user-account' onClick={loginModal}  to={'user-account/profile'}>
                     <img src={user} alt='user settings'/>
                 </NavLink>
                 <button onClick={toggleSearch} className="btn-search">

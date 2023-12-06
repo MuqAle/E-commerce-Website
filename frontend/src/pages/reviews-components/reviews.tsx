@@ -5,7 +5,6 @@ import { sortReviewsInDiffArray} from "../../utils/sort-reviews";
 import ReviewBody from "./review-body";
 import { forwardRef, useRef} from "react";
 import StarRatingForm from "./star-rating-form";
-import { useImmer } from "use-immer";
 
 
 
@@ -18,8 +17,6 @@ interface ReviewSectionType {
     rating:number | null,
     setStarRating:React.Dispatch<React.SetStateAction<null | number>>
 }
-
-
 
 
 
@@ -60,7 +57,7 @@ const ReviewsSection = forwardRef<HTMLDivElement, ReviewSectionType>(({
                     </div>
                 </div>
                 <div className="open-review-modal">
-                    <p>Review This Product!</p>
+                    <p>Add/Update Review For This Product!</p>
                     <StarRatingForm 
                     size="50"
                     openModal={openModal}

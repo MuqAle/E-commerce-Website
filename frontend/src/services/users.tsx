@@ -1,5 +1,6 @@
 import axios from "axios"
-const baseUrl = 'http://localhost:3003/api/users'
+import BASEURL from "../utils/constants"
+const baseUrl = `${BASEURL}/users`
 
 const createAccount = async(credentials:{
     firstName:string,

@@ -70,6 +70,7 @@ const SignUpForm = ({user}:{user:LoginTypes | null}) => {
     const handleSubmit = async(e: React.FormEvent) => {
         e.preventDefault()
         setErrors({})
+        setServerResponse('')
         if (validateForm()) {
             try{
                 await createAccount(formData)
@@ -78,53 +79,56 @@ const SignUpForm = ({user}:{user:LoginTypes | null}) => {
                     email:formData.email,
                     password:formData.password
                 })
-                window.localStorage.setItem('loggedUser',JSON.stringify(user))
+                window.sessionStorage.setItem('loggedUser',JSON.stringify(user))
+                location.reload()
             }catch(error){
                 setServerResponse('This email is already in use')
             }
     }
   }
     return(
-           <form className="sign-up-form"> 
-              <div className={`input-container ${errors.firstName ? 'error' : ''}`}>
-                  <label htmlFor="sign-up-first-name">
-                      First Name<span>*</span>
-                  </label>
-                  <input id="sign-up-first-name" name="firstName" value={formData.firstName} onChange = {handleChange}/>
-                  {errors.firstName && <p className="error">{errors.firstName}</p>}
-              </div>
-              <div className={`input-container ${errors.lastName ? 'error' : ''}`}>
-                  <label htmlFor="sign-up-last-name">
-                      Last Name<span>*</span>
-                  </label>
-                  <input id="sign-up-last-name" name="lastName" value={formData.lastName} onChange={handleChange}/>
-                  {errors.lastName && <p className="error">{errors.lastName}</p>}
-              </div>
-              <div className={`input-container ${errors.email ? 'error' : ''}`}>
-                  <label htmlFor="sign-up-email">
-                      Email<span>*</span>
-                  </label>
-                  <input type="email" id="sign-up-email" name="email" value={formData.email} onChange={handleChange} autoComplete="off"/>
-                  {errors.email && <p className="error">{errors.email}</p>}
-              </div>
-            <PasswordInput 
-            id='sign-up-password' 
-            inputName='Password' 
-            name="password" 
-            errors={errors.password} 
-            className={`input-container ${errors.password ? 'error' : ''}`} 
-            value={formData.password} 
-            setPassword={handleChange}/>
-            <PasswordInput 
-            id='sign-up-second-password' 
-            inputName="Confirm Password" 
-            name="confirmPassword" 
-            errors={errors.confirmPassword} 
-            className={`input-container ${errors.confirmPassword ? 'error' : ''}`} 
-            value={formData.confirmPassword} setPassword={handleChange}/>
-              <button onClick={handleSubmit}>Submit</button>
-              <p className="error">{serverResponse}</p>
-          </form>
+           <div className="sign-up-form-scroll">
+             <form className="sign-up-form">
+                <div className={`input-container ${errors.firstName ? 'error' : ''}`}>
+                    <label htmlFor="sign-up-first-name">
+                        First Name<span>*</span>
+                    </label>
+                    <input id="sign-up-first-name" name="firstName" value={formData.firstName} onChange = {handleChange}/>
+                    {errors.firstName && <p className="error">{errors.firstName}</p>}
+                </div>
+                <div className={`input-container ${errors.lastName ? 'error' : ''}`}>
+                    <label htmlFor="sign-up-last-name">
+                        Last Name<span>*</span>
+                    </label>
+                    <input id="sign-up-last-name" name="lastName" value={formData.lastName} onChange={handleChange}/>
+                    {errors.lastName && <p className="error">{errors.lastName}</p>}
+                </div>
+                <div className={`input-container ${errors.email ? 'error' : ''}`}>
+                    <label htmlFor="sign-up-email">
+                        Email<span>*</span>
+                    </label>
+                    <input type="email" id="sign-up-email" name="email" value={formData.email} onChange={handleChange} autoComplete="off"/>
+                    {errors.email && <p className="error">{errors.email}</p>}
+                </div>
+              <PasswordInput
+              id='sign-up-password'
+              inputName='Password'
+              name="password"
+              errors={errors.password}
+              className={`input-container ${errors.password ? 'error' : ''}`}
+              value={formData.password}
+              setPassword={handleChange}/>
+              <PasswordInput
+              id='sign-up-second-password'
+              inputName="Confirm Password"
+              name="confirmPassword"
+              errors={errors.confirmPassword}
+              className={`input-container ${errors.confirmPassword ? 'error' : ''}`}
+              value={formData.confirmPassword} setPassword={handleChange}/>
+              <p className="server-error">{serverResponse}</p>
+                <button className="sign-up-submit" onClick={handleSubmit}>Submit</button>
+                </form>
+           </div>
     )
 }
 

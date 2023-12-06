@@ -7,11 +7,11 @@ interface Props{
 }
 const Collapse = ({label,children,className}:Props) => {
 
-    const [open, setOPen] = useState(false);
+    const [open, setOpen] = useState(false);
     const contentRef = useRef<HTMLDivElement>(null);
 
     const toggle = () => {
-        setOPen(!open);
+        setOpen(!open);
       };
       
       return (

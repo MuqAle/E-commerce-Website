@@ -2,11 +2,14 @@ import { useImmer } from "use-immer"
 
 
 const PasswordInput = ({ 
-    id,name,value,setPassword}: 
+    id,name,value,setPassword,className,errors,inputName}: 
     {   id: string,
+        value:string,
+        className:string,
         name:string,
-        value:string
-        setPassword:React.ChangeEventHandler<HTMLInputElement>
+        inputName:string
+        errors:string|undefined
+        setPassword:React.ChangeEventHandler<HTMLInputElement>,
     }) => {
     const [passwordType,setPasswordType] = useImmer(true)
 
@@ -15,16 +18,17 @@ const PasswordInput = ({
         setPasswordType(!passwordType)
     }
     return(
-    <div className="input-container">
+    <div className={className}>
         <label htmlFor ={id}>
-            {name}<span>*</span>
+            {inputName}<span>*</span>
         </label>
-        <div>
-            <input id={id} value={value} type={passwordType ? 'password' : 'text'} onChange={setPassword} required={true}/>
+        <div className="password-container">
+            <input id={id} value={value} type={passwordType ? 'password' : 'text'} name={name} onChange={setPassword} required={true}/>
         <button onClick={togglePassword}>
          {passwordType ? 'SHOW' : 'HIDE'}
         </button>
         </div>
+        {errors && <p className="error">{errors}</p>}
     </div>
     )
 }

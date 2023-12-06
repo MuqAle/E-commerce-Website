@@ -1,6 +1,5 @@
 import { useImmer } from "use-immer"
 import { LoginTypes} from "../../utils/types"
-import { motion } from "framer-motion"
 import SignInForm from "./sign-in"
 import SignUpForm from "./sign-up"
 import '../../style/css/login.css'

@@ -8,7 +8,7 @@ import {
     sortRecentDate} from "../../utils/sort-reviews";
 import { useImmer } from "use-immer";
 import DropDownButton from "./dropdown";
-import {useEffect, useMemo} from "react";
+import {Ref, RefObject, useEffect, useMemo} from "react";
 import Pagination from "../../components/pagination";
 import useOutsideClick from "../../hooks/outside-click";
 import arrow from '../../assets/imgs/svg-imgs/arrow_forward_ios_FILL0_wght100_GRAD-25_opsz48.svg'
@@ -184,7 +184,7 @@ const ReviewBody = ({filterReviewArray,reviews,scrollToTop,myRef}:ReviewBodyType
         <div className="reviews-body">
                 <div className="reviews-button">
                     <div ref={myRef}  className="reviews-btn-container">
-                        <div ref={filterRef} className={dropDownShow.filter || checkActives('filter') ? "filter-reviews active" : "filter-reviews"}>
+                        <div ref={filterRef as RefObject<HTMLDivElement>} className={dropDownShow.filter || checkActives('filter') ? "filter-reviews active" : "filter-reviews"}>
                             <button  className="dropdown-toggle-btn" onClick={(e) => openDropDown('filter',e)}>Filter
                             <img src={arrow}/>
                             </button>
@@ -199,7 +199,7 @@ const ReviewBody = ({filterReviewArray,reviews,scrollToTop,myRef}:ReviewBodyType
                                 })}
                             </div>
                         </div>
-                        <div ref={ref} className={dropDownShow.sort || checkActives('sort') ? "sort-reviews active" : "sort-reviews"}>
+                        <div ref={ref as RefObject<HTMLDivElement>} className={dropDownShow.sort || checkActives('sort') ? "sort-reviews active" : "sort-reviews"}>
                             <button  className="dropdown-toggle-btn" onClick={(e) => openDropDown('sort',e)}>
                                 Sort
                             <img src={arrow}/></button>

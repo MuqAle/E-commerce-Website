@@ -1,4 +1,4 @@
 
-const URL = 'http://localhost:3003/api'
+const BASEURL = 'http://localhost:3003/api'
 
-export default URL
+export default BASEURL
