@@ -1,49 +1,84 @@
-import { useState } from "react"
+import { useEffect,  useRef} from "react"
 import { useParams} from "react-router-dom"
-import ErrorPage from "./error-page"
+import { ProductDb, ProductTypes, UserReviewType } from "../utils/types"
 import '../style/css/product-page.css'
+import '../style/css/pagination.css'
 import ReactImageMagnify from "@blacklab/react-image-magnify"
-import heartimg from '../assets/imgs/svg-imgs/heart-outline.svg'
-import filledheart from '../assets/imgs/svg-imgs/heart-filled.svg'
+import heartImg from '../assets/imgs/svg-imgs/heart-outline.svg'
+import filledHeart from '../assets/imgs/svg-imgs/heart-filled.svg'
 import rightArrow from '../assets/imgs/svg-imgs/arrow_forward_ios_FILL0_wght100_GRAD-25_opsz48.svg'
 import leftArrow from '../assets/imgs/svg-imgs/arrow_back_ios_new_FILL0_wght100_GRAD0_opsz48.svg'
 import Breadcrumbs from "../components/breadcrumbs"
+import { getOneProduct } from "../services/products"
+import { useImmer } from "use-immer"
+import StarRating from "./reviews-components/star-rating"
+import ReviewsSection from "./reviews-components/reviews"
+import { AnimatePresence } from "framer-motion"
+import ReviewForm from "./reviews-components/review-form"
+import disableScrollModal from "../utils/stop-scrolling"
 
 
-interface ProductProp{
-    data:{
-        name:string,
-        id:string,
-        type:string,
-        price:number,
-        onSale:boolean,
-        salePrice:number,
-        description:string,
-       Gallery:string[],
-    }[],
-    addToCart: (id:string) => void,
-    addToFavorite: (id:string) => void,
-    favorited: (id:string | undefined) => boolean 
-}
+
 
 interface Params {
     id: string;
 }
 
 
-const ProductPage = ({data,addToCart,addToFavorite,favorited}:ProductProp) => {
+const ProductPage = ({addToCart,addFavorite,favorited,loginFnc,user,userReviews}:ProductTypes) => {
     
     const {id} = useParams<keyof Params>() as Params
-    const [image, setImage] = useState(0)
-    const product= data.find(p => p.id === id);
-    if(!product){
-        return (
-           <ErrorPage/>
-        )
+    const [image, setImage] = useImmer(0)
+    const [product, setProduct] = useImmer<ProductDb>(Object)
+    const [reviews,setReviews] = useImmer(product.reviews)
+    const [showReviewModal,setShowReviewModal] = useImmer(false)
+    const [rating,setRating] = useImmer<null | number>(null)
+    const ref = useRef<HTMLDivElement>(null)
+    const [foundReview,setFoundReview] = useImmer<UserReviewType['reviews']>(undefined)
+
+    useEffect (() => {
+        if(userReviews){
+            const review = userReviews.find(reviews => reviews.product._id === id)
+            if(review){
+                const foundReview = {
+                    reviewDesc : review?.reviewDesc as string,
+                    reviewTitle: review?.reviewTitle as string,
+                    rating: review?.rating as number 
+                }
+                setFoundReview(foundReview)
+            }
+        }
+    },[id, setFoundReview, userReviews])
+ 
+
+    useEffect(() => {
+        const controller = new AbortController()
+        getOneProduct(id).then(product => {
+            setProduct(product)
+            setReviews(product.reviews)
+        })
+
+        return () => {
+            controller.abort()
+          }
+    },[id, setProduct, setReviews])
+
+    useEffect(() => {
+        disableScrollModal(showReviewModal)
+    },[showReviewModal])
+
+    const scrollToReviews = () => {
+        if (ref.current) {
+            ref.current.scrollIntoView({
+                behavior: 'smooth',
+                block:'start',
+                inline: 'center'
+            })
+        }
     }
-    
+
     const increment = () => {
-        if(product && product.Gallery && image+1 === product.Gallery.length){
+        if(product && product.images && image+1 === product.images.length){
             setImage(0)
         }
         else{
@@ -52,31 +87,46 @@ const ProductPage = ({data,addToCart,addToFavorite,favorited}:ProductProp) => {
     }
 
     const decrement = () => {
-        if(product && product.Gallery && image-1 === -1){
+        if(product && product.images && image-1 === -1){
             setImage(1)
         }
         else{
             setImage(i => i - 1)
         }
     }
-
+    if(product && product.images){
     return(
         <div className="product-page-container">
-            <Breadcrumbs/>
+            <AnimatePresence>
+              {
+                showReviewModal &&
+                <ReviewForm 
+                setFoundReview = {setFoundReview}
+                foundReview={foundReview}
+                setReviews={setReviews}
+                setRating = {setRating} 
+                closeModal={() => setShowReviewModal(false)}  
+                rating={rating}
+                product={id}
+                user={user}
+                />
+              }
+            </AnimatePresence>
+            <Breadcrumbs name={product.name}/>
             <div className="product-page">
                 <div className="product-images">
                     <div className="gallery">
-                        {product?.Gallery.map((i,index) =>
+                        {product.images.map((i,index) =>
                         <button key={index} className="image-button" onClick={() => setImage(index)}><img  src={i} alt="image-button"/></button>)}
                     </div>
                     <div className="product-img-container">
                         <ReactImageMagnify className = 'product-img'
                         
                         imageProps={{
-                            src: product?.Gallery[image],
+                            src: product.images[image],
                         }}
                         magnifiedImageProps={{
-                            src:product?.Gallery[image],
+                            src:product.images[image],
                             height:1300,
                             width:1300
                         }}
@@ -91,26 +141,48 @@ const ProductPage = ({data,addToCart,addToFavorite,favorited}:ProductProp) => {
                             
                         }}
                         activationInteractionHint="hover"/>
-                        {product && product.Gallery && product.Gallery.length > 1 ? <button className="left-count-btn" onClick={decrement}><img src={leftArrow} alt="" /></button> : null}
-                        {product && product.Gallery && product.Gallery.length > 1 ? <button className="right-count-btn" onClick={increment}><img src={rightArrow} alt="" /></button> : null}
+                        {product.images.length > 1 ? <button className="left-count-btn" onClick={decrement}><img src={leftArrow} alt="" /></button> : null}
+                        {product.images.length > 1 ? <button className="right-count-btn" onClick={increment}><img src={rightArrow} alt="" /></button> : null}
                     </div>
                     </div>
                     <div className="product-info">
                         <div className="first-container">
-                            <h1 className="product-name">{product?.name}</h1>
-                            <button className = 'add-product-favorites' onClick={() => {if(product?.id !== undefined){addToFavorite(product.id)}
-                            }}><img src={favorited(product?.id) ? filledheart : heartimg}  alt="favorite-btn" /></button>
+                            <h1 className="product-name">{product.name}</h1>
+                            <button className = 'add-product-favorites' onClick={() => {if(product?._id !== undefined){addFavorite(product._id)}
+                            }}><img src={favorited(product._id) ? filledHeart : heartImg}  alt="favorite-btn" /></button>
                         </div>
+                        {
+                            product.overallRating > 0 ? 
+                            <div className="product-rating-top-page">
+                                <StarRating rating={product.overallRating} size="24" type="product"/>
+                                <button onClick={scrollToReviews}>{product.reviews?.length} Reviews</button>
+                            </div>
+                            :
+                            null
+                        }
                         {product?.onSale ?
-                        <p className='product-price product-sale-price'>${product?.salePrice.toFixed(2)} <s>${product?.price}</s> </p>
+                        <p className='product-price product-sale-price'>${product.salePrice?.toFixed(2)} <s>${product?.price.toFixed(2)}</s> </p>
                         :
-                        <p className='product-price '>${product?.price}</p>}
-                        <button className="add-to-bag" onClick={()=> {if(product?.id !== undefined){addToCart(product.id)}}}>Add to Bag</button>
-                        <p>Description :<br/><br/>{product?.description}</p>
+                        <p className='product-price '>${product.price}</p>}
+                        <button className="add-to-bag" onClick={()=> {if(product._id !== undefined){addToCart(product._id)}}}>Add to Bag</button>
+                        <p>Description :<br/><br/>{product.description}</p>
                     </div>
+                    
             </div>
+            <ReviewsSection 
+            setStarRating={setRating}
+            rating={rating}
+            openModal={() => user ? setShowReviewModal(true) : setShowReviewModal(false)} 
+            loginFnc={loginFnc} ref={ref} 
+            reviews={reviews} 
+            overallRating={product.overallRating}/>
         </div>
-    )
+    )}else{
+        return (
+           <div className="empty-page">
+           </div>
+         )
+    }
 }
 
 export default ProductPage

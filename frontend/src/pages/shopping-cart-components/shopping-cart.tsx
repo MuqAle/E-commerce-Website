@@ -2,31 +2,33 @@ import { Link } from "react-router-dom"
 import ProductCart from "./product-cart"
 import '../../style/css/cart.css'
 import Breadcrumbs from "../../components/breadcrumbs"
+import { CartCheckoutTypes} from "../../utils/types"
+import checkout from "../../services/checkout"
 
 
-interface Cart {
-    array:
-    {product:{name:string,
-        id:string,
-        type:string,
-        price:number,
-        onSale:boolean,
-        salePrice:number,
-        description:string,
-        Gallery:string[]}
-        amount:number
-      }[],
-    increaseAmount:(id:string) => void,
-    decreaseAmount:(id:string) => void,
-    deleteProductCart : (id:string) => void
-}
 
-const ShoppingCart = ({array,increaseAmount,decreaseAmount,deleteProductCart}:Cart) => {
+
+const ShoppingCart = ({cart,increaseAmount,decreaseAmount,deleteProductCart,setLoading,token}:CartCheckoutTypes) => {
+
+    const clickCheckout = async() => {
+        try{
+            setLoading(true)
+            const response = await checkout(token)
+            window.location.href = response
+
+        }catch(error){
+            console.log(error)
+        }finally{
+            setLoading(false)
+        }
+    }
+
+    if(cart.products){
     return (
         <div>
-            <Breadcrumbs/>
+            <Breadcrumbs name={null}/>
             <h1 className="title">Cart</h1>
-           {array.length === 0 ?
+           {cart.products.length === 0 ?
                 <div className="empty">
                     <p>Your Cart Is Empty</p>
                     <Link to={'/shop-all'}><button>Shop All Jewelry</button></Link>
@@ -39,8 +41,8 @@ const ShoppingCart = ({array,increaseAmount,decreaseAmount,deleteProductCart}:Ca
                         <Link to={'/shop-all'}>Continue Shopping</Link>
                     </div>
                     <div className="shopping-cart-container">
-                        {array.map((cart) => (
-                            <ProductCart increaseAmount={increaseAmount} decreaseAmount={decreaseAmount} deleteProductCart={deleteProductCart} cart={cart} key={cart.product.id}></ProductCart>
+                        {cart.products.map((cart) => (
+                            <ProductCart increaseAmount={increaseAmount} decreaseAmount={decreaseAmount} deleteProductCart={deleteProductCart} cart={cart} key={cart.product._id}></ProductCart>
                         ))}
                     </div>
                 </div>
@@ -48,15 +50,22 @@ const ShoppingCart = ({array,increaseAmount,decreaseAmount,deleteProductCart}:Ca
                     <h4>Order Summary</h4>
                     <div className="subtotal">
                         <p>Subtotal</p>
-                        <p className="total-price">${array.reduce((a,b) => a + (b.product.salePrice * b.amount),0).toFixed(2)}</p>
+                        <p className="total-price">${cart.cartPrice.toFixed(2)}</p>
                     </div>
                     <p className="shipping">Shipping and taxes calculated at checkout</p>
-                    <a target="_blank"  href="https://buy.stripe.com/test_5kA9DY3hB0xN9awaEE"><button className="checkout-btn">Secure Checkout</button></a>
+                    <button onClick={clickCheckout} className="checkout-btn">Secure Checkout</button>
                 </div>
             </div>
             }
         </div>
-    )
+    )}else{
+        return(
+            <div className="empty-page">
+
+            </div>
+        )
+       
+    }
 }
 
 export default ShoppingCart
