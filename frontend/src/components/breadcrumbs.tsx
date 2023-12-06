@@ -1,18 +1,22 @@
 import { useLocation, Link } from "react-router-dom"
 import capitalize from "../utils/capitalize"
 
-export default function Breadcrumbs() {
+
+export default function Breadcrumbs({name}:{name:string | null}) {
   const location = useLocation()
 
   let currentLink = ''
-
+  let crumbName
   const crumbs = location.pathname.split('/')
     .filter(crumb => crumb !== '')
-    .map(crumb => {
-      currentLink += `/${crumb}`
+    .map((crumb,i) => {
+      if(i === 1){
+        crumbName = capitalize(name)
+      }else{
+        currentLink += `/${crumb}`
+        crumbName = capitalize(crumb)
+      }
       
-      const crumbName = capitalize(crumb)
-
       return (
         <div className="crumb" key={crumb}>
             <Link to={currentLink}>{crumbName}</Link>
