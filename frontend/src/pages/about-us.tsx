@@ -9,7 +9,7 @@ import Breadcrumbs from '../components/breadcrumbs'
 const AboutUs =() => {
     return (
         <div>
-            <Breadcrumbs/>
+            <Breadcrumbs name={null}/>
             <h1 className='title'>About Us</h1>
             <div className="about-us-main-container">
                 <div className="about-us-container our-story">

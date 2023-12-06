@@ -1,7 +1,8 @@
 import { motion } from "framer-motion"
 import img from '../assets/imgs/front-page-imgs/nati-melnychuk-Ki7TPcA9204-unsplash.jpg'
 import arrow from '../assets/imgs/svg-imgs/arrow.svg'
-import '../style/css/modal.css'
+
+
 
 interface Modal{
     closeModal:() => void
