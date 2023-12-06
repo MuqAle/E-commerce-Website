@@ -8,7 +8,7 @@ import {
     sortRecentDate} from "../../utils/sort-reviews";
 import { useImmer } from "use-immer";
 import DropDownButton from "./dropdown";
-import {Ref, RefObject, useEffect, useMemo} from "react";
+import { RefObject, useEffect, useMemo} from "react";
 import Pagination from "../../components/pagination";
 import useOutsideClick from "../../hooks/outside-click";
 import arrow from '../../assets/imgs/svg-imgs/arrow_forward_ios_FILL0_wght100_GRAD-25_opsz48.svg'
