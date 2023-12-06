@@ -55,13 +55,6 @@
   margin-top: 5px;
 }
 
-@media screen and (max-width: 1100px) {
-  .right-side {
-    width: 100%;
-    margin-top: 20px;
-    margin-right: 0 !important;
-  }
-}
 .order-title {
   margin-bottom: 15px;
 }
@@ -100,6 +93,14 @@
 .order-container .left-side .order-detail span {
   font-weight: bold;
   margin-right: 5px;
+}
+
+@media screen and (max-width: 1100px) {
+  .right-side {
+    width: 100%;
+    margin-top: 20px;
+    margin-right: 0;
+  }
 }
 
 /*# sourceMappingURL=orders.css.map */

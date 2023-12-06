@@ -55,26 +55,6 @@
   margin-top: 5px;
 }
 
-@media (hover: none) {
-  .card-container .left-btn,
-  .card-container .right-btn {
-    display: flex;
-    visibility: visible !important;
-    opacity: 100% !important;
-    justify-content: center;
-    align-items: center;
-  }
-}
-@media screen and (min-width: 500px) and (max-width: 1024px) {
-  .card-container {
-    width: calc((100% - 8px) / 2) !important;
-  }
-}
-@media screen and (max-width: 500px) {
-  .card-container {
-    width: 100% !important;
-  }
-}
 @-webkit-keyframes spin {
   0% {
     -webkit-transform: rotate(0deg);
@@ -121,8 +101,8 @@
 
 .card-container:hover .left-btn, .card-container:hover .right-btn {
   display: flex;
-  visibility: visible !important;
-  opacity: 100% !important;
+  visibility: visible;
+  opacity: 100%;
   justify-content: center;
   align-items: center;
 }
@@ -349,11 +329,31 @@
 }
 
 @media (hover: none) {
+  .card-container .left-btn,
+  .card-container .right-btn {
+    display: flex;
+    visibility: visible;
+    opacity: 100%;
+    justify-content: center;
+    align-items: center;
+  }
+}
+@media screen and (min-width: 500px) and (max-width: 1024px) {
+  .card-container {
+    width: calc((100% - 8px) / 2);
+  }
+}
+@media screen and (max-width: 500px) {
+  .card-container {
+    width: 100%;
+  }
+}
+@media (hover: none) {
   .landing-page-card .landing-page-left-btn,
   .landing-page-card .landing-page-right-btn {
     display: flex;
-    visibility: visible !important;
-    opacity: 100% !important;
+    visibility: visible;
+    opacity: 100%;
     justify-content: center;
     align-items: center;
   }
@@ -495,8 +495,8 @@
 
 .landing-page-card:hover .landing-page-left-btn, .landing-page-card:hover .landing-page-right-btn {
   display: flex;
-  visibility: visible !important;
-  opacity: 100% !important;
+  visibility: visible;
+  opacity: 100%;
   justify-content: center;
   align-items: center;
 }
