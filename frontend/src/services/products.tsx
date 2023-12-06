@@ -1,6 +1,7 @@
 import axios from "axios"
 import { ProductDb } from "../utils/types"
-const baseUrl = 'http://localhost:3003/api/products'
+import BASEURL from "../utils/constants"
+const baseUrl = `${BASEURL}/products`
 
 
 
@@ -9,8 +10,14 @@ const setToken = (newToken:string) => {
  return token
 }
 
-const getAllProducts = async() => {
-    const response = await axios.get(baseUrl)
+const getAllProducts = async(query:string) => {
+     
+    const response = await axios.get(`${baseUrl}${query}`)
+    return response.data
+}
+
+const getOneProduct = async(product:string) => {
+    const response = await axios.get(`${baseUrl}/${product}`)
     return response.data
 }
 
@@ -46,5 +53,6 @@ export {
     getAllProducts,
     addProduct,
     deleteProduct,
-    updateProduct
+    updateProduct,
+    getOneProduct
 }
