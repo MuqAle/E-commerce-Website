@@ -5,22 +5,21 @@ const OrderBilling = ({billingDetails,cardInfo}:{
     billingDetails:OrderType['billingDetails'],
     cardInfo:OrderType['cardInfo']
 }) => {
+    const capitalizeCardBrand = cardInfo.brand.charAt(0).toUpperCase() + cardInfo.brand.slice(1) 
     return(
-        <div>
-            <div> 
-                <p>Billing Address:</p>
-                <p>
+        <div className="order-billing">
+            <div className="order-billing-address"> 
+                <p className="order-billing-title"><b>Billing Address:</b></p>
+                <p className="order-billing-address">
                     {billingDetails.name}<br/>
-                    {billingDetails.billingAddress.line1} <br/>
-                    {billingDetails.billingAddress.line2} <br/>
-                    {billingDetails.billingAddress.city},
-                    {billingDetails.billingAddress.state},
-                    {billingDetails.billingAddress.postal_code} <br/>
-                    {billingDetails.billingAddress.country}
+                    {billingDetails.address.line1} <br/>
+                    {billingDetails.address.line2}
+                    {billingDetails.address.city}, {billingDetails.address.state}, {billingDetails.address.postal_code} <br/>
+                    {billingDetails.address.country}
                 </p>
             </div>
-                <p><b>Email:</b>{billingDetails.email}</p>
-            <p><b>Payment Method:</b>{cardInfo.brand}{cardInfo.last4}</p>
+                <p className="order-billing-email"><b>Email:</b> {billingDetails.email}</p>
+                <p className="order-payment-method"><b>Payment Method:</b> {capitalizeCardBrand} {cardInfo.last4}</p>
         </div>
     )
 }

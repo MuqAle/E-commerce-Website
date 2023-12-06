@@ -1,5 +1,5 @@
 import axios from "axios"
-import URL from "../utils/constants"
+import BASEURL from "../utils/constants"
 
 
 axios.defaults.withCredentials = true
@@ -9,7 +9,7 @@ const checkout = async(token:string|null) => {
         headers:{Authorization:token}
         
     }
-        const response = await axios.post(`${URL}/checkout`,null,config)
+        const response = await axios.post(`${BASEURL}/checkout`,null,config)
         return response.data
 
     

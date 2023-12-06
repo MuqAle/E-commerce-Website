@@ -16,21 +16,21 @@ const OrderShipping = ({shippingName,shippingMethod,shippingAddress,orderStatus}
     }).join(" ")
 
     return (
-        <div>
-            <div>
+        <div className="order-shipping">
+            <div className="order-shipping-status">
                 <p><b>Order Status:</b></p>
                 <p>{orderStatus}</p>
             </div>
-            <div>
+            <div className="order-shipping-method">
                 <p><b>Shipping Method:</b></p>
                 <p>{shippingType}</p>
             </div>
-            <div>
+            <div className="order-shipping-address">
                 <p><b>Shipping Address:</b></p>
                 <p>
                     {shippingName}<br/>
                     {shippingAddress.line1} <br/>
-                    {shippingAddress.line2} <br/>
+                    {shippingAddress.line2}
                     {shippingAddress.city},
                     {shippingAddress.state},
                     {shippingAddress.postal_code} <br/>
