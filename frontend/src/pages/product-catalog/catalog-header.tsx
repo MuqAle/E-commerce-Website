@@ -16,7 +16,7 @@ interface CatalogHeaderType{
     filterFnc:(key: keyof Partial<FilterQueryType>,e: React.ChangeEvent<HTMLInputElement>) => void
     priceFilterFnc :(key: keyof Partial<FilterQueryType>,e: React.ChangeEvent<HTMLInputElement>) => void
     clearFilters : () => void
-    filtersApplied:object
+    filtersApplied: Partial<FilterQueryType>
     sortApplied:string,
     sortArray:string[]
 }
@@ -66,12 +66,24 @@ const CatalogHeader = (
 
     }
 
+    const countFilters = () => {
+        let filters = 0
+        const filtersInObject = Object.keys(filtersApplied).length
+        filters += filtersInObject
+        if(filtersApplied.colors || filtersApplied.metal){
+            filters += filtersApplied.colors ? filtersApplied.colors.length - 1 : 0
+            filters += filtersApplied.metal ? filtersApplied.metal.length - 1 : 0
+        }
+
+        return filters
+    }
+
 
 
     return(
         <div className="sort-filter-container" >
             <button className='filter-sort-btn' onClick={() => setOpenMenu(true)}>
-                Filter/Sort
+                Filter/Sort {countFilters()}
             </button>
         <div className="filter-catalogue-container" style={openMenu ? {background : 'rgba(0, 0, 0, 0.6)'}:
          {background:'transparent',visibility:'hidden'}}

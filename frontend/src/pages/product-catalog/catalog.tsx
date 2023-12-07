@@ -94,7 +94,6 @@ const Catalog = ({title,addToCart,addFavorite,favorited,setLoading}:CatalogueTyp
         setIsLoading(true)
     },[])
 
-   
 
     useEffect(() => {
         const controller = new AbortController()
