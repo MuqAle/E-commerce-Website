@@ -82,6 +82,9 @@
    } 
 
    .add-to-bag{
+    &.sold-out{
+        background-color: #b0adad;
+    }
     width: 100%;
     background-color: card.$accent-color ;
     height: 50px;

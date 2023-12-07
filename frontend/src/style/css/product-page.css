@@ -127,6 +127,9 @@
   font-size: 1.2rem;
   color: white;
 }
+.product-info .add-to-bag.sold-out {
+  background-color: #b0adad;
+}
 .product-info .product-price {
   font-size: 20px;
   word-spacing: 10px;
