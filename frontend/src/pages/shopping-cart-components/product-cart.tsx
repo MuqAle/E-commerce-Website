@@ -9,7 +9,6 @@ import { ProductCartType } from "../../utils/types"
 
 
 const ProductCart = ({cart, increaseAmount, decreaseAmount,deleteProductCart}:ProductCartType) => {
-    
     return (
         <div className="product-in-cart">
             <div className="product-cart-image">
@@ -18,10 +17,19 @@ const ProductCart = ({cart, increaseAmount, decreaseAmount,deleteProductCart}:Pr
                 </Link>
             </div>
             <div className="product-cart-info">
-                
+                <div>
                 <Link className="cart-product-name" to={`/${cart.product.type}/${cart.product._id}`}>
                     {cart.product.name}
                 </Link>
+                {
+                    
+                    cart.product.stock == 0 ?
+                    <p style={{marginTop:'2px',color:'#706d6d'}}>Out of Stock</p> : 
+                    null
+                }
+               
+                </div>
+                
                 <div className="cart-amount">
                     <button className="cart-amount-btn" onClick={() => decreaseAmount(cart.product._id)}><img src={subtract}/></button>
                     <p>{cart.quantity}</p>

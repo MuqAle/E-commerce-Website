@@ -4,11 +4,15 @@ import '../../style/css/cart.css'
 import Breadcrumbs from "../../components/breadcrumbs"
 import { CartCheckoutTypes} from "../../utils/types"
 import checkout from "../../services/checkout"
+import { useImmer } from "use-immer"
+import axios from "axios"
 
 
 
 
 const ShoppingCart = ({cart,increaseAmount,decreaseAmount,deleteProductCart,setLoading,token}:CartCheckoutTypes) => {
+
+    const [error,setError] = useImmer('')
 
     const clickCheckout = async() => {
         try{
@@ -17,7 +21,9 @@ const ShoppingCart = ({cart,increaseAmount,decreaseAmount,deleteProductCart,setL
             window.location.href = response
 
         }catch(error){
-            console.log(error)
+            if (axios.isAxiosError(error))  {
+                setError(error.response?.data)
+              }
         }finally{
             setLoading(false)
         }
@@ -54,6 +60,7 @@ const ShoppingCart = ({cart,increaseAmount,decreaseAmount,deleteProductCart,setL
                     </div>
                     <p className="shipping">Shipping and taxes calculated at checkout</p>
                     <button onClick={clickCheckout} className="checkout-btn">Secure Checkout</button>
+                    <p style={{marginTop:'10px',color:'rgb(188, 11, 11)'}}>{error}</p>
                 </div>
             </div>
             }
