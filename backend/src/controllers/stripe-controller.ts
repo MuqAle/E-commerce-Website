@@ -16,23 +16,26 @@ import { checkoutSessionConfig, clearCart, createCustomer, createLineItems,creat
 const checkoutSession =  async (req:Request, res:Response) => {
     const guestCart = req.session.guestCart as CartTypes
     const {user} = req
-    let cartItems:Stripe.Checkout.SessionCreateParams.LineItem[] = []
+    let cartItems:Stripe.Checkout.SessionCreateParams.LineItem | typeof NaN[] = []
     let customer:Stripe.Customer | Stripe.DeletedCustomer | undefined
 
     if(user){
         const cart = await Cart.findById(user.shoppingCart) as CartTypes
         
         if(!user.stripeId){
-          customer = await stripe.customers.create(createCustomer(user))
 
+          customer = await stripe.customers.create(createCustomer(user))
           user.stripeId = customer.id
           await user.save()
+
         }else{
+          
             customer = await stripe.customers.retrieve(user.stripeId)
         }
         const userCart = cart?.products
         
         if(userCart){
+
             cartItems = await createLineItems(userCart) as []
             
         }
@@ -47,12 +50,15 @@ const checkoutSession =  async (req:Request, res:Response) => {
     }
     if(cartItems.length === 0){
       return res.status(400).send('No Items In Cart')
-    }else{
+    }if(cartItems.includes(NaN)){
+      return res.status(400).send('Item In Cart Is Out Of Stock')
+    }
+    else{
       const session = await stripe.checkout.sessions.create(checkoutSessionConfig(
        user,
        req.session.id,
        customer?.id,
-       cartItems
+       cartItems as Stripe.Checkout.SessionCreateParams.LineItem[]
       ))
       return res.json(session.url)
     }

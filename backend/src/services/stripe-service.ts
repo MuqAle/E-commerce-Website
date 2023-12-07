@@ -18,24 +18,27 @@ const stripe = new Stripe(STRIPE_KEY as string, {
 const createPriceData = async (productId : Types.ObjectId, quantity:number) => {
 
     const product = await Product.findById(productId)
-
     if(product){
+      if(product.stock === 0){
+        return NaN
+      }else{
         return{
-            price_data:{
-                currency:"usd",
-                product_data:{
-                    name: product.name,
-                    images:product.images,
-                    metadata:{
-                      item:productId.toString() 
-                    }
-                },
-                unit_amount:product.onSale ? 
-                product.salePrice && evenRound((product.salePrice * 100),0):
-                evenRound(product.price * 100,0)
-            },
-            quantity:quantity,
-        }
+          price_data:{
+              currency:"usd",
+              product_data:{
+                  name: product.name,
+                  images:product.images,
+                  metadata:{
+                    item:productId.toString() 
+                  }
+              },
+              unit_amount:product.onSale ? 
+              product.salePrice && evenRound((product.salePrice * 100),0):
+              evenRound(product.price * 100,0)
+          },
+          quantity:quantity,
+      }
+      }
     }else{
         return 
     }
