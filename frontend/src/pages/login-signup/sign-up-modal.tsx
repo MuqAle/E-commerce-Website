@@ -9,14 +9,18 @@ import '../../style/css/login.css'
 
 const LoginModal = ({user,closeModal}:
     {user:LoginTypes | null,
-    closeModal:() => void}) => {
+    closeModal?:() => void}) => {
 
     const [showSignIn, setShowSignIn] = useImmer(true)
     
     return(
     
-        <div className="sign-in" onClick={e => e.stopPropagation()}>
-        <button className="close-modal sign-in-close" onClick={closeModal}>&times;</button>
+        <div className={closeModal ? "sign-in" : 'login-container'} onClick={e => e.stopPropagation()}>
+            {
+                closeModal ? <button className="close-modal sign-in-close" onClick={closeModal}>&times;</button> :
+                null
+            }
+        
             <div className="sign-in-btn-container">
                 <button className= {`sign-in-btn ${showSignIn ? 'active' : ''}`} onClick={() => setShowSignIn(true)}>Sign In</button>
                 <button className={`sign-in-btn ${!showSignIn ? 'active' : ''}`} onClick={() => setShowSignIn(false)}>Sign Up</button>
