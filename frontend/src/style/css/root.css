@@ -55,6 +55,138 @@
   margin-top: 5px;
 }
 
+@media screen and (max-width: 550px) {
+  nav {
+    justify-content: flex-start;
+    padding: 10px 5px;
+  }
+  nav #right-side-nav {
+    justify-content: flex-end;
+  }
+  header #left-side-nav-mobile {
+    transition: width ease-in-out 0.7s !important;
+  }
+  .nav-bar-container {
+    transition: all ease-in-out 0.6s 0.2s !important;
+  }
+}
+@media screen and (max-width: 1300px) and (min-width: 800px) {
+  .website-footer-container {
+    flex-direction: column;
+    gap: 100px;
+  }
+  .website-footer-container .discount {
+    width: 100%;
+  }
+  .website-footer-container .discount .input-box {
+    width: 100%;
+  }
+  .website-footer-container #info {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+@media screen and (max-width: 799px) {
+  footer {
+    gap: 100px;
+    padding: 80px 15px 20px !important;
+  }
+  footer .website-footer-container {
+    flex-direction: column;
+    gap: 100px;
+  }
+  footer .discount {
+    width: 100%;
+  }
+  footer .discount .email-signup-label {
+    font-size: 25px;
+  }
+  footer .discount #email-signup {
+    font-size: 20px;
+  }
+  footer .discount .input-box {
+    width: 100%;
+  }
+  footer #info-mobile {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    border-bottom: 1px solid rgb(203, 202, 202);
+  }
+  footer #info-mobile .info-links {
+    border-top: 1px solid rgb(203, 202, 202);
+  }
+  footer #info-mobile button {
+    width: 100%;
+    display: flex;
+    justify-content: baseline;
+  }
+  footer #info-mobile button h3 {
+    margin: 25px 0;
+  }
+  footer #info {
+    display: none;
+  }
+  footer .credit {
+    flex-direction: column-reverse;
+    gap: 30px;
+  }
+  .content-parent {
+    height: 0px;
+    overflow: hidden;
+    transition: height ease 0.9s;
+  }
+  .breadcrumbs {
+    visibility: hidden;
+  }
+}
+@media screen and (max-width: 1200px) {
+  header #left-side-nav-mobile {
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+    position: absolute;
+    justify-content: flex-start;
+    right: 0;
+    gap: 30px;
+    height: 100vh;
+    z-index: 100;
+    max-width: 470px;
+    background-color: white;
+    transition: width ease-in-out 1s;
+    overflow-x: hidden;
+  }
+  .nav-bar-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 5;
+    transition: all ease-in-out 0.7s 0.2s;
+  }
+  header #left-side-nav {
+    display: none;
+  }
+  .header-link {
+    padding-left: 20%;
+    white-space: nowrap;
+    font-size: 25px;
+    font-weight: 200;
+  }
+  nav #logo img {
+    height: 60px;
+  }
+  header .menu {
+    align-items: center;
+    display: flex;
+    z-index: 4;
+  }
+  header .close-menu {
+    margin-left: auto;
+    display: flex;
+  }
+}
 html {
   scroll-behavior: smooth;
 }
@@ -126,6 +258,9 @@ nav {
   padding: 15px 20px;
   display: flex;
   justify-content: space-between;
+}
+nav #logo img {
+  height: 60px;
 }
 
 #left-side-nav {
@@ -395,139 +530,6 @@ li {
 
 .empty-page {
   height: 100vh;
-}
-
-@media screen and (max-width: 550px) {
-  nav {
-    justify-content: flex-start;
-    padding: 10px 5px;
-  }
-  nav #right-side-nav {
-    justify-content: flex-end;
-  }
-  header #left-side-nav-mobile {
-    transition: width ease-in-out 0.7s;
-  }
-  .nav-bar-container {
-    transition: all ease-in-out 0.6s 0.2s;
-  }
-}
-@media screen and (max-width: 1300px) and (min-width: 800px) {
-  .website-footer-container {
-    flex-direction: column;
-    gap: 100px;
-  }
-  .website-footer-container .discount {
-    width: 100%;
-  }
-  .website-footer-container .discount .input-box {
-    width: 100%;
-  }
-  .website-footer-container #info {
-    width: 100%;
-    justify-content: space-between;
-  }
-}
-@media screen and (max-width: 799px) {
-  footer {
-    gap: 100px;
-    padding: 80px 15px 20px;
-  }
-  footer .website-footer-container {
-    flex-direction: column;
-    gap: 100px;
-  }
-  footer .discount {
-    width: 100%;
-  }
-  footer .discount .email-signup-label {
-    font-size: 25px;
-  }
-  footer .discount #email-signup {
-    font-size: 20px;
-  }
-  footer .discount .input-box {
-    width: 100%;
-  }
-  footer #info-mobile {
-    display: flex;
-    width: 100%;
-    flex-direction: column;
-    border-bottom: 1px solid rgb(203, 202, 202);
-  }
-  footer #info-mobile .info-links {
-    border-top: 1px solid rgb(203, 202, 202);
-  }
-  footer #info-mobile button {
-    width: 100%;
-    display: flex;
-    justify-content: baseline;
-  }
-  footer #info-mobile button h3 {
-    margin: 25px 0;
-  }
-  footer #info {
-    display: none;
-  }
-  footer .credit {
-    flex-direction: column-reverse;
-    gap: 30px;
-  }
-  .content-parent {
-    height: 0px;
-    overflow: hidden;
-    transition: height ease 0.9s;
-  }
-  .breadcrumbs {
-    visibility: hidden;
-  }
-}
-@media screen and (max-width: 1200px) {
-  header #left-side-nav-mobile {
-    display: flex;
-    flex-direction: column;
-    align-items: baseline;
-    position: absolute;
-    justify-content: flex-start;
-    right: 0;
-    gap: 30px;
-    height: 100vh;
-    z-index: 100;
-    max-width: 470px;
-    background-color: white;
-    transition: width ease-in-out 1s;
-    overflow-x: hidden;
-  }
-  .nav-bar-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 5;
-    transition: all ease-in-out 0.7s 0.2s;
-  }
-  header #left-side-nav {
-    display: none;
-  }
-  .header-link {
-    padding-left: 20%;
-    white-space: nowrap;
-    font-size: 25px;
-    font-weight: 200;
-  }
-  nav #logo {
-    padding-top: 10px;
-  }
-  header .menu {
-    align-items: center;
-    display: flex;
-    z-index: 4;
-  }
-  header .close-menu {
-    margin-left: auto;
-    display: flex;
-  }
 }
 
 /*# sourceMappingURL=root.css.map */
