@@ -1,7 +1,25 @@
 @use 'card';
 @use 'catalog';
 
+@media screen and (min-width:500px) and  (max-width:1024px){
+    .wish-list-product{
+        width: calc((100% - 8px)/2) !important;
+    }
+}
 
+@media screen and (max-width:500px) {
+    .wish-list-product{
+        width: 100% !important;
+    }
+}
+
+
+@media (hover: none){
+    .wish-list-product .wishlist-cart-btn,
+    .wish-list-product .wishlist-close-btn{
+        @include catalog.visibility;
+    }
+}
 
 .empty{
     width: 100%;
@@ -73,26 +91,5 @@
     img{
         width: 30px;
         height: 23px;
-    }
-}
-
-
-@media screen and (min-width:500px) and  (max-width:1024px){
-    .wish-list-product{
-        width: calc((100% - 8px)/2) ;
-    }
-}
-
-@media screen and (max-width:500px) {
-    .wish-list-product{
-        width: 100% ;
-    }
-}
-
-
-@media (hover: none){
-    .wish-list-product .wishlist-cart-btn,
-    .wish-list-product .wishlist-close-btn{
-        @include catalog.visibility;
     }
 }
