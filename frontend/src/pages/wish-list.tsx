@@ -15,6 +15,7 @@ interface WishlistProp{
 
 
 const Wishlist = ({array,addToCart,deleteFavorite,user}:WishlistProp) => {
+    console.log(array[0])
     return (
        <div className="wish-list-container">
             <Breadcrumbs name={null}/>
@@ -33,7 +34,12 @@ const Wishlist = ({array,addToCart,deleteFavorite,user}:WishlistProp) => {
                             <Link className="wish-list-link" to={`/${a.type}/${a._id}`}>
                             <Card cardInfo={a}></Card>
                             </Link>
-                            <button className="wishlist-cart-btn" onClick={() => addToCart(a._id)}><img src={shoppingBag} alt="shopping bag" /></button>
+                            {
+                                a.stock === 0 ? 
+                                <span className="out-of-stock">Out of Stock</span>
+                                :
+                                <button className="wishlist-cart-btn" onClick={() => addToCart(a._id)}><img src={shoppingBag} alt="shopping bag" /></button>
+                            } 
                         </div>
                         ))}
                 </div>

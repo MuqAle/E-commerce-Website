@@ -17,7 +17,7 @@ const Card = ({cardInfo}:CardType) => {
                     {cardInfo.onSale ?
                         <p className='price sale-price'>${cardInfo.salePrice?.toFixed(2)} <s>${cardInfo.price}</s> </p>
                         :
-                        <p className='price '>${cardInfo.price}</p>
+                        <p className='price'>${cardInfo.price}</p>
                     }
                     {cardInfo.overallRating === 0 ? 
                         null

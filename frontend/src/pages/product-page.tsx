@@ -164,7 +164,10 @@ const ProductPage = ({addToCart,addFavorite,favorited,loginFnc,user,userReviews}
                         <p className='product-price product-sale-price'>${product.salePrice?.toFixed(2)} <s>${product?.price.toFixed(2)}</s> </p>
                         :
                         <p className='product-price '>${product.price}</p>}
-                        <button className="add-to-bag" onClick={()=> {if(product._id !== undefined){addToCart(product._id)}}}>Add to Bag</button>
+                        <button className={product.stock === 0 ? 'add-to-bag sold-out' : "add-to-bag"} disabled ={product.stock === 0 ? true : false} 
+                        onClick={()=> {if(product._id !== undefined){addToCart(product._id)}}}>
+                            {product.stock === 0 ? 'Out of Stock' : 'Add to Bag'}
+                            </button>
                         <p>Description :<br/><br/>{product.description}</p>
                     </div>
                     
