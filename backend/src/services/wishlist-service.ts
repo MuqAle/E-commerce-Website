@@ -12,7 +12,7 @@ const addToWishlist = async (id:Types.ObjectId,prodId:string) => {
         }).populate({
             path: 'wishList',
             model: 'Product', 
-            select: 'name price images onSale salePercentage salePrice type' 
+            select: 'name price images onSale salePercentage salePrice type stock' 
           })
     return user
 }
