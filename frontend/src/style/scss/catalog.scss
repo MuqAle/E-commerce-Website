@@ -1,4 +1,5 @@
 @use 'card';
+
 @mixin card-btn($color:white, $size:2rem){
     display: flex;
     align-items: center;
@@ -112,6 +113,21 @@
         margin-left: 0.49px;
         
     }
+}
+
+.out-of-stock{
+    bottom: 125px;
+    right: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    background-color: #727272;
+    color: white;
+    height: 2rem;
+    padding: 0 5px;
+    padding-left: 10px;
+    padding-right: 5%;
 }
 
 .number-of-products{
