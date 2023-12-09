@@ -1,7 +1,7 @@
 import express from 'express'
 import { Request } from 'express'
 import mongoose from 'mongoose'
-import {MONGODB_URI} from './config/config'
+import {MONGODB_URI,CLIENT_URL} from './config/config'
 import cors from 'cors'
 import productRouter from './routes/product-routes'
 import { tokenExtractor, userExtractor} from './middleware/jwt-middleware'
@@ -45,7 +45,7 @@ dbConnect().catch(db => console.log(db.error))
 
 
 app.use(cors<Request>({
-    origin:'http://localhost:5173',
+    origin:CLIENT_URL,
     credentials:true
 }))
 app.use(express.json({

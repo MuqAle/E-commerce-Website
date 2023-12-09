@@ -11,4 +11,5 @@ export const {
     STRIPE_WEBHOOK,
     CLOUDINARY_SECRET,
     CLOUDINARY_KEY,
-    CLOUDINARY_NAME} = process.env
+    CLOUDINARY_NAME,
+    CLIENT_URL} = process.env

@@ -2,7 +2,7 @@ import { Types } from "mongoose"
 import Product from "../models/product-model"
 import { CartTypes,StripeCart,UserTypes } from "../types/type"
 import Stripe from "stripe"
-import { STRIPE_KEY } from "../config/config"
+import { CLIENT_URL, STRIPE_KEY } from "../config/config"
 import Order from "../models/orders-model"
 import evenRound from "../utils/rounding"
 import Cart from "../models/shopping-cart-model"
@@ -80,7 +80,7 @@ const checkoutSessionConfig = (user:UserTypes,sessionID:string,customer:string |
       allowed_countries:['US']
     },
     mode: 'payment',
-    success_url:'http://localhost:5173',
+    success_url:`${CLIENT_URL}/order-success`,
     shipping_options: [
       {
 
