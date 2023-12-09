@@ -271,11 +271,17 @@ const Catalog = ({title,addToCart,addFavorite,favorited,setLoading}:CatalogueTyp
                         </Link>
                     <button style = {favorited(d._id) ? {visibility:"visible", opacity:'100%'} : {visibility:'hidden', opacity:'0'}} className="left-btn" onClick={()=> addToFavoriteFnc(d._id)}><img src={favorited(d._id) ? heartFilled:heartOutline} alt="add-favorite" />
                     </button>
-                    <button className="right-btn" onClick={() => {addToCartFnc(d._id)}}><img src={shoppingBag} alt='add-to-cart'></img></button>
+                    {
+                        d.stock === 0 ? 
+                        <span className="out-of-stock">
+                            Out of Stock
+                        </span>
+                        :
+                        <button className="right-btn" onClick={() => {addToCartFnc(d._id)}}><img src={shoppingBag} alt='add-to-cart'></img></button>
+                    }
                     </div>
                     ))
                     :
-             
                     [...Array(20)].map((_card,i )=> {
                         return(
                             <div key={i} className="card-container">
