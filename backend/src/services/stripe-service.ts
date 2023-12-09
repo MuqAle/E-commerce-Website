@@ -199,7 +199,7 @@ const createOrder = async (data:Stripe.Checkout.Session,customer:Stripe.Customer
     try{
       if(customer){
         const user = await User.findById(customer.metadata.userId)
-        user?.orders?.push(newOrder._id)
+        user?.orders?.unshift(newOrder._id)
         await user?.save()
       }
        await newOrder.save()
