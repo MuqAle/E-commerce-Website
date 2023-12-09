@@ -8,7 +8,7 @@ import { ProductCartType } from "../../utils/types"
 
 
 
-const ProductCart = ({cart, increaseAmount, decreaseAmount,deleteProductCart}:ProductCartType) => {
+const ProductCart = ({cart, favorited, moveToWishlist ,increaseAmount, decreaseAmount,deleteProductCart}:ProductCartType) => {
     return (
         <div className="product-in-cart">
             <div className="product-cart-image">
@@ -40,7 +40,13 @@ const ProductCart = ({cart, increaseAmount, decreaseAmount,deleteProductCart}:Pr
                         :
                         <p className='price'>${cart.product.price.toFixed(2)}</p>
                     }
+               
             </div>
+            {
+                    favorited(cart.product._id) ? 
+                    null : 
+                    <button className="move-to-wishlist" onClick={() => moveToWishlist(cart.product._id)}>Move To Wishlist</button>
+                }
             <button className="delete-product-cart" onClick={() => deleteProductCart(cart.product._id)}><img src={deleteBtn}/></button>
         </div>
     )

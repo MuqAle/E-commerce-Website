@@ -10,7 +10,15 @@ import axios from "axios"
 
 
 
-const ShoppingCart = ({cart,increaseAmount,decreaseAmount,deleteProductCart,setLoading,token}:CartCheckoutTypes) => {
+const ShoppingCart = ({
+    cart,
+    moveToWishlist,
+    favorited,
+    increaseAmount,
+    decreaseAmount,
+    deleteProductCart,
+    setLoading,
+    token}:CartCheckoutTypes) => {
 
     const [error,setError] = useImmer('')
 
@@ -48,7 +56,14 @@ const ShoppingCart = ({cart,increaseAmount,decreaseAmount,deleteProductCart,setL
                     </div>
                     <div className="shopping-cart-container">
                         {cart.products.map((cart) => (
-                            <ProductCart increaseAmount={increaseAmount} decreaseAmount={decreaseAmount} deleteProductCart={deleteProductCart} cart={cart} key={cart.product._id}></ProductCart>
+                            <ProductCart 
+                            moveToWishlist={moveToWishlist}
+                            favorited={favorited} 
+                            increaseAmount={increaseAmount} 
+                            decreaseAmount={decreaseAmount} 
+                            deleteProductCart={deleteProductCart} 
+                            cart={cart} 
+                            key={cart.product._id}></ProductCart>
                         ))}
                     </div>
                 </div>

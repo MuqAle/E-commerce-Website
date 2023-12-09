@@ -17,6 +17,13 @@ import { CartTypes, LoginTypes, ProductDb, UserTypes } from './utils/types'
 import { useEffect } from 'react'
 import { addToCart, deleteOneCart,deleteAllProduct, getCart } from './services/cart'
 import { addOrDeleteFromWishlist, retrieveProfile } from './services/user-req'
+import UserLayout from './pages/user-account/root-layout'
+import UserOrder from './pages/user-account/order-invoice-components/orders'
+import UserReviews from './pages/user-account/review-components/reviews'
+import Profile from './pages/user-account/profile'
+import OrderSummary from './pages/user-account/order-invoice-components/order-summary'
+import LoginPage from './pages/login-page'
+import OrderSuccess from './pages/order-success'
 
 
 
@@ -30,9 +37,7 @@ function App() {
   const [error,setError] = useImmer('')
   const [loading,setLoading] = useImmer(false)
   
-
   const token = user?.token ? `Bearer ${user?.token}` : null
-
 
 
   useEffect(() => {
@@ -97,7 +102,7 @@ function App() {
         const user = await addOrDeleteFromWishlist(id,token) as UserTypes
         setFavorite(user.wishList)
       }catch(err){
-        console.log(err)
+        setError('Something went wrong')
       }finally{
         setLoading(false)
       }
@@ -116,7 +121,7 @@ function App() {
       const cart = await deleteAllProduct(id,token)
       setCart(cart)
     }catch(err){
-      console.log(err)
+      setError('Something went wrong')
     }finally{
       setLoading(false)
     }
@@ -129,7 +134,7 @@ function App() {
       const cart = await deleteOneCart(id,token)
       setCart(cart)
     }catch(err){
-      console.log(err)
+      setError('Something went wrong')
     }finally{
       setLoading(false)
     }
@@ -142,11 +147,30 @@ function App() {
       const cart = await addToCart(id,token)
       setCart(cart)
     }catch(err){
-      console.log(err)
+      setError('Something went wrong')
     }finally{
       setLoading(false)
     }
   
+  }
+
+  const moveToWishlist = async(id:string) => {
+    if(!user){
+      setLoginModal(true)
+      return
+    }else{
+      try{
+        setLoading(true)
+        const user = await addOrDeleteFromWishlist(id,token) as UserTypes
+        setFavorite(user.wishList)
+        const cart = await deleteAllProduct(id,token)
+        setCart(cart) 
+      }catch(err){
+        setError('Something went wrong')
+      }finally{
+        setLoading(false)
+      }
+    }
   }
 
 
@@ -168,9 +192,19 @@ function App() {
         <Route path='earrings' element={<Catalog setLoading={setLoading}  title='Earrings'  addFavorite={addProductFavorite} addToCart={addProductCart} favorited={favorited}/>}/>
         <Route path='on-sale' element={<Catalog  setLoading={setLoading}  title='On Sale' addFavorite={addProductFavorite} addToCart={addProductCart} favorited={favorited}/>}/>
         <Route path='about-us' element={<AboutUs/>}/>
-        <Route path='wish-list' element={<Wishlist array={favorite} addToCart={addProductCart} deleteFavorite={addProductFavorite}/>}/>
-        <Route path='shopping-cart' element={<ShoppingCart setLoading={setLoading} cart={cart} decreaseAmount={decreaseAmount} increaseAmount={addProductCart} deleteProductCart={deleteProductCart} token={token}></ShoppingCart>}/>
+        <Route path='wish-list' element={<Wishlist array={favorite} user={user} addToCart={addProductCart} deleteFavorite={addProductFavorite}/>}/>
+        <Route path='shopping-cart' element={<ShoppingCart 
+        favorited={favorited} 
+        setLoading={setLoading} 
+        cart={cart} 
+        decreaseAmount={decreaseAmount} 
+        increaseAmount={addProductCart} 
+        deleteProductCart={deleteProductCart} 
+        token={token}
+        moveToWishlist={moveToWishlist}
+        ></ShoppingCart>}/>
         <Route path='search' element = {<Catalog setLoading={setLoading} title={`Search '${window.sessionStorage.getItem('searchItem')}'`} addFavorite={addProductFavorite} addToCart={addProductCart} favorited={favorited}/>}/>
+        <Route path='login' element ={<LoginPage user={user}/>}/>
         <Route path='shop-all/:id' element ={<ProductPage 
         userReviews={userProfile?.reviews} 
         user={user} loginFnc={openLoginModal} 
@@ -205,6 +239,13 @@ function App() {
         addToCart={addProductCart} 
         addFavorite={addProductFavorite} 
         favorited={favorited}/>}/>
+        <Route path='user-account' element={<UserLayout/>}>
+          <Route path='profile' element={<Profile/>}/>
+          <Route path='orders' element={<UserOrder orders={userProfile?.orders || []}/>}/>
+          <Route path='reviews-posted' element={<UserReviews token={token} reviews={userProfile?.reviews || []}/>}/>
+        </Route>
+        <Route path='user-account/orders/:id' element={<OrderSummary/>}/>
+        <Route path='order-success' element={<OrderSuccess/>}/>
         <Route path='*' element ={<ErrorPage/>}/>
       </Route>
     )
