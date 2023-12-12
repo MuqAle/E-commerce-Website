@@ -23,7 +23,7 @@ const userExtractor = async (req:Request,res:Response,next:NextFunction) => {
             .populate({
                 path: 'wishList',
                 model: 'Product', 
-                select: 'name price images onSale salePercentage salePrice type' 
+                select: 'name price stock images onSale salePercentage salePrice type' 
               }) 
             .populate({
               path: 'reviews.product', 
