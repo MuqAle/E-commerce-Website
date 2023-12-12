@@ -1,5 +1,7 @@
 @use 'card';
 
+
+
 @media screen and (max-width:550px) {
     nav{
         justify-content: flex-start;
@@ -122,6 +124,9 @@
         transition: width  ease-in-out 1s ;
         overflow-x: hidden;
     }
+    header .cart-msg{
+        right: 70px;
+    }
     .nav-bar-container{
         position: fixed;
         top: 0;
@@ -157,6 +162,18 @@
     }
 }
 
+@media screen and (max-width:500px){
+    header .cart-msg{
+        right: 5%;
+    }
+}
+
+@media screen and (width:375px) {
+    header .cart-msg{
+        right: 0;
+    }
+}
+
 html {
     scroll-behavior: smooth;
   }
@@ -177,6 +194,7 @@ html {
     grid-template-rows: auto auto 1fr auto;
     width: 100%;
 }
+
 
 .sign-up-header{
     background-color: card.$accent-color ;
@@ -344,6 +362,57 @@ nav{
         img{
             width: 2.5rem;
         }
+    }
+}
+
+.cart-msg{
+    position: absolute;
+    width: 375px;
+    height: 250px;
+    background-color: card.$accent-color;
+    right: 30px;
+    top: 65px;
+    padding: 25px;
+    
+    .cart-msg-title{
+        display: flex;
+        align-items: center;
+        justify-content: end;
+        margin-bottom: 20px;
+        font-weight: lighter;
+        img{
+            width: 30px;
+        }
+    }
+    .cart-msg-product{
+        display: flex;
+        
+
+    }
+    .cart-msg-product-img{
+        width: 110px;
+    }
+    .cart-msg-product-info{
+        flex-grow: 1;
+        font-size: 14px;
+        margin-left: 10px;
+        margin-top: 18px;
+        p:first-child{
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        & p:nth-child(2){
+            margin-bottom: 20px;
+            font-weight: bold;
+            s{
+                margin-left: 10px;
+                font-weight: lighter;
+            }
+        }
+        p:last-child{
+           font-weight: lighter;
+        }
+        
     }
 }
 

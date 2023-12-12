@@ -4,10 +4,22 @@ import { v4 as uuidv4 } from 'uuid'
 import '../../style/css/orders.css'
 import '../../style/css/profile-layout.css'
 import '../../style/css/user-profile-reviews.css'
+import { useEffect } from "react";
 
 
 const UserLayout = () => {
 
+    useEffect(() => {
+        const controller = new AbortController()
+        const user = localStorage.getItem('loggedUser') || sessionStorage.getItem('loggedUser')
+        if(!user){
+            location.replace('/login')
+        }
+
+        return () => {
+            controller.abort()
+        }
+    },[])
 
     return(
         <div className="user-container">

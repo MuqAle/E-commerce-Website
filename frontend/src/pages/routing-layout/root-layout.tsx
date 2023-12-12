@@ -9,7 +9,7 @@ import Modal from "../../components/modal";
 import '../../style/css/modal.css'
 import '../../style/css/login.css'
 import LoginModal from "../login-signup/sign-up-modal";
-import { LoginTypes } from "../../utils/types";
+import { LoginTypes, ProductDb } from "../../utils/types";
 import { useImmer } from "use-immer";
 import disableScrollModal from "../../utils/stop-scrolling";
 
@@ -17,10 +17,12 @@ interface Span{
     shoppingCart:number,
     favorites:number,
     showLoginModal:boolean,
-    user:LoginTypes|null
+    user:LoginTypes|null,
     setLoginModal : React.Dispatch<React.SetStateAction<boolean>>
     closeModal:() => void,
-    loading:boolean
+    loading:boolean,
+    productAddedToCart:ProductDb,
+    showCartMsg:boolean
 }
 
 const backdrop = {
@@ -37,7 +39,9 @@ const RootLayout = ({
     user,
     closeModal,
     setLoginModal,
-    loading}:Span) => {
+    productAddedToCart,
+    loading,
+    showCartMsg}:Span) => {
 
     const [showModal, setShowModal] = useImmer(false);
     
@@ -84,8 +88,16 @@ const RootLayout = ({
                   </div>
               }
             <ScrollToTop/>
+
             <div className="sign-up-header">Get 10% Off Your Next Order When You <button onClick={toggleModal}>Sign Up!</button></div>
-            <Header favorites={favorites} shoppingCart={shoppingCart} loggedUser={user} logInModal={showLoginModal} setLoginModal={setLoginModal}/>
+            <Header 
+            productAddedToCart={productAddedToCart} 
+            favorites={favorites} 
+            shoppingCart={shoppingCart} 
+            loggedUser={user} 
+            logInModal={showLoginModal} 
+            setLoginModal={setLoginModal} 
+            showCartMsg={showCartMsg}/>
             <AnimatePresence initial={false} mode="wait" onExitComplete={() => setShowModal(false)} >
             {showModal && 
               <Modal key='modal' open={showModal} closeModal={toggleModal}/>
