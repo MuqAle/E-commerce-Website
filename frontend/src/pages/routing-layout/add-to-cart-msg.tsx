@@ -17,7 +17,7 @@ const AddedToCartMsg = ({product,shopping}:{
         <img className="cart-msg-product-img" src={product.images && product.images[0]} alt='product image' />
         <div className="cart-msg-product-info">
             <p>{product.name}</p>
-            {product.onSale ? <p>{product.salePrice} <s>{product.price}</s> </p>: <p>{product.price}</p>}
+            {product.onSale ? <p>${product.salePrice} <s>${product.price}</s> </p>: <p>${product.price}</p>}
             <p>Quantity: 1</p>
         </div>
         </div>
