@@ -8,11 +8,12 @@ import menu from '../../assets/imgs/svg-imgs/menu_FILL0_wght100_GRAD0_opsz48.svg
 import close from '../../assets/imgs/svg-imgs/close_FILL0_wght100_GRAD0_opsz48.svg'
 import arrow from '../../assets/imgs/svg-imgs/arrow.svg'
 import user from '../../assets/imgs/svg-imgs/account_circle_FILL0_wght200_GRAD0_opsz48.svg'
-import { LoginTypes } from '../../utils/types';
+import { LoginTypes, ProductDb } from '../../utils/types';
 import disableScrollModal from '../../utils/stop-scrolling';
 import useOutsideClick from '../../hooks/outside-click';
 import { useImmer } from 'use-immer';
 import { useNavigate } from 'react-router-dom';
+import AddedToCartMsg from './add-to-cart-msg';
 
 interface Header{
     shoppingCart:number,
@@ -20,9 +21,11 @@ interface Header{
     logInModal:boolean,
     loggedUser:LoginTypes | null
     setLoginModal : React.Dispatch<React.SetStateAction<boolean>>
+    productAddedToCart:ProductDb
+    showCartMsg:boolean
 }
 
-const Header = ({favorites, shoppingCart,logInModal,setLoginModal,loggedUser}:Header) => {
+const Header = ({favorites, shoppingCart,logInModal,setLoginModal,loggedUser,productAddedToCart,showCartMsg}:Header) => {
 
     const [openMenu,setOpenMenu] = useState(false)
     const [openSearch, setOpenSearch] = useState(false)
@@ -124,6 +127,10 @@ const Header = ({favorites, shoppingCart,logInModal,setLoginModal,loggedUser}:He
                         }}><img src={arrow}/></button>
             </form>
         </div>
+        {showCartMsg ?
+            <AddedToCartMsg product={productAddedToCart} shopping={shoppingCart}/>
+            :
+            null}
     </header>
     )
 }

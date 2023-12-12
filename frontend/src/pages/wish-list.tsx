@@ -15,7 +15,7 @@ interface WishlistProp{
 
 
 const Wishlist = ({array,addToCart,deleteFavorite,user}:WishlistProp) => {
-    console.log(array[0])
+    console.log(array)
     return (
        <div className="wish-list-container">
             <Breadcrumbs name={null}/>
