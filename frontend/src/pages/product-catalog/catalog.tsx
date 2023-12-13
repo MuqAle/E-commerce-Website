@@ -92,6 +92,7 @@ const Catalog = ({title,addToCart,addFavorite,favorited,setLoading}:CatalogueTyp
     
     useEffect(() => {
         setIsLoading(true)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
 
 
