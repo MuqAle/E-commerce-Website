@@ -24,7 +24,7 @@ const loginUser =  async(req:Request<ParamsDictionary, unknown, UserRequest>,res
 
     if(!(user && passwordCorrect)){
         return res.status(401).json({
-            error:'Invalid Email Or Password'
+            Error:'Invalid Email Or Password'
         })
     }
 

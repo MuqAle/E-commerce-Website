@@ -53,6 +53,12 @@ interface UserRequest{
     isAdmin:boolean
 }
 
+interface PasswordChange{
+    currentPassword:string,
+    newPassword:string,
+    rewriteNewPassword:string
+}
+
 interface ReviewTypes{
     reviewDesc:string,
     reviewTitle:string,
@@ -177,6 +183,7 @@ export {
     SessionTypes,
     LineItem,
     StripeCart,
-    GuestCartTypes
+    GuestCartTypes,
+    PasswordChange
   
 }
