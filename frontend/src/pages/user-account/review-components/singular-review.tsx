@@ -26,12 +26,13 @@ const UserSingularReview = ({review,token}:{
     const [readMore,setReadMore] = useImmer(false)
     const [modal,setModal] = useImmer(false)
     const [successMessage,setSuccessMessage] = useImmer(false)
+    const [disableBtn,setDisableBtn] = useImmer(false)
     const reviewLength = review.reviewDesc.length <= 200
-
 
     const deleteOneReview = async() => {
         if(token){
             try{
+                setDisableBtn(true)
                 await deleteReview(review.product._id,token)
                 setSuccessMessage(true)
             }catch(err){
@@ -50,7 +51,7 @@ const UserSingularReview = ({review,token}:{
             <AnimatePresence>
                 {
                     modal ? 
-                    <DeleteReviewModal successMessage={successMessage} yesFnc={deleteOneReview} closeModal={() => setModal(false)} productName={review.product.name}/>
+                    <DeleteReviewModal disableBtn={disableBtn} successMessage={successMessage} yesFnc={deleteOneReview} closeModal={() => setModal(false)} productName={review.product.name}/>
                     :
                     null
                 }

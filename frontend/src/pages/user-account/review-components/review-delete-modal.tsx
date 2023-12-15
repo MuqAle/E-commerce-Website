@@ -6,12 +6,13 @@ const backdrop = {
     exit:{opacity:0}
   }
 
-const DeleteReviewModal = ({yesFnc,closeModal,productName,successMessage}:
+const DeleteReviewModal = ({yesFnc,closeModal,productName,successMessage,disableBtn}:
     {
     yesFnc:() => void,
     closeModal:() => void,
     productName:string,
-    successMessage:boolean}) => {
+    successMessage:boolean,
+    disableBtn:boolean}) => {
 
     return(
         <motion.div
@@ -23,8 +24,8 @@ const DeleteReviewModal = ({yesFnc,closeModal,productName,successMessage}:
             <div className="modal-content" onClick={e => e.stopPropagation()}>
                 <p>Are you sure you want to delete your  review for '{productName}'?</p>
                 <div className="delete-btns">
-                    <button onClick={yesFnc}>Yes</button>
-                    <button onClick={closeModal}>No</button>
+                    <button disabled={disableBtn} onClick={yesFnc}>Yes</button>
+                    <button disabled={disableBtn} onClick={closeModal}>No</button>
                 </div>
                 {
                     successMessage ?
