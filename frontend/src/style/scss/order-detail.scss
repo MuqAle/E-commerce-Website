@@ -1,0 +1,115 @@
+
+
+.order-details{
+
+    margin: 50px 30px 30px;
+    h1{
+        padding-bottom: 20px;
+        border-bottom: 1px solid rgb(203, 202, 202);
+    }
+    .order-details-first-container{
+        display: flex;
+        flex-wrap: wrap;
+        margin: 100px 0 100px 0;
+        gap: 100px;
+
+        .order-shipping{
+            display: flex;
+            gap: 30px;
+            .order-shipping-labels{
+                display: flex;
+                flex-direction: column;
+                width: 135px;
+                gap: 10px;
+            }
+            .order-shipping-info{
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+       
+        }
+        .order-billing{
+            display: flex;
+            gap: 30px;
+            .order-billing-title{
+                width: 135px;
+            }
+        }
+    }
+
+    h2{
+        font-size: 29px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid rgb(203, 202, 202)
+    }
+
+    .order-summary{
+        margin-top: 40px;
+        width: 100%;
+        max-width: 50rem;
+        div{
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+        }
+        .order-summary-total{
+            margin-top: 30px;
+            font-size: 18px;
+            margin-bottom: 50px;
+        }
+    }
+
+    .order-products-container{
+        margin-top: 30px;
+ 
+
+        .order-products-container-header{
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+             div:first-child{
+                width: 45%;
+            }
+            div:not(:first-child){
+                width: 200px;
+            }
+        }
+
+        .order-products-container-list{
+            .order-product-single{
+                height: 170px;
+                display: flex;
+                justify-content: space-between;
+                border-top: solid 1px rgb(233, 232, 232);
+                align-items: center;
+                div:not(:first-child){
+                    width: 200px;
+                }
+                .order-product-price-container{
+                    p:first-child{
+                        color: gray;
+                        margin-bottom: 2px;
+                    }
+                }
+                .order-product-info{
+                    display: flex;
+                    width: 45%;
+                    align-items: center;
+                    gap: 30px;
+                    
+                    p:hover{
+                        text-decoration: underline;
+                    }
+                    img{
+                        width: 90px;
+                    }
+                }
+            }
+           
+            
+        }
+    }
+
+
+}

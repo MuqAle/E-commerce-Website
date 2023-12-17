@@ -1,0 +1,97 @@
+.order-details {
+  margin: 50px 30px 30px;
+}
+.order-details h1 {
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgb(203, 202, 202);
+}
+.order-details .order-details-first-container {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 100px 0 100px 0;
+  gap: 100px;
+}
+.order-details .order-details-first-container .order-shipping {
+  display: flex;
+  gap: 30px;
+}
+.order-details .order-details-first-container .order-shipping .order-shipping-labels {
+  display: flex;
+  flex-direction: column;
+  width: 135px;
+  gap: 10px;
+}
+.order-details .order-details-first-container .order-shipping .order-shipping-info {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.order-details .order-details-first-container .order-billing {
+  display: flex;
+  gap: 30px;
+}
+.order-details .order-details-first-container .order-billing .order-billing-title {
+  width: 135px;
+}
+.order-details h2 {
+  font-size: 29px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid rgb(203, 202, 202);
+}
+.order-details .order-summary {
+  margin-top: 40px;
+  width: 100%;
+  max-width: 50rem;
+}
+.order-details .order-summary div {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.order-details .order-summary .order-summary-total {
+  margin-top: 30px;
+  font-size: 18px;
+  margin-bottom: 50px;
+}
+.order-details .order-products-container {
+  margin-top: 30px;
+}
+.order-details .order-products-container .order-products-container-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+.order-details .order-products-container .order-products-container-header div:first-child {
+  width: 45%;
+}
+.order-details .order-products-container .order-products-container-header div:not(:first-child) {
+  width: 200px;
+}
+.order-details .order-products-container .order-products-container-list .order-product-single {
+  height: 170px;
+  display: flex;
+  justify-content: space-between;
+  border-top: solid 1px rgb(233, 232, 232);
+  align-items: center;
+}
+.order-details .order-products-container .order-products-container-list .order-product-single div:not(:first-child) {
+  width: 200px;
+}
+.order-details .order-products-container .order-products-container-list .order-product-single .order-product-price-container p:first-child {
+  color: gray;
+  margin-bottom: 2px;
+}
+.order-details .order-products-container .order-products-container-list .order-product-single .order-product-info {
+  display: flex;
+  width: 45%;
+  align-items: center;
+  gap: 30px;
+}
+.order-details .order-products-container .order-products-container-list .order-product-single .order-product-info p:hover {
+  text-decoration: underline;
+}
+.order-details .order-products-container .order-products-container-list .order-product-single .order-product-info img {
+  width: 90px;
+}
+
+/*# sourceMappingURL=order-detail.css.map */
