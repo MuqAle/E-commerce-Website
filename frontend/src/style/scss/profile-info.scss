@@ -1,0 +1,141 @@
+@use 'card';
+
+
+h1{
+    margin-bottom: 15px ;
+    font-size: 24px;
+}
+
+.profile-container{
+    border-top: 1px solid black;
+    margin-top: 10px;
+    padding-top: 40px;
+    display: flex;
+    gap: 100px;
+    flex-wrap: wrap;
+    .profile-details-container{
+        width: 350px;
+        h2{
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+    }
+    .success-message{
+        margin-bottom: 10px;
+        color: green;
+    }
+    
+    
+    .profile-info-container{
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+
+        
+        .input-profile{
+            display: flex;
+            flex-direction: column;
+
+            .password-container{
+                position: relative;
+                #password-profile{
+                    width: 100%;
+                }
+                button{
+                    position: absolute;
+                    top: 12px;
+                    right: 10px;
+                }
+            }
+
+            .error{
+                font-size: 14px;
+                color:rgb(188, 11, 11) ;
+            }
+
+            span{
+                color: rgb(188, 11, 11);
+            }
+            label{
+                margin-bottom: 5px;
+            }
+            input{
+                height: 40px;
+                border: black solid 1px;
+                padding-left: 5px;
+                font-size: 14px;
+            }
+        }
+
+        .profile-form-btns{
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            button{
+                background-color: card.$accent-color;
+                height: 30px;
+                width: 150px;
+            }
+        }
+
+        .change-profile{
+            background-color: card.$accent-color;
+            width: 200px;
+            margin: auto;
+            height: 30px;
+        }
+
+        div{
+            p:first-of-type{
+                margin-bottom: 5px;
+            }
+        }
+    }
+
+    .password-form-container{
+        width: 350px;
+        h2{
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+
+
+        .password-input{
+            margin-bottom: 20px;
+            span{
+                color: rgb(188, 11, 11);
+            }
+            .password-container{
+                position: relative;
+
+                
+                
+                input{
+                    margin-top: 5px;
+                    height: 40px;
+                    width: 100%;
+                    padding-left: 5px;
+                    border: black solid 1px;
+                }
+
+                button{
+                    position:absolute;
+                    right: 10px;
+                    top: 17px;
+                }
+        }
+        .error{
+            font-size: 14px;
+            color: rgb(188, 11, 11);
+        }
+    }
+
+    .change-password-btn{
+        background-color: card.$accent-color;
+        height: 30px;
+        width: 200px;
+        margin: auto;
+        display: block;
+    }
+}
+}
