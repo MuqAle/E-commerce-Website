@@ -165,6 +165,11 @@ interface StripeCart {
 
 }
 
+interface ProfileChange {
+    firstName:string,
+    lastName:string,
+    currentPassword:string
+}
 
   
 
@@ -173,6 +178,7 @@ interface StripeCart {
 
 
 export {
+    ProfileChange,
     ProductDb,
     UserRequest,
     UserTypes,

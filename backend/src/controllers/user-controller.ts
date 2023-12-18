@@ -3,7 +3,7 @@ import User from '../models/user-model'
 import { createUser, deleteUserDB } from '../services/user-service'
 import {NextFunction, Request,Response} from 'express'
 import { ParamsDictionary } from "express-serve-static-core"
-import { UserRequest, UserTypes,PasswordChange} from '../types/type'
+import { UserRequest,PasswordChange, ProfileChange} from '../types/type'
 
 const addUser = async (req:Request<ParamsDictionary, unknown, UserRequest>,res:Response,next:NextFunction) => {
     const {email,firstName,lastName,password,isAdmin} = req.body
@@ -67,7 +67,7 @@ const getUserProfile = (req:Request,res:Response) => {
 }
 
 const changeUserProfile = async(req:Request,res:Response,next:NextFunction) => {
-    const body = req.body as UserTypes
+    const body = req.body as ProfileChange
     if(req.user){
         const user = {
             firstName: body.firstName,
@@ -75,11 +75,17 @@ const changeUserProfile = async(req:Request,res:Response,next:NextFunction) => {
         }
 
         try{
-            const newUserInfo = await User.findByIdAndUpdate(req.user.id,user,
-                {new:true,
-                runValidators:true,
-                context:'query'})
-            return res.status(200).json(newUserInfo)
+            const passwordCorrect = await compare(body.currentPassword, req.user.passwordHash)
+
+            if(!passwordCorrect){
+                return res.status(401).json({Error:'Invalid Password'})
+            }else{
+                const newUserInfo = await User.findByIdAndUpdate(req.user.id,user,
+                    {new:true,
+                    runValidators:true,
+                    context:'query'})
+                return res.status(200).json(newUserInfo)
+            }
         }catch(error){
            return next(error)
         }
@@ -91,7 +97,7 @@ const changeUserProfile = async(req:Request,res:Response,next:NextFunction) => {
 const changeUserPassword = async(req:Request,res:Response,next:NextFunction) => {
     const {newPassword,currentPassword,rewriteNewPassword} = req.body as PasswordChange
     const regexp = new RegExp(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,1024}$/)
-
+    
     if(req.user){
         try{
             const passwordCorrect = await compare(currentPassword, req.user.passwordHash)
@@ -123,7 +129,7 @@ const changeUserPassword = async(req:Request,res:Response,next:NextFunction) => 
                 runValidators:true,
                 context:'query'})
 
-            return res.status(201).json(newUserInfo)
+            return res.status(204).json(newUserInfo)
 
         }
         }catch(error){
