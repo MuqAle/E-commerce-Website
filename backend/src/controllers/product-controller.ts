@@ -14,15 +14,15 @@ import { PipelineStage} from "mongoose"
 
 interface FilterTypes{
     type: string ,
-    price:{ $gte: number; $lte: number; } | {$gt:number},
+    price:{ $gte: number, $lte: number } | {$gt:number},
     colors:{ $in: string[] }
-    onSale: string,
+    onSale: boolean,
     metal: { $in: string[] }
     $or: (
-      { name: { $regex: string ; $options: string; }; } | 
-      { type: { $regex: string ; $options: string; }; } | 
-      { colors: { $regex: string; $options: string; };} | 
-      { metal: { $regex: string; $options: string; };})[] 
+      { name: { $regex: string , $options: string } } | 
+      { type: { $regex: string , $options: string } } | 
+      { colors: { $regex: string, $options: string }} | 
+      { metal: { $regex: string, $options: string }})[] 
 }
 
 const getAllProducts = async (req:Request,res:Response,next:NextFunction)=> {
@@ -59,7 +59,7 @@ const getAllProducts = async (req:Request,res:Response,next:NextFunction)=> {
             filter.colors = { $in: colors }
         }
         if(onSale){
-            filter.onSale = onSale as string
+          filter.onSale = onSale === 'true'
         }
         if(metal.length > 0){
             filter.metal = { $in: metal}
