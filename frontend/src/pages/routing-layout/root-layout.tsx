@@ -20,6 +20,8 @@ interface Span{
     user:LoginTypes|null,
     setLoginModal : React.Dispatch<React.SetStateAction<boolean>>
     closeModal:() => void,
+    setShowSignIn : React.Dispatch<React.SetStateAction<boolean>>,
+    showSignIn: boolean,
     loading:boolean,
     productAddedToCart:ProductDb,
     showCartMsg:boolean
@@ -41,9 +43,12 @@ const RootLayout = ({
     setLoginModal,
     productAddedToCart,
     loading,
+    setShowSignIn,
+    showSignIn,
     showCartMsg}:Span) => {
 
-    const [showModal, setShowModal] = useImmer(false);
+    const [showModal, setShowModal] = useImmer(false)
+    
     
     useEffect(() => {
       const visitedBefore = sessionStorage.getItem('visitedBefore');
@@ -91,6 +96,7 @@ const RootLayout = ({
 
             <div className="sign-up-header">Get 10% Off Your Next Order When You <button onClick={toggleModal}>Sign Up!</button></div>
             <Header 
+            setShowSignIn={setShowSignIn}
             productAddedToCart={productAddedToCart} 
             favorites={favorites} 
             shoppingCart={shoppingCart} 
@@ -112,7 +118,7 @@ const RootLayout = ({
                 animate="visible"
                 exit="exit"
                 className="modal" onClick={closeModal}>
-                <LoginModal key='modal' closeModal={closeModal} user={user}/>
+                <LoginModal key='modal' signUp={showSignIn} closeModal={closeModal} user={user}/>
                 </motion.div>
               }
             </AnimatePresence>

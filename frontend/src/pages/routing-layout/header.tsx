@@ -19,13 +19,22 @@ interface Header{
     shoppingCart:number,
     favorites:number,
     logInModal:boolean,
-    loggedUser:LoginTypes | null
-    setLoginModal : React.Dispatch<React.SetStateAction<boolean>>
+    loggedUser:LoginTypes | null,
+    setLoginModal : React.Dispatch<React.SetStateAction<boolean>>,
+    setShowSignIn : React.Dispatch<React.SetStateAction<boolean>>,
     productAddedToCart:ProductDb
     showCartMsg:boolean
 }
 
-const Header = ({favorites, shoppingCart,logInModal,setLoginModal,loggedUser,productAddedToCart,showCartMsg}:Header) => {
+const Header = ({
+    setShowSignIn,
+    favorites, 
+    shoppingCart,
+    logInModal,
+    setLoginModal,
+    loggedUser,
+    productAddedToCart,
+    showCartMsg}:Header) => {
 
     const [openMenu,setOpenMenu] = useState(false)
     const [openSearch, setOpenSearch] = useState(false)
@@ -39,7 +48,7 @@ const Header = ({favorites, shoppingCart,logInModal,setLoginModal,loggedUser,pro
         
     }
 
-    const loginModal = (e : React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+    const loginModal = (e:React.MouseEvent<HTMLAnchorElement>) => {
         if(!logInModal && !loggedUser){
             e.preventDefault()
             setLoginModal(true)
@@ -63,6 +72,12 @@ const Header = ({favorites, shoppingCart,logInModal,setLoginModal,loggedUser,pro
       }, [openMenu])
 
     const outSideSearch = useOutsideClick(closeSearch) 
+
+    const signOut = () => {
+        window.localStorage.removeItem('loggedUser')
+        window.sessionStorage.removeItem('loggedUser')
+        location.reload()
+    }
 
 
       return(
@@ -91,12 +106,29 @@ const Header = ({favorites, shoppingCart,logInModal,setLoginModal,loggedUser,pro
                 </div>
             </div>
             <div id="right-side-nav">
-                <div>
+                <div className="user-account-container">
+                    {
+                        loggedUser ? 
+                        <div className='user-account-msg signed-in'>
+                            <p>Hello {loggedUser.name.split(' ')[0] + '!'}</p>
+                            <NavLink reloadDocument={true} to={'user-account/profile'}>My Account</NavLink>
+                            <button className='sign-out-btn' onClick={signOut}>Sign Out</button>
+                        </div>
+                        : 
+                        <div className='user-account-msg signed-out'>
+                        <button className='sign-in-btn' onClick={() => setLoginModal(true)}>Sign In</button>
+                        <button className='sign-up-btn' onClick={() =>{
+                            setShowSignIn(false)
+                            setLoginModal(true)
+                        }}>Don't Have An Account? Sign Up!</button>
+                    </div>
 
+                    }
+                    <NavLink reloadDocument={true} id='user-account' onClick={loginModal}  
+                        to={'user-account/profile'}>
+                        <img src={user} alt='user settings'/>
+                    </NavLink>
                 </div>
-                <NavLink reloadDocument={true} id='user-account' onClick={loginModal}  to={'user-account/profile'}>
-                    <img src={user} alt='user settings'/>
-                </NavLink>
                 <button onClick={toggleSearch} className="btn-search">
                     <img src={searchImg} alt="search" />
                 </button>
@@ -105,7 +137,7 @@ const Header = ({favorites, shoppingCart,logInModal,setLoginModal,loggedUser,pro
                     <img src={heartOutline} alt="favorite items"/>
                 </NavLink>
                 <NavLink id="shopping-cart" to={"shopping-cart"}>
-                    {shoppingCart === 0?null:<span className="shopping-cart-span">{shoppingCart}</span>}
+                    {shoppingCart === 0 || !shoppingCart ?null:<span className="shopping-cart-span">{shoppingCart}</span>}
                     <img src={shoppingBag} alt="add to cart"/>
                 </NavLink>
                 <button className="menu" onClick={toggleMenu}><img src={menu} alt="open menu" /></button>

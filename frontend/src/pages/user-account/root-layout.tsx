@@ -41,7 +41,13 @@ const UserLayout = () => {
       }
 
     const ref = useOutsideClick(handleOutsideClick) as RefObject<HTMLDivElement>
-    
+
+
+    const signOut = () => {
+        window.localStorage.removeItem('loggedUser')
+        window.sessionStorage.removeItem('loggedUser')
+        location.reload()
+    }
 
 
     if(localStorage.getItem('loggedUser') || sessionStorage.getItem('loggedUser')){
@@ -64,7 +70,7 @@ const UserLayout = () => {
                         </li>
                     </div>
                 </div>
-                <button className="sign-out-mobile-btn">Sign Out</button>
+                <button onClick={signOut} className="sign-out-mobile-btn">Sign Out</button>
             </div>
             <ul className="user-nav">
                 <li key={uuidv4()}>
@@ -77,7 +83,7 @@ const UserLayout = () => {
                     <NavLink className='user-nav-link' to="reviews">Reviews</NavLink>
                 </li>
                 <li key={uuidv4()}>
-                    <button>
+                    <button onClick={signOut}>
                         Sign Out
                     </button>
                 </li>
