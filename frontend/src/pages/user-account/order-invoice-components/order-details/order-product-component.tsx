@@ -25,15 +25,15 @@ const OrderProductComponent = ({product}:{product:CartTypes['products'][0]}) => 
                         <p>${product.product.salePrice}</p>
                     </div>
                     :
-                    <div>
-                        <p className="order-product-price">${product.product.price}</p>
+                    <div className="order-product-price">
+                        <p >${product.product.price}</p>
                     </div>
                 }
-                <div>
-                    <p className="order-product-quantity">{product.quantity}</p>
+                <div className="order-product-quantity">
+                    <p >{product.quantity}</p>
                 </div>
-                <div>
-                    <p className="order-product-price">${product.product.price}</p>
+                <div className="order-product-full-price">
+                    <p >${product.product.price}</p>
                 </div>
  
         </div>

@@ -139,3 +139,21 @@ h1{
     }
 }
 }
+
+@media screen and (max-width:1100px) {
+
+    .profile-container{
+        justify-content: center;
+    }
+}
+
+@media screen and (max-width:400px){
+    .profile-container{
+        .password-form-container{
+            width: 315px;
+        }
+        .profile-details-container{
+            width: 315px;
+        }
+    }
+}

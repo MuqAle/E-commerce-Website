@@ -98,3 +98,31 @@
 
 }
 
+@media screen and (max-width:900px){
+    .user-review-container{
+        flex-direction: column;
+
+        .review-btn-container{
+            button{
+                margin-top: 30px;
+            }
+        }
+    }
+}
+
+@media screen and (max-width:500px) {
+    .user-review-container{
+        .review-main{
+            .right-container{
+                p:last-of-type{
+                    position: relative;
+                    right: 100px;
+                    max-width: 500px;
+                    min-width: 300px;
+                    width: 130%;
+                }
+            }
+        }
+    }
+}
+

@@ -1,5 +1,4 @@
 import { scrollBack,scrollForward} from "../../utils/scroll-slider";
-import allData from "../../assets/data/all-products";
 import { NavLink } from "react-router-dom";
 import { useRef,useEffect,useState } from "react";
 import forwardArrow from '../../assets/imgs/svg-imgs/arrow_forward_ios_FILL0_wght100_GRAD-25_opsz48.svg'
@@ -10,26 +9,21 @@ import Card from "../product-catalog/card";
 import heartOutline from '../../assets/imgs/svg-imgs/heart-outline.svg'
 import heartFilled from '../../assets/imgs/svg-imgs/heart-filled.svg'
 import shoppingBag from '../../assets/imgs/svg-imgs/shopping-bag-white.svg'
+import { CatalogueTypes } from "../../utils/types";
 
 
-interface ProductCarouselProps{
-    array:typeof allData,
-    addToCart:(id:string) => void,
-    addFavorite:(id:string) => void,
-    favorited:(id:string) =>boolean,
-    title:string
-}
 
-const ProductCarousel = ({array,addToCart,addFavorite,favorited,title}:ProductCarouselProps) => {
+
+const ProductCarousel = ({data,addToCart,addFavorite,favorited,title}:CatalogueTypes) => {
 
     const scroll = useRef<HTMLDivElement>(null);
     const [isScrollAtStart, setIsScrollAtStart] = useState(true);
     const [isScrollAtEnd, setIsScrollAtEnd] = useState(false);
 
     useEffect(() => {
+      const scrollElement = scroll.current;
         const handleScroll = () => {
-            const scrollElement = scroll.current;
-          
+            
             if (scrollElement) {
               const atStart = scrollElement.scrollLeft === 0;
               const atEnd =
@@ -40,10 +34,11 @@ const ProductCarousel = ({array,addToCart,addFavorite,favorited,title}:ProductCa
               setIsScrollAtEnd(atEnd);
             }
           };
-        scroll.current?.addEventListener("scroll", handleScroll);
+        scrollElement?.addEventListener("scroll", handleScroll);
 
         return () => {
-            scroll.current?.removeEventListener("scroll", handleScroll);
+            
+            scrollElement?.removeEventListener("scroll", handleScroll);
           };
        
     },[])
@@ -60,15 +55,15 @@ const ProductCarousel = ({array,addToCart,addFavorite,favorited,title}:ProductCa
                 </div>
               </div>
               <div className="landing-page-card-container" ref={scroll}>
-                {array.map(a => (
-                  <div className='landing-page-card'  key={a.id}>
-                    <NavLink className="product-link" to={`${a.type}/${a.id}`} >
+                {data.map(a => (
+                  <div className='landing-page-card'  key={a._id}>
+                    <NavLink className="product-link" to={`${a.type}/${a._id}`} >
                       <Card cardInfo={a}></Card>
                     </NavLink>
                     <button className="landing-page-left-btn" 
-                    style = {favorited(a.id) ? {visibility:"visible", opacity:'100%'} : {visibility:'hidden', opacity:'0'}}
-                    onClick={()=> addFavorite(a.id)} ><img src={favorited(a.id) ? heartFilled:heartOutline} alt="add-favorite" /></button>
-                    <button className="landing-page-right-btn" onClick={() => addToCart(a.id)}><img src={shoppingBag} alt='add-to-cart'></img></button>
+                    style = {favorited(a._id) ? {visibility:"visible", opacity:'100%'} : {visibility:'hidden', opacity:'0'}}
+                    onClick={()=> addFavorite(a._id)} ><img src={favorited(a._id) ? heartFilled:heartOutline} alt="add-favorite" /></button>
+                    <button className="landing-page-right-btn" onClick={() => addToCart(a._id)}><img src={shoppingBag} alt='add-to-cart'></img></button>
                   </div>
                 ))}
               </div>

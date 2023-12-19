@@ -4,6 +4,7 @@
 
     margin: 50px 30px 30px;
     h1{
+        font-size: 32px;
         padding-bottom: 20px;
         border-bottom: 1px solid rgb(203, 202, 202);
     }
@@ -112,4 +113,83 @@
     }
 
 
+}
+
+@media screen and (max-width:950px) {
+    .order-details{
+        h1{
+            font-size: 27px;
+            text-wrap:wrap;
+        }
+        h2{
+            font-size: 23px;
+        }
+
+        .order-products-container{
+
+            margin-top: 0px;
+            .order-products-container-header{
+            display: none;
+        }
+
+        .order-products-container-list{
+            .order-product-single:first-of-type{
+                border-top: none;
+                }
+            .order-product-single{
+                .order-product-info{
+                    flex-grow: 1;
+                    align-items: flex-start;
+                    p{
+                        margin-top: 10px;
+                    }
+                }
+                .order-product-price-container,.order-product-price{
+                    width: auto !important;
+                    left: 150px;
+                    margin-top: 0;
+                    position: absolute;
+                    display: flex;
+                    gap: 4px;
+                }
+                .order-product-full-price{
+                    display: none;
+                }
+                .order-product-quantity{
+                    width: auto !important;
+                    left: 150px;
+                    margin-top: 60px;
+                    position: absolute;
+                    & p::before{
+                        content: 'Qty: ';
+                    }
+                }
+
+            }
+                
+        }
+
+        }
+        
+    }   
+}
+
+@media screen and (max-width:450px){
+      .order-details{
+        h1{
+            font-size: 22px;
+            text-wrap:wrap;
+        }
+        h2{
+            font-size: 20px;
+        }
+    }
+}
+
+@media screen and (max-width:380px){
+    .order-details{
+        .order-product-price-container{
+            margin-top: 21px !important;
+        }
+    }
 }

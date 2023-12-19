@@ -159,7 +159,7 @@ const ReviewForm = ({
                 <button className="submit-review" disabled={disable} type="submit">Submit Review</button>
                 {
                 reviewPosted ? 
-                <p>Your Review Has Been Posted!</p>
+                <p style={{color:'green'}}>Your Review Has Been Posted!</p>
                 :null
                 }
             </form>

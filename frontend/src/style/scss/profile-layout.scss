@@ -1,12 +1,18 @@
+@use 'card';
 
 .user-container{
     display: flex;
     margin: 30px 30px 0px 30px;
     gap: 40px;
 
+    .user-nav-mobile{
+        display: none;
+    }
+
     .user-nav{
         max-width: 300px;
         width: 15%;
+
     
         margin-left: 30px;
         li{
@@ -30,4 +36,75 @@
     .user-main{
         flex-grow: 1;
     }
+}
+
+
+@media screen and (max-width:1100px){
+
+    .user-container{
+        flex-direction: column;
+        .user-nav-mobile{
+            display: flex;
+            justify-content: space-between;
+
+            button{
+                background-color: card.$accent-color;
+                    width: 120px;
+                    height: 35px;
+            }
+
+            .user-nav-drop-down{
+                
+                &.active{
+                    .dropdown-toggle-btn{
+                        img{
+                            transform: rotate(-0.25turn);
+                            transition: ease-out 0.3s;
+                        }
+                    }
+                }
+                div{
+                    transition: max-height 0.5s ease;
+                    z-index: 2;
+                    position: absolute;
+                    background-color: white;
+                    overflow: hidden;
+                    width: 180px;
+                    box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 6px;
+                    margin-top: 10px;
+                    width: 180px;
+                    
+                    li{
+                        text-align: start;
+                        &:hover{
+                            text-decoration: underline;
+                        }
+                        a{
+                            width: 100%;
+                            padding: 10px 20px;
+                        }
+                    }
+                }
+                .dropdown-toggle-btn{
+                    background-color: card.$accent-color;
+                    width: 120px;
+                    height: 35px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    gap: 7px;
+                    img{
+                        transform: rotate(0.25turn);
+                        height: 20px;
+                        width: 20px;
+                        transition: ease-out 0.2s;
+                    }
+                }
+            }
+        }
+    }
+    .user-nav{
+        display: none;
+    }
+
 }

@@ -1,7 +1,67 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,400;0,500;0,700;0,800;0,1000;1,200&display=swap");
+.card {
+  max-width: inherit;
+  min-width: inherit;
+  width: inherit;
+  height: auto;
+}
+.card .card-img {
+  width: 100%;
+  position: relative;
+}
+
+.jewelry-img {
+  aspect-ratio: 1/1.2;
+  width: 100%;
+  object-fit: cover;
+}
+
+.on-sale {
+  position: absolute;
+  padding-left: 5%;
+  margin-top: 15px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding: 5px 10px 5px 5%;
+  color: rgb(255, 255, 255);
+  background-color: rgb(231, 185, 192);
+}
+
+.card-name, .price, .on-sale {
+  font-family: "Nunito", sans-serif;
+}
+
+.label {
+  margin-top: 20px;
+  height: 90px;
+  overflow: hidden;
+}
+.label .card-name {
+  margin-bottom: 5px;
+  font-weight: 200;
+}
+.label .sale-price {
+  word-spacing: 10px;
+}
+.label s {
+  color: gray;
+}
+.label .price {
+  font-weight: 200;
+}
+
+.star-rating-container.card {
+  display: flex;
+  margin-top: 5px;
+}
+
 .user-container {
   display: flex;
   margin: 30px 30px 0px 30px;
   gap: 40px;
+}
+.user-container .user-nav-mobile {
+  display: none;
 }
 .user-container .user-nav {
   max-width: 300px;
@@ -26,6 +86,64 @@
 }
 .user-container .user-main {
   flex-grow: 1;
+}
+
+@media screen and (max-width: 1100px) {
+  .user-container {
+    flex-direction: column;
+  }
+  .user-container .user-nav-mobile {
+    display: flex;
+    justify-content: space-between;
+  }
+  .user-container .user-nav-mobile button {
+    background-color: rgb(231, 185, 192);
+    width: 120px;
+    height: 35px;
+  }
+  .user-container .user-nav-mobile .user-nav-drop-down.active .dropdown-toggle-btn img {
+    transform: rotate(-0.25turn);
+    transition: ease-out 0.3s;
+  }
+  .user-container .user-nav-mobile .user-nav-drop-down div {
+    transition: max-height 0.5s ease;
+    z-index: 2;
+    position: absolute;
+    background-color: white;
+    overflow: hidden;
+    width: 180px;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 6px;
+    margin-top: 10px;
+    width: 180px;
+  }
+  .user-container .user-nav-mobile .user-nav-drop-down div li {
+    text-align: start;
+  }
+  .user-container .user-nav-mobile .user-nav-drop-down div li:hover {
+    text-decoration: underline;
+  }
+  .user-container .user-nav-mobile .user-nav-drop-down div li a {
+    width: 100%;
+    padding: 10px 20px;
+  }
+  .user-container .user-nav-mobile .user-nav-drop-down .dropdown-toggle-btn {
+    background-color: rgb(231, 185, 192);
+    width: 120px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 7px;
+  }
+  .user-container .user-nav-mobile .user-nav-drop-down .dropdown-toggle-btn img {
+    transform: rotate(0.25turn);
+    height: 20px;
+    width: 20px;
+    transition: ease-out 0.2s;
+  }
+  .user-nav {
+    display: none;
+  }
 }
 
 /*# sourceMappingURL=profile-layout.css.map */
