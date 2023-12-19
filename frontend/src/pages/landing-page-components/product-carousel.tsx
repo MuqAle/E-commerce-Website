@@ -9,12 +9,13 @@ import Card from "../product-catalog/card";
 import heartOutline from '../../assets/imgs/svg-imgs/heart-outline.svg'
 import heartFilled from '../../assets/imgs/svg-imgs/heart-filled.svg'
 import shoppingBag from '../../assets/imgs/svg-imgs/shopping-bag-white.svg'
-import { CatalogueTypes } from "../../utils/types";
+import { LandingTypes } from "../../utils/types";
+import EmptyCard from "../../components/empty-card";
 
 
 
 
-const ProductCarousel = ({data,addToCart,addFavorite,favorited,title}:CatalogueTypes) => {
+const ProductCarousel = ({data,addToCart,addFavorite,favorited,title,isLoading}:LandingTypes) => {
 
     const scroll = useRef<HTMLDivElement>(null);
     const [isScrollAtStart, setIsScrollAtStart] = useState(true);
@@ -55,7 +56,17 @@ const ProductCarousel = ({data,addToCart,addFavorite,favorited,title}:CatalogueT
                 </div>
               </div>
               <div className="landing-page-card-container" ref={scroll}>
-                {data.map(a => (
+                {isLoading ? 
+                [...Array(7)].map((_card,i) => {
+                  return(
+                    <div className="landing-page-card" key={i}>
+                      <EmptyCard/>
+                    </div>
+                    
+                  )
+                })
+                :
+                data.map(a => (
                   <div className='landing-page-card'  key={a._id}>
                     <NavLink className="product-link" to={`${a.type}/${a._id}`} >
                       <Card cardInfo={a}></Card>
@@ -63,7 +74,14 @@ const ProductCarousel = ({data,addToCart,addFavorite,favorited,title}:CatalogueT
                     <button className="landing-page-left-btn" 
                     style = {favorited(a._id) ? {visibility:"visible", opacity:'100%'} : {visibility:'hidden', opacity:'0'}}
                     onClick={()=> addFavorite(a._id)} ><img src={favorited(a._id) ? heartFilled:heartOutline} alt="add-favorite" /></button>
-                    <button className="landing-page-right-btn" onClick={() => addToCart(a._id)}><img src={shoppingBag} alt='add-to-cart'></img></button>
+                    {
+                        a.stock === 0 ? 
+                        <span className="out-of-stock">
+                            Out of Stock
+                        </span>
+                        :
+                        <button className="right-btn" onClick={() => {addToCart(a._id)}}><img src={shoppingBag} alt='add-to-cart'></img></button>
+                    }
                   </div>
                 ))}
               </div>

@@ -1,5 +1,5 @@
 import express from 'express'
-import { deleteProduct, getAllProducts,getProduct, addProduct, updatedProducts} from '../controllers/product-controller'
+import { deleteProduct, getAllProducts,getProduct, addProduct, updatedProducts, getFrontPageProducts} from '../controllers/product-controller'
 import upload from '../middleware/multer-middleware'
 import { isAdmin, userExtractor } from '../middleware/jwt-middleware'
 
@@ -8,6 +8,8 @@ import { isAdmin, userExtractor } from '../middleware/jwt-middleware'
 const productRouter = express.Router()
 
 productRouter.get('/',getAllProducts)
+
+productRouter.get('/front-page-products',getFrontPageProducts)
 
 productRouter.get('/:id',getProduct)
 

@@ -162,7 +162,36 @@ const getProduct = async(req:Request,res:Response,next:NextFunction) => {
     }
 }
 
+const getFrontPageProducts = async(_req:Request,res:Response,next:NextFunction) => {
 
+  const limit = 7
+
+  try{
+    const newProducts = await Product.find({})
+    .sort('-createdAt')
+    .limit(limit)
+    .exec()
+  
+  const onSaleProducts = await Product.find({onSale:true})
+    .limit(limit)
+    .exec()
+
+  const trendingProducts = await Product.find({})
+    .sort('-sold')
+    .limit(limit)
+    .exec()
+  
+  if(!newProducts || !onSaleProducts || !trendingProducts){
+    res.status(404).end()
+  }else{
+    res.status(200).json({newProducts,onSaleProducts,trendingProducts})
+  }
+
+  }catch(error){
+    next(error)
+  }
+
+}
 
 const addProduct = async (req:Request,res:Response,next:NextFunction) => {
     try{
@@ -228,4 +257,5 @@ export {
     deleteProduct,
     addProduct,
     updatedProducts,
+    getFrontPageProducts
 }

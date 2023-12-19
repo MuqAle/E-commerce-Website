@@ -2,33 +2,49 @@ import { Link } from "react-router-dom";
 import CarouselComponent from "./carousel";
 import ProductCarousel from "./product-carousel";
 import '../../style/css/landing-page.css'
-import allData from "../../assets/data/all-products";
-import { useMemo } from "react";
 import necklaceImg from '../../assets/imgs/front-page-imgs/saeed-anahid--GhLgB-oXNw-unsplash.jpg'
 import aboutUsImg from '../../assets/imgs/front-page-imgs/harper-sunday-Vya9Ji2Eg6A-low.jpg'
 import tripleImg1 from '../../assets/imgs/front-page-imgs/natalie-sysko-0IOY1_3d-r0-low.jpg'
 import tripleImg2 from '../../assets/imgs/front-page-imgs/kateryna-hliznitsova-pjrPWwwYx1I-unsplash.jpg'
 import tripleImg3 from '../../assets/imgs/front-page-imgs/cat-han-BJ3grTerqY4-unsplash.jpg'
+import { FunctionTypes, ProductDb} from "../../utils/types"
+import { useEffect } from "react";
+import { getFrontPageProducts } from "../../services/products";
+import { useImmer } from "use-immer";
 
-
-
-
-interface Home{
-  addToCart:(id:string) => void
-  addFavorite:(id:string) => void
-  favorited:(id:string) =>boolean
+interface FrontPageData{
+  newProducts:ProductDb[],
+  onSaleProducts:ProductDb[],
+  trendingProducts:ProductDb[]
 }
 
-const Home = ({addToCart,addFavorite,favorited}:Home) => {
-  const trending = useMemo(() => allData.slice(14,21),[])
-  const whatsNew = useMemo(() => allData.slice(23,30),[])
-  const onSale = useMemo(() => allData.filter(s => s.onSale === true).slice(0,7),[])
+
+const Home = ({addToCart,addFavorite,favorited}:FunctionTypes) => {
+
+  const [products,setProducts] = useImmer<FrontPageData>(Object)
+  const [isLoading,setIsLoading] = useImmer(true)
+
+  useEffect(() => {
+    const controller = new AbortController()
+    getFrontPageProducts().then(products => {
+      setProducts(products)
+    }).catch(err => {
+      console.log(err)
+    }).finally(() => {
+      setIsLoading(false)
+    })
+
+    return () => {
+      controller.abort()
+    }
+  })
 
     return (
         <div className="landing-page-container">
           <CarouselComponent/>
           <ProductCarousel 
-          array={trending} 
+          isLoading={isLoading}
+          data={products.trendingProducts} 
           addToCart={addToCart} 
           addFavorite={addFavorite} 
           favorited={favorited} 
@@ -37,7 +53,8 @@ const Home = ({addToCart,addFavorite,favorited}:Home) => {
             <p className="words">Shop All Necklaces</p>
           </Link>
           <ProductCarousel
-          array={whatsNew} 
+          isLoading={isLoading}
+          data={products.newProducts} 
           addToCart={addToCart} 
           addFavorite={addFavorite} 
           favorited={favorited} 
@@ -52,7 +69,8 @@ const Home = ({addToCart,addFavorite,favorited}:Home) => {
             </div>
           </Link>
           <ProductCarousel
-          array={onSale} 
+          isLoading={isLoading}
+          data={products.onSaleProducts} 
           addToCart={addToCart} 
           addFavorite={addFavorite} 
           favorited={favorited} 

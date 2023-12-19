@@ -21,6 +21,11 @@ const getOneProduct = async(product:string) => {
     return response.data
 }
 
+const getFrontPageProducts = async() => {
+    const response = await axios.get(`${baseUrl}/front-page-products`)
+    return response.data
+}
+
 const addProduct = async(newProduct:ProductDb,token:string) => {
     const config = {
         headers:{Authorization:token}
@@ -54,5 +59,6 @@ export {
     addProduct,
     deleteProduct,
     updateProduct,
-    getOneProduct
+    getOneProduct,
+    getFrontPageProducts
 }
