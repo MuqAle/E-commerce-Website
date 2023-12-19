@@ -27,12 +27,12 @@ const SignUpForm = ({user}:{user:LoginTypes | null}) => {
       const [serverResponse,setServerResponse] = useImmer('')
     
       const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
+        const { name, value } = e.target
         setFormData({
           ...formData,
           [name]: value,
-        });
-      };
+        })
+      }
     
       const validateForm = () => {
         const newErrors: Partial<FormData> = {};
