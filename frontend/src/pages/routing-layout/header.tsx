@@ -110,7 +110,7 @@ const Header = ({
                     {
                         loggedUser ? 
                         <div className='user-account-msg signed-in'>
-                            <p>Hello {loggedUser.name.split(' ')[0] + '!'}</p>
+                            <p>Hello {loggedUser.firstName + '!'}</p>
                             <NavLink reloadDocument={true} to={'user-account/profile'}>My Account</NavLink>
                             <button className='sign-out-btn' onClick={signOut}>Sign Out</button>
                         </div>

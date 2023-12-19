@@ -14,7 +14,6 @@ const LoginModal = ({user,closeModal,signUp = true}:
 
     const [showSignIn, setShowSignIn] = useImmer<boolean>(signUp)
 
-    console.log(showSignIn)
     
     return(
     

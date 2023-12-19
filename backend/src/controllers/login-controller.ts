@@ -78,6 +78,8 @@ const loginUser =  async(req:Request<ParamsDictionary, unknown, UserRequest>,res
     return res.status(200).send({
         token,
         email:user.email, 
+        firstName:user.firstName,
+        lastName:user.lastName,
         name:`${user.firstName} ${user.lastName}`,
         isAdmin:user.isAdmin,
         })

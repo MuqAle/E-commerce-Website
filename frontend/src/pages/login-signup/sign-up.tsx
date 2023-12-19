@@ -25,6 +25,7 @@ const SignUpForm = ({user}:{user:LoginTypes | null}) => {
     
       const [errors, setErrors] = useImmer<Partial<FormData>>({});
       const [serverResponse,setServerResponse] = useImmer('')
+      const [serverSuccess,setServerSuccess] = useImmer('')
     
       const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target
@@ -71,10 +72,11 @@ const SignUpForm = ({user}:{user:LoginTypes | null}) => {
         e.preventDefault()
         setErrors({})
         setServerResponse('')
+        setServerSuccess('')
         if (validateForm()) {
             try{
                 await createAccount(formData)
-                setServerResponse('Account created you will be redirected shortly')
+                setServerSuccess('Account created you will be redirected shortly')
                 user = await login({
                     email:formData.email,
                     password:formData.password
@@ -126,6 +128,7 @@ const SignUpForm = ({user}:{user:LoginTypes | null}) => {
               className={`input-container ${errors.confirmPassword ? 'error' : ''}`}
               value={formData.confirmPassword} setPassword={handleChange}/>
               <p className="server-error">{serverResponse}</p>
+              <p className="server-success" style={{color:'green'}}>{serverSuccess}</p>
                 <button className="sign-up-submit" onClick={handleSubmit}>Submit</button>
                 </form>
            </div>

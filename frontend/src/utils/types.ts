@@ -133,6 +133,8 @@ interface ProductCartType extends CartFncType{
 
 interface LoginTypes{
     email:string,
+    firstName:string,
+    lastName:string
     name:string,
     token:string,
     isAdmin:boolean
