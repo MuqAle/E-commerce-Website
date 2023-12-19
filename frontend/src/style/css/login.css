@@ -158,6 +158,19 @@
   font-size: 15px;
 }
 
+.credentials {
+  display: flex;
+  justify-content: space-between;
+}
+.credentials button {
+  padding-right: 30px;
+  font-size: 16px;
+  font-weight: 200;
+}
+.credentials button:hover {
+  text-decoration: underline;
+}
+
 .remember-me-container {
   display: flex;
   padding-left: 30px;
@@ -168,6 +181,7 @@
   -ms-user-select: none;
   user-select: none;
   appearance: none;
+  cursor: pointer;
 }
 .remember-me-container #remember-me-checkbox::before {
   content: "";
