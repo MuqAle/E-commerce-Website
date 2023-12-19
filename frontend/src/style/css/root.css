@@ -284,7 +284,7 @@ button {
   top: 4rem;
 }
 .user-account-container .user-account-msg.signed-in {
-  min-width: 200px;
+  min-width: 250px;
 }
 .user-account-container .user-account-msg.signed-out {
   min-width: 250px;
