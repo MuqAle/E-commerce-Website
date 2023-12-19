@@ -27,7 +27,7 @@ interface FilterTypes{
 
 const getAllProducts = async (req:Request,res:Response,next:NextFunction)=> {
     const page = req.query.page as string
-    const sortBy = req.query.sort as string || '-createdAt'
+    const sortBy = req.query.sort as string || '-sold'
     const { category, minPrice, maxPrice,onSale,keyword} = req.query 
     const colors = req.query.colors ? (req.query.colors as string).split(',') : []
     const metal = req.query.metal ? (req.query.metal as string).split(',') : []
@@ -173,6 +173,7 @@ const getFrontPageProducts = async(_req:Request,res:Response,next:NextFunction) 
     .exec()
   
   const onSaleProducts = await Product.find({onSale:true})
+    .sort('-stock')
     .limit(limit)
     .exec()
 

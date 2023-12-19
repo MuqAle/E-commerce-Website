@@ -7,11 +7,14 @@ import '../../style/css/login.css'
 
 
 
-const LoginModal = ({user,closeModal}:
+const LoginModal = ({user,closeModal,signUp = true}:
     {user:LoginTypes | null,
-    closeModal?:() => void}) => {
+    closeModal?:() => void,
+    signUp?:boolean}) => {
 
-    const [showSignIn, setShowSignIn] = useImmer(true)
+    const [showSignIn, setShowSignIn] = useImmer<boolean>(signUp)
+
+    console.log(showSignIn)
     
     return(
     

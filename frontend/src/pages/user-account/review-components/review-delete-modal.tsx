@@ -29,7 +29,7 @@ const DeleteReviewModal = ({yesFnc,closeModal,productName,successMessage,disable
                 </div>
                 {
                     successMessage ?
-                    <p className="success-delete">Your Review Was Successfully Deleted</p> :
+                    <p className="success-delete" style={{color:'green'}}>Your Review Was Successfully Deleted</p> :
                     null
                 }
             </div>

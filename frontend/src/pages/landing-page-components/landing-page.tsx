@@ -37,7 +37,7 @@ const Home = ({addToCart,addFavorite,favorited}:FunctionTypes) => {
     return () => {
       controller.abort()
     }
-  })
+  },[setIsLoading, setProducts])
 
     return (
         <div className="landing-page-container">

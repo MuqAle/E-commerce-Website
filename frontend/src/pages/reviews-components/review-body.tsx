@@ -40,7 +40,7 @@ const ReviewBody = ({filterReviewArray,reviews,scrollToTop,myRef}:ReviewBodyType
 
     const [displayReviews,setDisplayReviews] = useImmer<ReviewType[] | undefined>(reviews || [])
     const [ratingFilter,setRatingFilter] = useImmer<ReviewType[] | undefined>(reviews || [])
-    const [sortFunction,setSortFunction] = useImmer<(arr:ReviewType[] | undefined) => ReviewType[] | undefined>(sortOldestDate)
+    const [sortFunction,setSortFunction] = useImmer<(arr:ReviewType[] | undefined) => ReviewType[] | undefined>(sortRecentDate)
     const [actives,setActives] = useImmer<ActiveType[]>([])
     const [dropDownShow,setDropDownShow] = useImmer({filter:false,sort: false })
     const filterArrayName = ['5 Star','4 Star','3 Star','2 Star','1 Star']

@@ -7,6 +7,7 @@ interface LoginForm {
     emailError:string,
     passwordError:string,
     serverError:string
+    serverSuccess:string
 }
 
 const SignInForm = ({user}:{user:LoginTypes | null}) => {
@@ -47,9 +48,12 @@ const SignInForm = ({user}:{user:LoginTypes | null}) => {
                 }else{
                     window.sessionStorage.setItem('loggedUser',JSON.stringify(user))
                 }
-                newErrors.serverError = 'You are now logged in. You will be redirected shortly'
+                newErrors.serverSuccess = 'You are now logged in. You will be redirected shortly'
                 setError(newErrors)
-                location.reload()
+                setTimeout(() => {
+                    location.reload()
+                },2000)
+                
         }
             }catch(error){
                 newErrors.passwordError = 'Wrong email or password, please try again'
@@ -57,6 +61,13 @@ const SignInForm = ({user}:{user:LoginTypes | null}) => {
             }
             
     }
+
+    const inputCustomerCredentials = (e:React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault()
+        setEmail('customer@gmail.com')
+        setPassword('Customer123!')
+    }
+
     return (
         <form className="sign-in-form">
         <div className={`input-container ${errors.emailError ? 'error' : ''}` }>
@@ -69,13 +80,17 @@ const SignInForm = ({user}:{user:LoginTypes | null}) => {
         <div className="password-input-container">
         <PasswordInput id = 'sign-in-password' value= {password} errors={errors.passwordError} className={`input-container ${errors.passwordError ? 'error' : ''}`}  inputName="Password" name="password" setPassword={
             (e) =>  setPassword(e.target.value) } />
-        <div className= 'remember-me-container'>
-        <input type="checkbox" checked ={rememberMe} onChange = {() => setRememberMe(!rememberMe)} id="remember-me-checkbox"/>
-        <label htmlFor="remember-me-checkbox">Remember me</label>
+        <div className="credentials">
+            <div className= 'remember-me-container'>
+            <input type="checkbox" checked ={rememberMe} onChange = {() => setRememberMe(!rememberMe)} id="remember-me-checkbox"/>
+            <label htmlFor="remember-me-checkbox">Remember me</label>
+            </div>
+            <button onClick={inputCustomerCredentials}>Customer Credentials</button>
         </div>
         </div>
         <button type="submit" className="sign-in-submit" onClick={signInFunction}>Submit</button>
         {errors.serverError && <p className="error">{errors.serverError}</p>}
+        {errors.serverSuccess && <p className="error" style={{color:'green'}}>{errors.serverSuccess}</p>}
     </form> 
     )
 }

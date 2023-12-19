@@ -66,10 +66,12 @@ const addNewRating = async (id:string,user:UserTypes,rating:number,reviewTitle:s
     await Product.findByIdAndUpdate(id,{
         $push: {
             reviews:{
-                postedBy:user.id,
-                rating:rating,
-                reviewDesc:reviewDesc, 
-                reviewTitle:reviewTitle,
+                $each:[{
+                    postedBy:user.id,
+                    rating:rating,
+                    reviewDesc:reviewDesc, 
+                    reviewTitle:reviewTitle,}],
+                $position:0
             }
         },
         new:true,
@@ -77,7 +79,7 @@ const addNewRating = async (id:string,user:UserTypes,rating:number,reviewTitle:s
         context:'query'
     })
     if(user.reviews){
-        user.reviews.push({
+        user.reviews.unshift({
             product:new Types.ObjectId(id),
             reviewDesc:reviewDesc,
             reviewTitle:reviewTitle,

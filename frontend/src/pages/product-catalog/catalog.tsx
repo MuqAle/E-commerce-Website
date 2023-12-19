@@ -49,7 +49,7 @@ const Catalog = ({title,addToCart,addFavorite,favorited,setLoading}:CatalogueTyp
     const [page, setPage] = useImmer(1)
     const [filtersApplied,setFiltersApplied] = useImmer<Partial<FilterQueryType>>({})
     const [totalProducts, setTotalProducts] = useImmer(0)
-    const [sortProducts,setSortProducts] = useImmer('-createdAt')
+    const [sortProducts,setSortProducts] = useImmer('-sold')
     const [isLoading,setIsLoading] = useImmer(true)
     const sortNameArray = ['Newest', 'Best Seller','Highest Rated','Price [Low-High]','Price [High-Low]']
     const sortArray = ['-createdAt','-sold','-overallRating','price','-price']
@@ -219,7 +219,7 @@ const Catalog = ({title,addToCart,addFavorite,favorited,setLoading}:CatalogueTyp
         setPage(1)
         setProducts([])
         setFiltersApplied({})
-        setSortProducts('-createdAt')
+        setSortProducts('-sold')
       }
 
       const addToCartFnc = async(id:string) => {

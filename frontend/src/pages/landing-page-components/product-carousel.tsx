@@ -80,7 +80,7 @@ const ProductCarousel = ({data,addToCart,addFavorite,favorited,title,isLoading}:
                             Out of Stock
                         </span>
                         :
-                        <button className="right-btn" onClick={() => {addToCart(a._id)}}><img src={shoppingBag} alt='add-to-cart'></img></button>
+                        <button className="landing-page-right-btn" onClick={() => {addToCart(a._id)}}><img src={shoppingBag} alt='add-to-cart'></img></button>
                     }
                   </div>
                 ))}

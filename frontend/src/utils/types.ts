@@ -31,7 +31,8 @@ interface ProductDb {
 
 interface UserTypes{
     id:string
-    name:string,
+    firstName:string,
+    lastName:string,
     email:string,
     passwordHash:string
     wishList:ProductDb[],
@@ -80,6 +81,12 @@ interface CatalogueTypes extends FunctionTypes{
     title:string,
     setLoading:React.Dispatch<React.SetStateAction<boolean>>
 }
+
+interface LandingTypes extends FunctionTypes{
+    title:string,
+    isLoading:boolean,
+    data:ProductDb[]
+}
 interface ProductTypes extends FunctionTypes{
     loginFnc:() => void,
     user:LoginTypes | null,
@@ -110,10 +117,14 @@ interface CartFncType{
 interface CartCheckoutTypes extends CartFncType{
     cart:CartTypes,
     setLoading:React.Dispatch<React.SetStateAction<boolean>>,
-    token:string|null
+    token:string|null,
+    favorited:(id: string) => boolean
+    moveToWishlist: (id:string) => void,
 }
 
 interface ProductCartType extends CartFncType{
+    favorited:(id: string) => boolean,
+    moveToWishlist: (id:string) => void,
     cart:{
         product:ProductDb,
         quantity:number
@@ -164,7 +175,9 @@ interface OrderType{
     total:number
 }
 
+
 export type {
+    LandingTypes,
     CardType,
     ProductDb,
     UserTypes,
