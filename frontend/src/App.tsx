@@ -27,6 +27,7 @@ import OrderSuccess from './pages/order-success'
 
 
 
+
 function App() {
   const [cart, setCart] = useImmer<CartTypes>(Object)
   const [favorite, setFavorite] = useImmer<UserTypes['wishList']>([])
@@ -38,7 +39,7 @@ function App() {
   const [loading,setLoading] = useImmer(false)
   const [showAddToCart, setShowAddToCart] = useImmer(false)
   const [lastAddedToCart, setLastAddedToCart] = useImmer<ProductDb>(Object)
-  const timerRef = useRef<NodeJS.Timeout | null>(null)
+  const timerRef = useRef<ReturnType<typeof setTimeout>  | null>(null)
   
   const token = user?.token ? `Bearer ${user?.token}` : null
   
