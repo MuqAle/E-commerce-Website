@@ -130,7 +130,7 @@ const SignUpForm = ({user}:{user:LoginTypes | null}) => {
               <p className="server-error">{serverResponse}</p>
               <p className="server-success" style={{color:'green'}}>{serverSuccess}</p>
                 <button className="sign-up-submit" onClick={handleSubmit}>Submit</button>
-                </form>
+              </form>
            </div>
     )
 }

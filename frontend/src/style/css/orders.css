@@ -56,17 +56,21 @@
 }
 
 .order-title {
-  margin-bottom: 15px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid rgb(203, 202, 202);
 }
 
 .order-container {
   display: flex;
   width: 100%;
   margin-top: 10px;
-  border-top: 1px solid black;
+  border-top: 1px solid rgb(203, 202, 202);
   padding-top: 20px;
   padding-bottom: 10px;
   flex-wrap: wrap;
+}
+.order-container:first-of-type {
+  border-top: none;
 }
 .order-container .right-side {
   min-width: 200px;

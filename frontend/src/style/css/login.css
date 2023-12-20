@@ -208,6 +208,9 @@
   color: rgb(188, 11, 11);
   padding-left: 30px;
 }
+.sign-up-form-scroll .server-success {
+  padding-left: 30px;
+}
 
 .sign-up-submit {
   margin: 30px;
