@@ -1,4 +1,4 @@
 
-const BASEURL = 'http://localhost:3003/api'
+const BASEURL = 'https://muqqy-ecommerce-backend.fly.dev'
 
 export default BASEURL
