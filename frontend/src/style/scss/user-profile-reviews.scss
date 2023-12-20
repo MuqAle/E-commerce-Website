@@ -2,7 +2,8 @@
 
 .user-review-main{
     .review-title{
-        margin-bottom: 15px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid rgb(203, 202, 202);
     }
 
     .modal-content{
@@ -31,6 +32,9 @@
 
 
 .user-review-container{
+    &:first-of-type{
+        border-top: none;
+    }
     display: flex;
     width: 100%;
     margin-top: 10px;
