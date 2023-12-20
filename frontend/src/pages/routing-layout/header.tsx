@@ -16,6 +16,7 @@ import { useNavigate } from 'react-router-dom';
 import AddedToCartMsg from './add-to-cart-msg';
 
 interface Header{
+    error:boolean,
     shoppingCart:number,
     favorites:number,
     logInModal:boolean,
@@ -27,6 +28,7 @@ interface Header{
 }
 
 const Header = ({
+    error,
     setShowSignIn,
     favorites, 
     shoppingCart,
@@ -159,6 +161,7 @@ const Header = ({
                         }}><img src={arrow}/></button>
             </form>
         </div>
+        {error ? <p className="main-error-msg">Something Went Wrong</p> : null}
         {showCartMsg ?
             <AddedToCartMsg product={productAddedToCart} shopping={shoppingCart}/>
             :

@@ -30,7 +30,7 @@ const DropDown = ({
     sortApplied}:DropDownType) => {
 
     const [checkedItems, setCheckedItems] = useImmer<Record<string, boolean>>({})
-    const ref = useOutsideClick(closeFnc)
+    const ref = useOutsideClick(closeFnc) as React.RefObject<HTMLDivElement>
 
     const handleCheckboxChange = (itemName:string,e:React.ChangeEvent<HTMLInputElement>) => {
         if(name === 'Price Range'){

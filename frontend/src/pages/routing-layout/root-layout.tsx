@@ -14,6 +14,7 @@ import { useImmer } from "use-immer";
 import disableScrollModal from "../../utils/stop-scrolling";
 
 interface Span{
+    error:boolean,
     shoppingCart:number,
     favorites:number,
     showLoginModal:boolean,
@@ -35,6 +36,7 @@ const backdrop = {
 
 
 const RootLayout = ({
+    error,
     shoppingCart,
     favorites,
     showLoginModal,
@@ -96,6 +98,7 @@ const RootLayout = ({
 
             <div className="sign-up-header">Get 10% Off Your Next Order When You <button onClick={toggleModal}>Sign Up!</button></div>
             <Header 
+            error={error}
             setShowSignIn={setShowSignIn}
             productAddedToCart={productAddedToCart} 
             favorites={favorites} 
@@ -122,6 +125,7 @@ const RootLayout = ({
                 </motion.div>
               }
             </AnimatePresence>
+            
             <main>
                 <Outlet/>
             </main>

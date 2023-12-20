@@ -471,6 +471,15 @@ nav #logo img {
   font-weight: lighter;
 }
 
+.main-error-msg {
+  position: absolute;
+  padding: 20px 50px;
+  margin-top: 10px;
+  font-size: 18px;
+  background-color: rgb(231, 185, 192);
+  color: rgb(187, 8, 8);
+}
+
 main {
   margin-bottom: 80px;
 }

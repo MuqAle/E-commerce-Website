@@ -14,7 +14,7 @@ import Wishlist from './pages/wish-list'
 import ShoppingCart from './pages/shopping-cart-components/shopping-cart'
 import ErrorPage from './pages/error-page'
 import { CartTypes, LoginTypes, ProductDb, UserTypes } from './utils/types'
-import { useEffect, useRef } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 import { addToCart, deleteOneCart,deleteAllProduct, getCart } from './services/cart'
 import { addOrDeleteFromWishlist, retrieveProfile } from './services/user-req'
 import UserLayout from './pages/user-account/root-layout'
@@ -34,13 +34,20 @@ function App() {
   const [userProfile,setUserProfile] = useImmer<UserTypes | null>(null)
   const [loginModal,setLoginModal] = useImmer(false)
   const [showSignIn,setShowSignIn] = useImmer(true)
-  const [error,setError] = useImmer('')
+  const [error,setError] = useImmer(false)
   const [loading,setLoading] = useImmer(false)
   const [showAddToCart, setShowAddToCart] = useImmer(false)
   const [lastAddedToCart, setLastAddedToCart] = useImmer<ProductDb>(Object)
   const timerRef = useRef<NodeJS.Timeout | null>(null)
   
   const token = user?.token ? `Bearer ${user?.token}` : null
+  
+  const errorHandler = useCallback(() => {
+    setError(true)
+    setTimeout(() => {
+      setError(false)
+    },4000)
+  },[setError])
 
 
   useEffect(() => {
@@ -53,23 +60,23 @@ function App() {
       setUser(user)
       getCart(`Bearer ${user.token}`).then(
         userCart => setCart(userCart)
-      ).catch(err => setError('Something went wrong'))
+      ).catch(() => errorHandler())
 
     }if(loggedUserSessionJSON){
       const user:LoginTypes = JSON.parse(loggedUserSessionJSON)
       getCart(`Bearer ${user.token}`).then(
         userCart => setCart(userCart)
-      ).catch(err => setError('Something went wrong'))
+      ).catch(() => errorHandler())
       setUser(user)
     }else{
       getCart(null).then(
         userCart => setCart(userCart)
-      ).catch(err => setError('Something went wrong'))
+      ).catch(() => errorHandler())
     }
     return () => {
       controller.abort()
     }
-  },[setCart, setError, setUser, token])
+  },[errorHandler, setCart, setUser, token])
 
   useEffect(() => {
     const controller = new AbortController()
@@ -79,13 +86,13 @@ function App() {
           setUserProfile(user)
           setFavorite(user.wishList)
         }
-      ).catch(err => console.log(err))
+      ).catch(() => errorHandler())
     }
 
     return () => {
       controller.abort()
     }
-  },[setFavorite, setUserProfile, token, user])
+  },[errorHandler, setFavorite, setUserProfile, token, user])
 
   const openLoginModal = () => {
     if(!user){
@@ -93,6 +100,7 @@ function App() {
     }
     return
   }
+
 
 
   const addProductFavorite = async(id:string) => {
@@ -105,7 +113,7 @@ function App() {
         const user = await addOrDeleteFromWishlist(id,token) as UserTypes
         setFavorite(user.wishList)
       }catch(err){
-        setError('Something went wrong')
+        errorHandler
       }finally{
         setLoading(false)
       }
@@ -124,7 +132,7 @@ function App() {
       const cart = await deleteAllProduct(id,token)
       setCart(cart)
     }catch(err){
-      setError('Something went wrong')
+      errorHandler()
     }finally{
       setLoading(false)
     }
@@ -137,7 +145,7 @@ function App() {
       const cart = await deleteOneCart(id,token)
       setCart(cart)
     }catch(err){
-      setError('Something went wrong')
+      errorHandler()
     }finally{
       setLoading(false)
     }
@@ -158,7 +166,7 @@ function App() {
         clearTimeout(timerRef.current);
       }
     }catch(err){
-      setError('Something went wrong')
+      errorHandler()
     }finally{
       setLoading(false)
       setShowAddToCart(true)
@@ -181,7 +189,7 @@ function App() {
         const cart = await deleteAllProduct(id,token)
         setCart(cart) 
       }catch(err){
-        setError('Something went wrong')
+        errorHandler()
       }finally{
         setLoading(false)
       }
@@ -195,6 +203,7 @@ function App() {
   
     createRoutesFromElements(
       <Route path='/' element={<RootLayout 
+        error={error}
         showSignIn={showSignIn}
         setShowSignIn={setShowSignIn}
         productAddedToCart={lastAddedToCart}
