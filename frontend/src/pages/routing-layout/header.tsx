@@ -78,7 +78,7 @@ const Header = ({
     const signOut = () => {
         window.localStorage.removeItem('loggedUser')
         window.sessionStorage.removeItem('loggedUser')
-        location.reload()
+        location.replace('/login')
     }
 
 
