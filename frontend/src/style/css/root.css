@@ -140,6 +140,11 @@
     visibility: hidden;
   }
 }
+@media screen {
+  header .user-account-container {
+    display: none !important;
+  }
+}
 @media screen and (max-width: 1200px) {
   header #left-side-nav-mobile {
     display: flex;
@@ -213,6 +218,10 @@ html {
   margin: 0;
   font-family: "Nunito", sans-serif;
   box-sizing: border-box;
+}
+
+button {
+  color: black;
 }
 
 #main-container {

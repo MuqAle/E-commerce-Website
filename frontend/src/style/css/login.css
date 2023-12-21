@@ -203,6 +203,7 @@
 .sign-up-form-scroll {
   overflow-y: scroll;
   overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
 }
 .sign-up-form-scroll .server-error {
   color: rgb(188, 11, 11);

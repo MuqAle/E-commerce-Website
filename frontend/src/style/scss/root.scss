@@ -107,6 +107,12 @@
     }
 }
 
+@media screen {
+    header .user-account-container{
+        display: none !important;
+    }
+}
+
 
 @media screen and (max-width:1200px){
     header #left-side-nav-mobile{
@@ -191,6 +197,10 @@ html {
     font-family: card.$font-stack;
     box-sizing: border-box;
 
+}
+
+button{
+    color: black;
 }
 
 
