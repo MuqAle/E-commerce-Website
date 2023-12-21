@@ -9,7 +9,9 @@ primary_region = "ewr"
 
 [build]
 
-
+[env]
+  PORT = "3000"
+  
 
 [http_service]
   internal_port = 3000
