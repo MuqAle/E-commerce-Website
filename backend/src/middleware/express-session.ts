@@ -14,6 +14,8 @@ const sessionOptions:session.SessionOptions  = {
     resave:false,
     saveUninitialized:false,
     store: sessionStore,
+    proxy:true,
+    name:'MuqqyE-commerceStore',
     cookie:{
         sameSite:'none',
         httpOnly:true,
