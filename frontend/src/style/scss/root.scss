@@ -108,8 +108,13 @@
 }
 
 @media screen {
-    header .user-account-container{
-        display: none !important;
+    header .user-account-msg{
+        &.signed-in{ 
+            display: none;
+        }
+        &.signed-out{
+            display: none;
+        }
     }
 }
 

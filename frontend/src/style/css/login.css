@@ -189,7 +189,6 @@
   border: 1px black solid;
   height: 17px;
   width: 17px;
-  margin-right: 5px;
 }
 .remember-me-container #remember-me-checkbox:checked:before {
   background: url("../../assets/imgs/svg-imgs/done_FILL0_wght200_GRAD0_opsz48.svg") no-repeat;
@@ -198,12 +197,12 @@
 .remember-me-container label {
   font-size: 16px;
   font-weight: 200;
+  margin-left: 5px;
 }
 
 .sign-up-form-scroll {
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
-  -webkit-overflow-scrolling: touch;
 }
 .sign-up-form-scroll .server-error {
   color: rgb(188, 11, 11);
