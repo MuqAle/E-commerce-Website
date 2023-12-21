@@ -6,14 +6,19 @@ import session from "express-session";
 const sessionStore = MongoStore.create({
     mongoUrl:MONGODB_URI,
     stringify:false,
-    ttl: 14 * 24 * 60 * 60
+    ttl: 14 * 24 * 60 * 60,
 })
 
 const sessionOptions:session.SessionOptions  = {
     secret:SESSION_KEY as string,
     resave:false,
     saveUninitialized:false,
-    store: sessionStore
+    store: sessionStore,
+    cookie:{
+        sameSite:'none',
+        httpOnly:true,
+        secure:true
+    }
 }
 
 export {sessionOptions,sessionStore}
