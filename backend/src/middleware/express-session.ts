@@ -19,6 +19,7 @@ const sessionOptions:session.SessionOptions  = {
     cookie:{
         sameSite:'none',
         httpOnly:true,
+        secure:true
     }
 }
 
