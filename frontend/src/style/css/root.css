@@ -142,10 +142,10 @@
 }
 @media screen {
   header .user-account-msg.signed-in {
-    display: none;
+    display: none !important;
   }
   header .user-account-msg.signed-out {
-    display: none;
+    display: none !important;
   }
 }
 @media screen and (max-width: 1200px) {
@@ -205,6 +205,11 @@
 @media screen and (max-width: 500px) {
   header .cart-msg {
     right: 5%;
+  }
+}
+@media screen and (max-width: 400px) and (min-width: 376px) {
+  header .cart-msg {
+    right: 2vw;
   }
 }
 @media screen and (width: 375px) {

@@ -106,42 +106,46 @@
   width: 100%;
   padding-top: 30px;
 }
-.sign-in-form .input-container.error input, .sign-up-form-scroll .input-container.error input {
+.sign-in-form .sign-up-input-container.error input, .sign-in-form .sign-in-input-container.error input, .sign-up-form-scroll .sign-up-input-container.error input, .sign-up-form-scroll .sign-in-input-container.error input {
   border: rgb(188, 11, 11) solid 1px;
+}
+.sign-in-form .sign-up-input-container.error .error, .sign-in-form .sign-in-input-container.error .error, .sign-up-form-scroll .sign-up-input-container.error .error, .sign-up-form-scroll .sign-in-input-container.error .error {
+  width: 36ch;
+  text-wrap: wrap;
 }
 .sign-in-form .password-input-container, .sign-up-form-scroll .password-input-container {
   display: flex;
   flex-direction: column;
   width: 100%;
 }
-.sign-in-form .input-container, .sign-up-form-scroll .input-container {
+.sign-in-form .sign-up-input-container, .sign-in-form .sign-in-input-container, .sign-up-form-scroll .sign-up-input-container, .sign-up-form-scroll .sign-in-input-container {
   display: flex;
   flex-direction: column;
   padding: 10px 30px;
   width: 100%;
   gap: 10px;
 }
-.sign-in-form .input-container span, .sign-up-form-scroll .input-container span {
+.sign-in-form .sign-up-input-container span, .sign-in-form .sign-in-input-container span, .sign-up-form-scroll .sign-up-input-container span, .sign-up-form-scroll .sign-in-input-container span {
   color: rgb(188, 11, 11);
 }
-.sign-in-form .input-container input, .sign-up-form-scroll .input-container input {
+.sign-in-form .sign-up-input-container input, .sign-in-form .sign-in-input-container input, .sign-up-form-scroll .sign-up-input-container input, .sign-up-form-scroll .sign-in-input-container input {
   height: 50px;
   font-size: 15px;
   padding: 10px;
   border: black solid 1px;
 }
-.sign-in-form .input-container p, .sign-up-form-scroll .input-container p {
+.sign-in-form .sign-up-input-container p, .sign-in-form .sign-in-input-container p, .sign-up-form-scroll .sign-up-input-container p, .sign-up-form-scroll .sign-in-input-container p {
   margin-top: -5px;
   color: rgb(188, 11, 11);
 }
-.sign-in-form .input-container .password-container, .sign-up-form-scroll .input-container .password-container {
+.sign-in-form .sign-up-input-container .password-container, .sign-in-form .sign-in-input-container .password-container, .sign-up-form-scroll .sign-up-input-container .password-container, .sign-up-form-scroll .sign-in-input-container .password-container {
   display: flex;
   position: relative;
 }
-.sign-in-form .input-container .password-container input, .sign-up-form-scroll .input-container .password-container input {
+.sign-in-form .sign-up-input-container .password-container input, .sign-in-form .sign-in-input-container .password-container input, .sign-up-form-scroll .sign-up-input-container .password-container input, .sign-up-form-scroll .sign-in-input-container .password-container input {
   flex-grow: 1;
 }
-.sign-in-form .input-container .password-container button, .sign-up-form-scroll .input-container .password-container button {
+.sign-in-form .sign-up-input-container .password-container button, .sign-in-form .sign-in-input-container .password-container button, .sign-up-form-scroll .sign-up-input-container .password-container button, .sign-up-form-scroll .sign-in-input-container .password-container button {
   position: absolute;
   right: 10px;
   margin-top: 16px;
@@ -201,7 +205,7 @@
 }
 
 .sign-up-form-scroll {
-  overflow-y: auto;
+  overflow-y: scroll;
   overflow-x: hidden;
 }
 .sign-up-form-scroll .server-error {
@@ -257,6 +261,9 @@
   }
   .sign-in-close {
     margin-right: 15px;
+  }
+  .sign-up-form .sign-up-input-container.error .error {
+    width: 100%;
   }
 }
 

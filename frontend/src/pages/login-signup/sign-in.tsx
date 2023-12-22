@@ -70,7 +70,7 @@ const SignInForm = ({user}:{user:LoginTypes | null}) => {
 
     return (
         <form className="sign-in-form">
-        <div className={`input-container ${errors.emailError ? 'error' : ''}` }>
+        <div className={`sign-in-input-container ${errors.emailError ? 'error' : ''}` }>
             <label htmlFor="sign-in-email">
                 Email<span>*</span>
             </label>
@@ -78,7 +78,7 @@ const SignInForm = ({user}:{user:LoginTypes | null}) => {
             {errors.emailError && <p className="error">{errors.emailError}</p>}
         </div>
         <div className="password-input-container">
-        <PasswordInput id = 'sign-in-password' value= {password} errors={errors.passwordError} className={`input-container ${errors.passwordError ? 'error' : ''}`}  inputName="Password" name="password" setPassword={
+        <PasswordInput id = 'sign-in-password' value= {password} errors={errors.passwordError} className={`sign-in-input-container ${errors.passwordError ? 'error' : ''}`}  inputName="Password" name="password" setPassword={
             (e) =>  setPassword(e.target.value) } />
         <div className="credentials">
             <div className= 'remember-me-container'>

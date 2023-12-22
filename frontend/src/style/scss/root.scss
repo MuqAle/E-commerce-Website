@@ -110,10 +110,10 @@
 @media screen {
     header .user-account-msg{
         &.signed-in{ 
-            display: none;
+            display: none !important;
         }
         &.signed-out{
-            display: none;
+            display: none !important;
         }
     }
 }
@@ -183,6 +183,12 @@
 @media screen and (max-width:500px){
     header .cart-msg{
         right: 5%;
+    }
+}
+
+@media screen and (max-width:400px) and (min-width:376px){
+    header .cart-msg{
+        right: 2vw;
     }
 }
 

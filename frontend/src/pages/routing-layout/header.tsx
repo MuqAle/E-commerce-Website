@@ -123,7 +123,7 @@ const Header = ({
                             setShowSignIn(false)
                             setLoginModal(true)
                         }}>Don't Have An Account? Sign Up!</button>
-                    </div>
+                        </div>
 
                     }
                     <NavLink reloadDocument={true} id='user-account' onClick={loginModal}  

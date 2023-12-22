@@ -91,21 +91,21 @@ const SignUpForm = ({user}:{user:LoginTypes | null}) => {
     return(
            <div className="sign-up-form-scroll">
              <form className="sign-up-form">
-                <div className={`input-container ${errors.firstName ? 'error' : ''}`}>
+                <div className={`sign-up-input-container ${errors.firstName ? 'error' : ''}`}>
                     <label htmlFor="sign-up-first-name">
                         First Name<span>*</span>
                     </label>
                     <input id="sign-up-first-name" name="firstName" value={formData.firstName} onChange = {handleChange}/>
                     {errors.firstName && <p className="error">{errors.firstName}</p>}
                 </div>
-                <div className={`input-container ${errors.lastName ? 'error' : ''}`}>
+                <div className={`sign-up-input-container ${errors.lastName ? 'error' : ''}`}>
                     <label htmlFor="sign-up-last-name">
                         Last Name<span>*</span>
                     </label>
                     <input id="sign-up-last-name" name="lastName" value={formData.lastName} onChange={handleChange}/>
                     {errors.lastName && <p className="error">{errors.lastName}</p>}
                 </div>
-                <div className={`input-container ${errors.email ? 'error' : ''}`}>
+                <div className={`sign-up-input-container ${errors.email ? 'error' : ''}`}>
                     <label htmlFor="sign-up-email">
                         Email<span>*</span>
                     </label>
@@ -117,7 +117,7 @@ const SignUpForm = ({user}:{user:LoginTypes | null}) => {
               inputName='Password'
               name="password"
               errors={errors.password}
-              className={`input-container ${errors.password ? 'error' : ''}`}
+              className={`sign-up-input-container ${errors.password ? 'error' : ''}`}
               value={formData.password}
               setPassword={handleChange}/>
               <PasswordInput
@@ -125,7 +125,7 @@ const SignUpForm = ({user}:{user:LoginTypes | null}) => {
               inputName="Confirm Password"
               name="confirmPassword"
               errors={errors.confirmPassword}
-              className={`input-container ${errors.confirmPassword ? 'error' : ''}`}
+              className={`sign-up-input-container ${errors.confirmPassword ? 'error' : ''}`}
               value={formData.confirmPassword} setPassword={handleChange}/>
               <p className="server-error">{serverResponse}</p>
               <p className="server-success" style={{color:'green'}}>{serverSuccess}</p>

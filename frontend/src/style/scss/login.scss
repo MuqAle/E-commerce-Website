@@ -49,7 +49,7 @@
     top: 0;
 }
 
-.sign-in-form ,.sign-up-form-scroll{
+.sign-in-form,.sign-up-form-scroll{
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -62,9 +62,14 @@
         width: 100%;
         padding-top: 30px;
     }
-    .input-container.error{
+    .sign-up-input-container.error,.sign-in-input-container.error{
         input{
             border: rgb(188, 11, 11) solid 1px;
+        }
+
+        .error{
+            width: 36ch;
+            text-wrap: wrap;
         }
        
     }
@@ -73,7 +78,7 @@
         flex-direction: column;
         width: 100%;
     }
-    .input-container{
+    .sign-up-input-container,.sign-in-input-container{
         display: flex;
         flex-direction: column;
         padding: 10px 30px;
@@ -169,7 +174,7 @@
 }
 
 .sign-up-form-scroll{
-overflow-y: auto;
+overflow-y: scroll;
 overflow-x: hidden;
     .server-error{
         color:rgb(188, 11, 11) ;
@@ -228,5 +233,11 @@ overflow-x: hidden;
     }
     .sign-in-close{
         margin-right: 15px;
+    }
+
+    .sign-up-form .sign-up-input-container.error{
+        .error{
+            width: 100%;
+        }
     }
 }
