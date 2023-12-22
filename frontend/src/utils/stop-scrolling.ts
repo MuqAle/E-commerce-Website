@@ -1,25 +1,20 @@
-const preventScroll = (event: Event) => {
+const preventScroll = (event: TouchEvent) => {
     event.preventDefault()
   }; 
   
   const disableScrollModal = (modal:boolean) => {
     const body = document.querySelector("body")
     const signUpForm = document.querySelector('.sign-up-form-scroll')
-
-    const scrollHandler: EventListenerOrEventListenerObject = (event) => {
-      preventScroll(event)
-    } 
-
     if(body){
         body.style.overflow = modal ? 'hidden' : 'visible';
-        modal ? body.addEventListener("touchmove", scrollHandler, { passive: false }) : body.removeEventListener("touchmove", scrollHandler)
+        modal ? body.addEventListener("touchmove", preventScroll, { passive: false }) : body.removeEventListener("touchmove", preventScroll)
         if (signUpForm){
-          signUpForm.removeEventListener("touchmove", scrollHandler)
+          signUpForm.removeEventListener("touchmove", preventScroll)
         }
        
     }
     return () => {
-      document.body.removeEventListener("touchmove", scrollHandler)
+      document.body.removeEventListener("touchmove", preventScroll)
     }
   }
 
