@@ -1,5 +1,5 @@
 
-const BASEURL = 'https://muqqy-ecommerce-backend.fly.dev/api'
+const BASEURL = 'https://muqqyjewelryshop.fly.dev/api'
 
 
 export default BASEURL
