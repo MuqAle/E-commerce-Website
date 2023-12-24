@@ -221,7 +221,31 @@ overflow-x: hidden;
      }
 }
 
-
+@media (hover: none) and (pointer: coarse) {
+    
+    .sign-in:has(.sign-up-form-scroll){
+        transition: aspect-ratio 1s;
+        aspect-ratio: 1/1.3;
+    }
+    .sign-in-btn-container{
+        padding-top: 50px;
+    }
+    .sign-up-form-scroll{
+        height: auto;
+        overflow-y:visible;
+        overflow-x: visible;
+    }
+    .sign-up-submit{
+        margin-bottom: 60px;
+    }
+}
+@media (hover: none) and (pointer: coarse) and (max-width:640px){
+    .sign-in:has(.sign-up-form-scroll){
+        transition: height .5s;
+        height: 100svh;
+        height: 100vh;
+    }
+}
 
 @media screen and (max-width:640px){
     .sign-in{

@@ -107,7 +107,9 @@
     }
 }
 
-@media screen {
+
+
+@media (hover: none){
     header .user-account-msg{
         &.signed-in{ 
             display: none !important;
