@@ -1,10 +1,10 @@
 # E-commerce Jewelry Website
 
 ## Live Link
-https://e-commerce-website-1mzt.vercel.app/
+https://www.muqqyjewelryshop.com/
 
 ## Technologies
-html, css, sass, typescript, react, react-router, framer motion
+html, css, sass, typescript, react, react-router, framer motion, express, mongodb, cloudinary, express session
 
 ## Project Description
 This application is apart of the Odin Project but instead of a small shopping cart application an e-commerce website was created. Mock up of an e-commerce website utilizing react-router and sass. 
@@ -15,10 +15,6 @@ Clone down this repository. You will need node and npm installed globally on you
 Installation:
 
 npm install
-
-To Run Test Suite:
-
-npm test
 
 To Start Server:
 
